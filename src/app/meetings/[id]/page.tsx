@@ -48,28 +48,66 @@ export default function MeetingRunPage() {
   }, [meetingId]);
 
   const loadMeetingDetails = async () => {
+    // 1. Immediately hydrate from client sessionStorage if available (instant rendering on serverless)
+    if (typeof window !== "undefined") {
+      try {
+        const cached = sessionStorage.getItem(`meeting_${meetingId}`);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (parsed && parsed.id === meetingId) {
+            setMeeting(parsed);
+            const decMap: Record<string, boolean> = {};
+            (parsed.decisions || []).forEach((d: Decision) => {
+              decMap[d.id] = parsed.status === "executed" ? d.approved : true;
+            });
+            setApprovedDecisions(decMap);
+
+            const actMap: Record<string, boolean> = {};
+            (parsed.action_items || []).forEach((a: ActionItem) => {
+              actMap[a.id] = parsed.status === "executed" ? a.approved : true;
+            });
+            setApprovedActions(actMap);
+
+            if (parsed.status === "executed") {
+              setConfirmationSuccess(true);
+            }
+            setLoading(false);
+          }
+        }
+      } catch (cacheErr) {
+        console.warn("sessionStorage hydration error:", cacheErr);
+      }
+    }
+
+    // 2. Fetch fresh server-side data from /api/meetings/[id]
     try {
       const res = await fetch(`/api/meetings/${meetingId}`);
-      if (!res.ok) throw new Error("Failed to load meeting");
-      const data = await res.json();
-      const m: Meeting = data.meeting;
-      setMeeting(m);
+      if (res.ok) {
+        const data = await res.json();
+        const m: Meeting = data.meeting;
+        if (m) {
+          setMeeting(m);
 
-      // Initialize approval toggles: default to approved unless severe conflict
-      const decMap: Record<string, boolean> = {};
-      (m.decisions || []).forEach((d) => {
-        decMap[d.id] = m.status === "executed" ? d.approved : true;
-      });
-      setApprovedDecisions(decMap);
+          const decMap: Record<string, boolean> = {};
+          (m.decisions || []).forEach((d) => {
+            decMap[d.id] = m.status === "executed" ? d.approved : true;
+          });
+          setApprovedDecisions(decMap);
 
-      const actMap: Record<string, boolean> = {};
-      (m.action_items || []).forEach((a) => {
-        actMap[a.id] = m.status === "executed" ? a.approved : true;
-      });
-      setApprovedActions(actMap);
+          const actMap: Record<string, boolean> = {};
+          (m.action_items || []).forEach((a) => {
+            actMap[a.id] = m.status === "executed" ? a.approved : true;
+          });
+          setApprovedActions(actMap);
 
-      if (m.status === "executed") {
-        setConfirmationSuccess(true);
+          if (m.status === "executed") {
+            setConfirmationSuccess(true);
+          }
+
+          if (typeof window !== "undefined") {
+            sessionStorage.setItem(`meeting_${meetingId}`, JSON.stringify(m));
+          }
+        }
       }
     } catch (err) {
       console.error(err);
@@ -114,6 +152,9 @@ export default function MeetingRunPage() {
       if (!res.ok) throw new Error("Execution failed");
       const data = await res.json();
       setMeeting(data.meeting);
+      if (typeof window !== "undefined" && data.meeting) {
+        sessionStorage.setItem(`meeting_${meetingId}`, JSON.stringify(data.meeting));
+      }
       setConfirmationSuccess(true);
     } catch (err) {
       console.error(err);

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getMeetings, saveMeeting } from "@/lib/db";
 import { Meeting } from "@/lib/types";
+import { runAgentPipeline } from "@/lib/agent/orchestrator";
 
 export async function GET() {
   try {
@@ -15,7 +16,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { title, raw_transcript, date, source_type } = body;
+    const { title, raw_transcript, date, source_type, run_pipeline } = body;
 
     if (!title || !raw_transcript) {
       return NextResponse.json(
@@ -38,9 +39,20 @@ export async function POST(request: Request) {
     };
 
     const saved = saveMeeting(newMeeting);
-    return NextResponse.json({ meeting: saved }, { status: 201 });
-  } catch (error) {
+
+    let finalMeeting = saved;
+    if (run_pipeline) {
+      try {
+        const apiKey = body.apiKey || process.env.GEMINI_API_KEY;
+        finalMeeting = await runAgentPipeline(saved.id, apiKey);
+      } catch (runErr) {
+        console.error("Error auto-running pipeline during meeting creation:", runErr);
+      }
+    }
+
+    return NextResponse.json({ meeting: finalMeeting }, { status: 201 });
+  } catch (error: any) {
     console.error("POST /api/meetings error:", error);
-    return NextResponse.json({ error: "Failed to create meeting" }, { status: 500 });
+    return NextResponse.json({ error: error?.message || "Failed to create meeting" }, { status: 500 });
   }
 }

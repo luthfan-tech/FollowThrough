@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import os from "os";
 import {
   Meeting,
   Speaker,
@@ -22,70 +23,91 @@ interface DatabaseSchema {
   agent_events: AgentEvent[];
 }
 
-const DB_DIR = path.join(process.cwd(), "data");
+// In Vercel and AWS Lambda serverless functions, process.cwd() is read-only (/var/task).
+// Only os.tmpdir() (/tmp) is writable.
+const isServerless =
+  process.env.VERCEL === "1" ||
+  Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME) ||
+  Boolean(process.env.VERCEL_ENV);
+
+const DB_DIR = isServerless
+  ? path.join(os.tmpdir(), "followthrough_data")
+  : path.join(process.cwd(), "data");
 const DB_FILE = path.join(DB_DIR, "database.json");
+const SEED_FILE = path.join(process.cwd(), "data", "database.json");
+
+// In-memory database cache to guarantee immediate read/write consistency across serverless runs
+let inMemoryDb: DatabaseSchema | null = null;
 
 function ensureDirectoryExists() {
-  if (!fs.existsSync(DB_DIR)) {
-    fs.mkdirSync(DB_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(DB_DIR)) {
+      fs.mkdirSync(DB_DIR, { recursive: true });
+    }
+  } catch (err) {
+    console.warn("ensureDirectoryExists notice (serverless fallback active):", err);
   }
 }
 
 export function readDatabase(): DatabaseSchema {
-  ensureDirectoryExists();
-  if (!fs.existsSync(DB_FILE)) {
-    const empty: DatabaseSchema = {
-      meetings: [],
-      speakers: [],
-      decisions: [],
-      action_items: [],
-      conflicts: [],
-      reminders: [],
-      digests: [],
-      agent_events: [],
-    };
-    writeDatabase(empty);
-    return empty;
+  if (inMemoryDb) {
+    return inMemoryDb;
   }
-  try {
-    const raw = fs.readFileSync(DB_FILE, "utf-8");
-    return JSON.parse(raw) as DatabaseSchema;
-  } catch (err) {
-    console.error("Error reading database file, returning clean state", err);
-    const empty: DatabaseSchema = {
-      meetings: [],
-      speakers: [],
-      decisions: [],
-      action_items: [],
-      conflicts: [],
-      reminders: [],
-      digests: [],
-      agent_events: [],
-    };
-    writeDatabase(empty);
-    return empty;
+
+  // 1. Try reading from writable DB_FILE (e.g. /tmp/database.json on Vercel)
+  if (fs.existsSync(DB_FILE)) {
+    try {
+      const raw = fs.readFileSync(DB_FILE, "utf-8");
+      inMemoryDb = JSON.parse(raw) as DatabaseSchema;
+      return inMemoryDb;
+    } catch (err) {
+      console.warn("Could not parse DB_FILE, checking seed fallback:", err);
+    }
   }
+
+  // 2. Try reading from repository seed database.json
+  if (fs.existsSync(SEED_FILE)) {
+    try {
+      const raw = fs.readFileSync(SEED_FILE, "utf-8");
+      inMemoryDb = JSON.parse(raw) as DatabaseSchema;
+      // Mirror to writable DB_FILE
+      try {
+        ensureDirectoryExists();
+        fs.writeFileSync(DB_FILE, JSON.stringify(inMemoryDb, null, 2), "utf-8");
+      } catch {
+        // Ignore mirror error
+      }
+      return inMemoryDb;
+    } catch (err) {
+      console.warn("Could not parse SEED_FILE:", err);
+    }
+  }
+
+  // 3. Clean empty schema fallback
+  const empty: DatabaseSchema = {
+    meetings: [],
+    speakers: [],
+    decisions: [],
+    action_items: [],
+    conflicts: [],
+    reminders: [],
+    digests: [],
+    agent_events: [],
+  };
+  inMemoryDb = empty;
+  return empty;
 }
 
-// Serialized write queue to prevent multi-request race conditions
-let writeLock: Promise<void> = Promise.resolve();
-
 export function writeDatabase(data: DatabaseSchema): void {
-  ensureDirectoryExists();
-  const serialized = JSON.stringify(data, null, 2);
+  // Always update in-memory representation immediately
+  inMemoryDb = data;
 
-  // Safe direct sync write compatible with Windows / OneDrive file locks and Linux volumes
   try {
+    ensureDirectoryExists();
+    const serialized = JSON.stringify(data, null, 2);
     fs.writeFileSync(DB_FILE, serialized, "utf-8");
   } catch (err) {
-    try {
-      const fd = fs.openSync(DB_FILE, "w");
-      fs.writeFileSync(fd, serialized, "utf-8");
-      fs.closeSync(fd);
-    } catch (retryErr) {
-      console.error("writeDatabase error:", retryErr);
-      throw retryErr;
-    }
+    console.warn("writeDatabase disk persistence notice (in-memory state preserved):", err);
   }
 }
 

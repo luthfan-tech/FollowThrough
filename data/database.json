@@ -1,10 +1,465 @@
 {
-  "meetings": [],
-  "speakers": [],
-  "decisions": [],
-  "action_items": [],
-  "conflicts": [],
+  "meetings": [
+    {
+      "id": "meet-1795265967634-jzoj",
+      "title": "Frontend Architecture Refactor.",
+      "date": "2026-11-21T00:00:00.000Z",
+      "source_type": "PASTED_TEXT",
+      "raw_transcript": "Carlos: We agreed to drop Tailwind CSS and replace with Bootstrap across all services.\nJordan: Someone needs to handle the rewrite overnight.",
+      "summary": "The meeting \"Frontend Architecture Refactor.\" concluded with 1 ratified decisions and 1 prioritized follow-up deliverables across the team. Key focus areas include delivery velocity, accountability, and resolving operational dependencies.",
+      "execution_score": 51,
+      "status": "executed",
+      "created_at": "2026-11-21T12:59:27.634Z",
+      "updated_at": "2026-11-21T13:00:01.310Z",
+      "speakers": [
+        {
+          "id": "spk-meet-1795265967634-jzoj-1",
+          "meeting_id": "meet-1795265967634-jzoj",
+          "name": "Carlos",
+          "role": "Team Member",
+          "confidence": 0.88
+        },
+        {
+          "id": "spk-meet-1795265967634-jzoj-2",
+          "meeting_id": "meet-1795265967634-jzoj",
+          "name": "Jordan",
+          "role": "Team Member",
+          "confidence": 0.88
+        }
+      ],
+      "decisions": [
+        {
+          "decision_text": "We agreed to drop Tailwind CSS and replace with Bootstrap across all services.",
+          "owner": "Carlos",
+          "status": "proposed",
+          "decision_date": "2026-11-21T12:59:28.910Z",
+          "context": "Ratified during Frontend Architecture Refactor. discussion (Carlos).",
+          "confidence": 0.94,
+          "approved": false,
+          "id": "dec-meet-1795265967634-jzoj-1",
+          "meeting_id": "meet-1795265967634-jzoj",
+          "meeting_title": "Frontend Architecture Refactor.",
+          "created_at": "2026-11-21T12:59:28.910Z"
+        }
+      ],
+      "action_items": [
+        {
+          "title": "meone needs to handle the rewrite overnight.",
+          "description": "Deliverable identified in meeting: \"Someone needs to handle the rewrite overnight.\"",
+          "owner": "Unassigned",
+          "priority": "MEDIUM",
+          "status": "PROPOSED",
+          "approved": false,
+          "id": "act-meet-1795265967634-jzoj-1",
+          "meeting_id": "meet-1795265967634-jzoj",
+          "decision_id": "dec-meet-1795265967634-jzoj-1",
+          "meeting_title": "Frontend Architecture Refactor.",
+          "external_task_id": "FLW-5317",
+          "created_at": "2026-11-21T12:59:28.911Z"
+        }
+      ],
+      "conflicts": [
+        {
+          "conflict_type": "MISSING_OWNER",
+          "severity": "MEDIUM",
+          "explanation": "Action Item \"meone needs to handle the rewrite overnight.\" has no designated single directly-responsible individual (DRI). High-priority tasks without owners have an 85% rate of execution failure.",
+          "recommendation": "Assign a specific engineering or operational owner during the approval confirmation step.",
+          "resolved": false,
+          "current_decision_text": "meone needs to handle the rewrite overnight.",
+          "id": "cnf-meet-1795265967634-jzoj-1",
+          "meeting_id": "meet-1795265967634-jzoj",
+          "created_at": "2026-11-21T12:59:28.942Z"
+        }
+      ],
+      "agent_events": [
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "ingest",
+          "status": "IN_PROGRESS",
+          "message": "Ingesting and normalizing raw meeting transcript...",
+          "id": "evt-1795265967660-r8e6h",
+          "created_at": "2026-11-21T12:59:27.660Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "ingest",
+          "status": "SUCCESS",
+          "message": "Transcript cleaned and tokenized (141 characters, 2 turns).",
+          "id": "evt-1795265967663-k98vw",
+          "created_at": "2026-11-21T12:59:27.663Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "speakers",
+          "status": "IN_PROGRESS",
+          "message": "Attributing statements and inferring organizational roles...",
+          "id": "evt-1795265967665-jxcix",
+          "created_at": "2026-11-21T12:59:27.665Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "speakers",
+          "status": "SUCCESS",
+          "message": "Identified 2 participants: Carlos (Team Member), Jordan (Team Member).",
+          "metadata": [
+            {
+              "id": "spk-meet-1795265967634-jzoj-1",
+              "meeting_id": "meet-1795265967634-jzoj",
+              "name": "Carlos",
+              "role": "Team Member",
+              "confidence": 0.88
+            },
+            {
+              "id": "spk-meet-1795265967634-jzoj-2",
+              "meeting_id": "meet-1795265967634-jzoj",
+              "name": "Jordan",
+              "role": "Team Member",
+              "confidence": 0.88
+            }
+          ],
+          "id": "evt-1795265967671-7uve5",
+          "created_at": "2026-11-21T12:59:27.671Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "extract",
+          "status": "IN_PROGRESS",
+          "message": "Extracting ratified decisions, action items, assignees, deadlines, and project risks...",
+          "id": "evt-1795265967676-5c0ms",
+          "created_at": "2026-11-21T12:59:27.676Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "extract",
+          "status": "WARNING",
+          "message": "AI Provider Notice: Gemini error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 ] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Switched to deterministic parser (1 decisions, 1 action items).",
+          "metadata": {
+            "provider": "deterministic",
+            "error": "Gemini error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 ] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods."
+          },
+          "id": "evt-1795265968922-izirv",
+          "created_at": "2026-11-21T12:59:28.922Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "memory_query",
+          "status": "IN_PROGRESS",
+          "message": "Querying persistent organizational memory across historical meetings and ADRs...",
+          "id": "evt-1795265968928-xhify",
+          "created_at": "2026-11-21T12:59:28.928Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "memory_query",
+          "status": "SUCCESS",
+          "message": "Retrieved 0 relevant historical policy/milestone decisions from persistent memory.",
+          "metadata": [],
+          "id": "evt-1795265968935-r5t9y",
+          "created_at": "2026-11-21T12:59:28.935Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "conflict_detection",
+          "status": "IN_PROGRESS",
+          "message": "Running Conflict Radar against organizational memory and resource constraints...",
+          "id": "evt-1795265968938-6w2pn",
+          "created_at": "2026-11-21T12:59:28.938Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "conflict_detection",
+          "status": "SUCCESS",
+          "message": "Conflict Radar identified 1 risk items (0 Critical, 0 High).",
+          "metadata": {
+            "criticalCount": 0,
+            "highCount": 0,
+            "mediumCount": 1,
+            "lowCount": 0,
+            "overallRisk": "MEDIUM"
+          },
+          "id": "evt-1795265968947-kjuwp",
+          "created_at": "2026-11-21T12:59:28.947Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "score",
+          "status": "IN_PROGRESS",
+          "message": "Computing multidimensional Execution Score (Clarity, Ownership, Timelines, Conflict Risk)...",
+          "id": "evt-1795265968951-dgowv",
+          "created_at": "2026-11-21T12:59:28.951Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "score",
+          "status": "SUCCESS",
+          "message": "Assigned Execution Score: 51/100. Factors: Clarity 24/25, Ownership 0/25, Deadlines 5/25, Risk Factor 22/25.",
+          "metadata": {
+            "total": 51,
+            "decision_clarity": 24,
+            "ownership_coverage": 0,
+            "deadline_quality": 5,
+            "risk_penalty": 22,
+            "feedback": [
+              "1 action item(s) lack an individual responsible owner (DRI).",
+              "1 action item(s) have open-ended or missing due dates."
+            ]
+          },
+          "id": "evt-1795265968954-5za94",
+          "created_at": "2026-11-21T12:59:28.954Z"
+        },
+        {
+          "meeting_id": "meet-1795265967634-jzoj",
+          "step": "ready_for_review",
+          "status": "PENDING",
+          "message": "Actions prepared and staged. Awaiting mandatory human confirmation before creating tasks or committing to memory.",
+          "id": "evt-1795265968957-q9q0g",
+          "created_at": "2026-11-21T12:59:28.957Z"
+        }
+      ]
+    }
+  ],
+  "speakers": [
+    {
+      "id": "spk-meet-1795265967634-jzoj-1",
+      "meeting_id": "meet-1795265967634-jzoj",
+      "name": "Carlos",
+      "role": "Team Member",
+      "confidence": 0.88
+    },
+    {
+      "id": "spk-meet-1795265967634-jzoj-2",
+      "meeting_id": "meet-1795265967634-jzoj",
+      "name": "Jordan",
+      "role": "Team Member",
+      "confidence": 0.88
+    }
+  ],
+  "decisions": [
+    {
+      "decision_text": "We agreed to drop Tailwind CSS and replace with Bootstrap across all services.",
+      "owner": "Carlos",
+      "status": "approved",
+      "decision_date": "2026-11-21T12:59:28.910Z",
+      "context": "Ratified during Frontend Architecture Refactor. discussion (Carlos).",
+      "confidence": 0.94,
+      "approved": true,
+      "id": "dec-meet-1795265967634-jzoj-1",
+      "meeting_id": "meet-1795265967634-jzoj",
+      "meeting_title": "Frontend Architecture Refactor.",
+      "created_at": "2026-11-21T12:59:28.910Z"
+    }
+  ],
+  "action_items": [
+    {
+      "title": "meone needs to handle the rewrite overnight.",
+      "description": "Deliverable identified in meeting: \"Someone needs to handle the rewrite overnight.\"",
+      "owner": "Unassigned",
+      "priority": "MEDIUM",
+      "status": "APPROVED",
+      "approved": true,
+      "id": "act-meet-1795265967634-jzoj-1",
+      "meeting_id": "meet-1795265967634-jzoj",
+      "decision_id": "dec-meet-1795265967634-jzoj-1",
+      "meeting_title": "Frontend Architecture Refactor.",
+      "external_task_id": "FLW-5317",
+      "created_at": "2026-11-21T12:59:28.911Z"
+    }
+  ],
+  "conflicts": [
+    {
+      "conflict_type": "MISSING_OWNER",
+      "severity": "MEDIUM",
+      "explanation": "Action Item \"meone needs to handle the rewrite overnight.\" has no designated single directly-responsible individual (DRI). High-priority tasks without owners have an 85% rate of execution failure.",
+      "recommendation": "Assign a specific engineering or operational owner during the approval confirmation step.",
+      "resolved": false,
+      "current_decision_text": "meone needs to handle the rewrite overnight.",
+      "id": "cnf-meet-1795265967634-jzoj-1",
+      "meeting_id": "meet-1795265967634-jzoj",
+      "created_at": "2026-11-21T12:59:28.942Z"
+    }
+  ],
   "reminders": [],
-  "digests": [],
-  "agent_events": []
+  "digests": [
+    {
+      "id": "dig-carlos",
+      "person": "Carlos",
+      "week_start": "2026-11-21T13:00:01.322Z",
+      "summary": "0 deliverable(s) due this upcoming week.",
+      "tasks_due": [],
+      "overdue_tasks": [],
+      "decisions_affecting_them": [
+        {
+          "id": "dec-meet-1795265967634-jzoj-1",
+          "decision_text": "We agreed to drop Tailwind CSS and replace with Bootstrap across all services.",
+          "meeting_title": "Frontend Architecture Refactor."
+        }
+      ],
+      "conflicts_requiring_attention": [],
+      "completed_work": [
+        {
+          "id": "c-0",
+          "title": "Prior sprint milestones verified"
+        }
+      ],
+      "generated_at": "2026-11-21T13:00:01.322Z"
+    }
+  ],
+  "agent_events": [
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "ingest",
+      "status": "IN_PROGRESS",
+      "message": "Ingesting and normalizing raw meeting transcript...",
+      "id": "evt-1795265967660-r8e6h",
+      "created_at": "2026-11-21T12:59:27.660Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "ingest",
+      "status": "SUCCESS",
+      "message": "Transcript cleaned and tokenized (141 characters, 2 turns).",
+      "id": "evt-1795265967663-k98vw",
+      "created_at": "2026-11-21T12:59:27.663Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "speakers",
+      "status": "IN_PROGRESS",
+      "message": "Attributing statements and inferring organizational roles...",
+      "id": "evt-1795265967665-jxcix",
+      "created_at": "2026-11-21T12:59:27.665Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "speakers",
+      "status": "SUCCESS",
+      "message": "Identified 2 participants: Carlos (Team Member), Jordan (Team Member).",
+      "metadata": [
+        {
+          "id": "spk-meet-1795265967634-jzoj-1",
+          "meeting_id": "meet-1795265967634-jzoj",
+          "name": "Carlos",
+          "role": "Team Member",
+          "confidence": 0.88
+        },
+        {
+          "id": "spk-meet-1795265967634-jzoj-2",
+          "meeting_id": "meet-1795265967634-jzoj",
+          "name": "Jordan",
+          "role": "Team Member",
+          "confidence": 0.88
+        }
+      ],
+      "id": "evt-1795265967671-7uve5",
+      "created_at": "2026-11-21T12:59:27.671Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "extract",
+      "status": "IN_PROGRESS",
+      "message": "Extracting ratified decisions, action items, assignees, deadlines, and project risks...",
+      "id": "evt-1795265967676-5c0ms",
+      "created_at": "2026-11-21T12:59:27.676Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "extract",
+      "status": "WARNING",
+      "message": "AI Provider Notice: Gemini error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 ] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Switched to deterministic parser (1 decisions, 1 action items).",
+      "metadata": {
+        "provider": "deterministic",
+        "error": "Gemini error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 ] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods."
+      },
+      "id": "evt-1795265968922-izirv",
+      "created_at": "2026-11-21T12:59:28.922Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "memory_query",
+      "status": "IN_PROGRESS",
+      "message": "Querying persistent organizational memory across historical meetings and ADRs...",
+      "id": "evt-1795265968928-xhify",
+      "created_at": "2026-11-21T12:59:28.928Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "memory_query",
+      "status": "SUCCESS",
+      "message": "Retrieved 0 relevant historical policy/milestone decisions from persistent memory.",
+      "metadata": [],
+      "id": "evt-1795265968935-r5t9y",
+      "created_at": "2026-11-21T12:59:28.935Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "conflict_detection",
+      "status": "IN_PROGRESS",
+      "message": "Running Conflict Radar against organizational memory and resource constraints...",
+      "id": "evt-1795265968938-6w2pn",
+      "created_at": "2026-11-21T12:59:28.938Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "conflict_detection",
+      "status": "SUCCESS",
+      "message": "Conflict Radar identified 1 risk items (0 Critical, 0 High).",
+      "metadata": {
+        "criticalCount": 0,
+        "highCount": 0,
+        "mediumCount": 1,
+        "lowCount": 0,
+        "overallRisk": "MEDIUM"
+      },
+      "id": "evt-1795265968947-kjuwp",
+      "created_at": "2026-11-21T12:59:28.947Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "score",
+      "status": "IN_PROGRESS",
+      "message": "Computing multidimensional Execution Score (Clarity, Ownership, Timelines, Conflict Risk)...",
+      "id": "evt-1795265968951-dgowv",
+      "created_at": "2026-11-21T12:59:28.951Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "score",
+      "status": "SUCCESS",
+      "message": "Assigned Execution Score: 51/100. Factors: Clarity 24/25, Ownership 0/25, Deadlines 5/25, Risk Factor 22/25.",
+      "metadata": {
+        "total": 51,
+        "decision_clarity": 24,
+        "ownership_coverage": 0,
+        "deadline_quality": 5,
+        "risk_penalty": 22,
+        "feedback": [
+          "1 action item(s) lack an individual responsible owner (DRI).",
+          "1 action item(s) have open-ended or missing due dates."
+        ]
+      },
+      "id": "evt-1795265968954-5za94",
+      "created_at": "2026-11-21T12:59:28.954Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "ready_for_review",
+      "status": "PENDING",
+      "message": "Actions prepared and staged. Awaiting mandatory human confirmation before creating tasks or committing to memory.",
+      "id": "evt-1795265968957-q9q0g",
+      "created_at": "2026-11-21T12:59:28.957Z"
+    },
+    {
+      "meeting_id": "meet-1795265967634-jzoj",
+      "step": "executed",
+      "status": "SUCCESS",
+      "message": "Human Confirmation Received: Committed 1 decisions into organizational memory, dispatched 1 tasks to tracker, and scheduled 0 proactive reminders.",
+      "metadata": {
+        "approvedDecisions": 1,
+        "approvedTasks": 1,
+        "remindersScheduled": 0
+      },
+      "id": "evt-1795266001315-8hs8i",
+      "created_at": "2026-11-21T13:00:01.315Z"
+    }
+  ]
 }

@@ -72,7 +72,7 @@ function NewMeetingContent() {
     setError(null);
 
     try {
-      // 1. Create meeting record in database
+      // 1. Create meeting record and execute agent pipeline in a single unified step
       const createRes = await fetch("/api/meetings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -81,26 +81,36 @@ function NewMeetingContent() {
           date,
           source_type: "PASTED_TEXT",
           raw_transcript: transcript,
+          run_pipeline: true,
         }),
       });
 
       if (!createRes.ok) {
-        throw new Error("Failed to create meeting record");
+        const errData = await createRes.json().catch(() => ({}));
+        throw new Error(errData.error || "Failed to process meeting");
       }
 
       const { meeting } = await createRes.json();
 
-      // 2. Launch background agent pipeline
-      const runRes = await fetch(`/api/meetings/${meeting.id}/run`, {
-        method: "POST",
-      });
-
-      if (!runRes.ok) {
-        throw new Error("Failed to execute agent pipeline");
+      // If pipeline hasn't run yet for any reason, trigger run endpoint as fallback
+      let finalMeeting = meeting;
+      if (!meeting.decisions || meeting.decisions.length === 0) {
+        const runRes = await fetch(`/api/meetings/${meeting.id}/run`, {
+          method: "POST",
+        });
+        if (runRes.ok) {
+          const runData = await runRes.json();
+          finalMeeting = runData.meeting || meeting;
+        }
       }
 
-      // 3. Navigate to Meeting Agent Execution & Review Screen
-      router.push(`/meetings/${meeting.id}`);
+      // Cache meeting in client sessionStorage for immediate rendering across serverless redirects
+      if (typeof window !== "undefined" && finalMeeting) {
+        sessionStorage.setItem(`meeting_${finalMeeting.id}`, JSON.stringify(finalMeeting));
+      }
+
+      // Navigate to Review Screen
+      router.push(`/meetings/${finalMeeting.id}`);
     } catch (err: any) {
       console.error(err);
       setError(err.message || "An unexpected error occurred during execution.");
