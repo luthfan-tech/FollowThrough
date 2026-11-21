@@ -23,6 +23,7 @@ import { Meeting, Conflict, ActionItem, WeeklyDigest } from "@/lib/types";
 import { HeroTypography } from "@/components/HeroTypography";
 import { HeroClotheslineCards } from "@/components/HeroClotheslineCards";
 import { FooterManifesto } from "@/components/FooterManifesto";
+import { BuyMeACoffee } from "@/components/BuyMeACoffee";
 
 export default function DashboardPage() {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
@@ -529,7 +530,10 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* 6. FOOTER WITH MEETING SKETCH MANIFESTO */}
+      {/* 6. SUPPORT THE CREATOR - BUY ME A COFFEE */}
+      <BuyMeACoffee />
+
+      {/* 7. FOOTER WITH MEETING SKETCH MANIFESTO */}
       <FooterManifesto />
     </div>
   );

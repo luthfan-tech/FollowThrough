@@ -54,6 +54,16 @@ export default function RootLayout({
 
               <div className="flex items-center gap-4 text-slate-600">
                 <a
+                  href="https://buymeacoffee.com/luthfanmakl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-800 font-bold hover:underline transition-colors text-sm inline-flex items-center gap-1.5"
+                >
+                  <span>☕</span>
+                  <span>Buy Me a Coffee</span>
+                </a>
+                <span className="text-slate-300">•</span>
+                <a
                   href="https://github.com/luthfan-tech/FollowThrough.git"
                   target="_blank"
                   rel="noopener noreferrer"
