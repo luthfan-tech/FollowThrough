@@ -13,16 +13,12 @@ import {
   Calendar,
   Layers,
   HelpCircle,
-  ChevronDown,
 } from "lucide-react";
-import { DEFAULT_USER, PRESET_USERS, UserRole } from "@/lib/auth";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isResetting, setIsResetting] = useState(false);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
-  const [currentRole, setCurrentRole] = useState<UserRole>("ADMIN");
-  const [showRoleMenu, setShowRoleMenu] = useState(false);
 
   const navLinks = [
     { href: "/", label: "Dashboard", icon: Compass },
@@ -41,10 +37,7 @@ export function Navbar() {
     try {
       const res = await fetch("/api/seed", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-user-role": currentRole,
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "clear" }),
       });
       if (res.ok) {
@@ -55,7 +48,7 @@ export function Navbar() {
         }, 800);
       } else {
         const data = await res.json();
-        alert(data.error || "Permission denied");
+        alert(data.error || "Failed to clear workspace");
       }
     } catch (err) {
       console.error(err);
@@ -63,9 +56,6 @@ export function Navbar() {
       setIsResetting(false);
     }
   };
-
-  const activeUser =
-    Object.values(PRESET_USERS).find((u) => u.role === currentRole) || DEFAULT_USER;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/98 shadow-sm backdrop-blur-md">
@@ -120,55 +110,6 @@ export function Navbar() {
 
         {/* Right side controls */}
         <div className="flex items-center gap-2.5">
-          {/* Active User & RBAC Role Switcher */}
-          <div className="relative">
-            <button
-              onClick={() => setShowRoleMenu(!showRoleMenu)}
-              className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-[#00638E] px-2.5 py-1.5 text-xs transition-all shadow-sm"
-              title="Current User Identity & Authorization Role"
-            >
-              <div className="h-6 w-6 rounded-md bg-[#00638E] text-white font-bold text-[10px] flex items-center justify-center shadow-sm">
-                {activeUser.avatarInitials}
-              </div>
-              <div className="hidden sm:flex flex-col text-left leading-none">
-                <span className="text-[11px] font-bold text-slate-900">{activeUser.name}</span>
-                <span className="text-[9px] text-[#00638E] font-mono font-semibold uppercase">{activeUser.role}</span>
-              </div>
-              <ChevronDown className="h-3 w-3 text-slate-400" />
-            </button>
-
-            {/* Dropdown Menu */}
-            {showRoleMenu && (
-              <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl z-50 space-y-1">
-                <div className="px-3 py-1.5 border-b border-slate-100 text-[10px] font-mono uppercase text-slate-400 font-bold">
-                  Switch Auth Role (RBAC)
-                </div>
-                {Object.values(PRESET_USERS).map((user) => (
-                  <button
-                    key={user.id}
-                    onClick={() => {
-                      setCurrentRole(user.role);
-                      setShowRoleMenu(false);
-                    }}
-                    className={`w-full flex items-center justify-between rounded-xl px-3 py-2 text-xs text-left transition-colors ${
-                      currentRole === user.role
-                        ? "bg-[#00638E]/10 text-[#00638E] font-bold"
-                        : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
-                    }`}
-                  >
-                    <div>
-                      <div className="font-semibold text-slate-900">{user.name}</div>
-                      <div className="text-[10px] text-slate-500">{user.title}</div>
-                    </div>
-                    <span className="text-[9px] font-mono uppercase font-bold text-[#00638E]">
-                      {user.role}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
           {/* Clear Workspace Button */}
           <button
             onClick={handleClearData}
