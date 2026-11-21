@@ -8,14 +8,12 @@ import {
   Compass,
   Database,
   CheckSquare,
-  Sparkles,
   Plus,
   Trash2,
   Calendar,
   Layers,
   HelpCircle,
-  Shield,
-  User,
+  ChevronDown,
 } from "lucide-react";
 import { DEFAULT_USER, PRESET_USERS, UserRole } from "@/lib/auth";
 
@@ -70,12 +68,12 @@ export function Navbar() {
     Object.values(PRESET_USERS).find((u) => u.role === currentRole) || DEFAULT_USER;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#2B2B2B] bg-[#000000]/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/98 shadow-sm backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand with User Logo */}
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-[#00638E]/50 bg-[#141414] p-0.5 shadow-md shadow-[#00638E]/20 transition-transform group-hover:scale-105">
+            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-slate-200 bg-white p-0.5 shadow-sm transition-transform group-hover:scale-105">
               <Image
                 src="/brand-logo.jpg"
                 alt="FollowThrough Logo"
@@ -86,19 +84,19 @@ export function Navbar() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-base sm:text-lg font-extrabold tracking-tight text-white group-hover:text-[#BFD8E3] transition-colors">
+                <span className="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 group-hover:text-[#00638E] transition-colors">
                   FollowThrough
                 </span>
-                <span className="rounded-full bg-[#00638E]/20 px-2 py-0.5 text-[9px] font-bold text-[#BFD8E3] border border-[#00638E]/50 uppercase tracking-wider">
+                <span className="rounded-full bg-[#00638E]/10 px-2 py-0.5 text-[9px] font-bold text-[#00638E] border border-[#00638E]/20 uppercase tracking-wider">
                   AI AGENT
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400">Meeting-to-Execution Agent</p>
+              <p className="text-[11px] text-slate-500 font-medium">Meeting-to-Execution Agent</p>
             </div>
           </Link>
 
           {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 pl-4 border-l border-[#2B2B2B]">
+          <nav className="hidden md:flex items-center gap-1 pl-4 border-l border-slate-200">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = pathname === link.href;
@@ -108,8 +106,8 @@ export function Navbar() {
                   href={link.href}
                   className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
                     isActive
-                      ? "bg-[#00638E]/20 text-[#BFD8E3] border border-[#00638E]/50"
-                      : "text-slate-400 hover:bg-[#141414] hover:text-white"
+                      ? "bg-[#00638E]/10 text-[#00638E] font-semibold"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                   }`}
                 >
                   <Icon className="h-3.5 w-3.5" />
@@ -126,22 +124,23 @@ export function Navbar() {
           <div className="relative">
             <button
               onClick={() => setShowRoleMenu(!showRoleMenu)}
-              className="flex items-center gap-2 rounded-xl border border-[#2B2B2B] bg-[#141414] px-2.5 py-1.5 text-xs hover:border-[#00638E] transition-all"
+              className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-[#00638E] px-2.5 py-1.5 text-xs transition-all shadow-sm"
               title="Current User Identity & Authorization Role"
             >
-              <div className="h-5 w-5 rounded-md bg-[#00638E]/30 text-[#BFD8E3] font-bold text-[10px] flex items-center justify-center border border-[#00638E]/50">
+              <div className="h-6 w-6 rounded-md bg-[#00638E] text-white font-bold text-[10px] flex items-center justify-center shadow-sm">
                 {activeUser.avatarInitials}
               </div>
               <div className="hidden sm:flex flex-col text-left leading-none">
-                <span className="text-[11px] font-bold text-white">{activeUser.name}</span>
-                <span className="text-[9px] text-[#8CB9CC] font-mono">{activeUser.role}</span>
+                <span className="text-[11px] font-bold text-slate-900">{activeUser.name}</span>
+                <span className="text-[9px] text-[#00638E] font-mono font-semibold uppercase">{activeUser.role}</span>
               </div>
+              <ChevronDown className="h-3 w-3 text-slate-400" />
             </button>
 
             {/* Dropdown Menu */}
             {showRoleMenu && (
-              <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-[#2B2B2B] bg-[#141414] p-2 shadow-2xl z-50 space-y-1">
-                <div className="px-3 py-1.5 border-b border-[#2B2B2B] text-[10px] font-mono uppercase text-slate-400 font-bold">
+              <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl z-50 space-y-1">
+                <div className="px-3 py-1.5 border-b border-slate-100 text-[10px] font-mono uppercase text-slate-400 font-bold">
                   Switch Auth Role (RBAC)
                 </div>
                 {Object.values(PRESET_USERS).map((user) => (
@@ -153,15 +152,15 @@ export function Navbar() {
                     }}
                     className={`w-full flex items-center justify-between rounded-xl px-3 py-2 text-xs text-left transition-colors ${
                       currentRole === user.role
-                        ? "bg-[#00638E]/20 text-[#BFD8E3] font-bold border border-[#00638E]/40"
-                        : "text-slate-300 hover:bg-[#2B2B2B] hover:text-white"
+                        ? "bg-[#00638E]/10 text-[#00638E] font-bold"
+                        : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                     }`}
                   >
                     <div>
-                      <div className="text-white font-medium">{user.name}</div>
-                      <div className="text-[10px] text-slate-400">{user.title}</div>
+                      <div className="font-semibold text-slate-900">{user.name}</div>
+                      <div className="text-[10px] text-slate-500">{user.title}</div>
                     </div>
-                    <span className="text-[9px] font-mono uppercase font-bold text-[#8CB9CC]">
+                    <span className="text-[9px] font-mono uppercase font-bold text-[#00638E]">
                       {user.role}
                     </span>
                   </button>
@@ -175,7 +174,7 @@ export function Navbar() {
             onClick={handleClearData}
             disabled={isResetting}
             title="Clear all workspace data for a fresh start"
-            className="flex items-center gap-1.5 rounded-lg border border-[#2B2B2B] bg-[#141414] px-2.5 py-1.5 text-xs text-slate-300 hover:bg-rose-950/40 hover:text-rose-300 hover:border-rose-500/30 transition-colors"
+            className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 transition-colors"
           >
             <Trash2 className="h-3.5 w-3.5 text-slate-400" />
             <span className="hidden sm:inline">{statusMsg || "Clear Workspace"}</span>
@@ -184,7 +183,7 @@ export function Navbar() {
           {/* New Meeting CTA Button */}
           <Link
             href="/meetings/new"
-            className="flex items-center gap-1.5 rounded-lg bg-[#00638E] px-3.5 py-1.5 text-xs font-semibold text-white shadow-md shadow-[#00638E]/30 hover:bg-[#0077ab] transition-all active:scale-95"
+            className="flex items-center gap-1.5 rounded-lg bg-[#00638E] px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-[#004A6B] transition-all active:scale-95"
           >
             <Plus className="h-4 w-4" />
             <span>Ingest Meeting</span>
