@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, Suspense } from "react";
+import { useRouter } from "next/navigation";
 import {
   FileText,
   Upload,
@@ -10,46 +10,29 @@ import {
   Users,
   AlertCircle,
 } from "lucide-react";
-import { SAMPLE_MEETINGS, SampleMeeting } from "@/lib/samples";
 
 function NewMeetingContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const sampleParam = searchParams.get("sample");
 
-  const [title, setTitle] = useState("Q3 Mobile App Launch Sync & Readiness");
+  const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [transcript, setTranscript] = useState("");
-  const [selectedSample, setSelectedSample] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [detectedSpeakers, setDetectedSpeakers] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  // Initialize with sample if param provided, or default to sample 1
-  useEffect(() => {
-    const targetSampleId = sampleParam || "sample-product-launch";
-    const sample = SAMPLE_MEETINGS.find((s) => s.id === targetSampleId) || SAMPLE_MEETINGS[0];
-    applySample(sample);
-  }, [sampleParam]);
-
-  const applySample = (sample: SampleMeeting) => {
-    setSelectedSample(sample.id);
-    setTitle(sample.title);
-    setTranscript(sample.raw_transcript);
-    parseSpeakersFromText(sample.raw_transcript);
-  };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setTitle(file.name.replace(/\.[^/.]+$/, ""));
+    if (!title) {
+      setTitle(file.name.replace(/\.[^/.]+$/, ""));
+    }
     const reader = new FileReader();
     reader.onload = (event) => {
       const text = event.target?.result as string;
       setTranscript(text);
       parseSpeakersFromText(text);
-      setSelectedSample(null);
     };
     reader.readAsText(file);
   };
@@ -58,26 +41,30 @@ function NewMeetingContent() {
     const lines = text.split("\n");
     const names = new Set<string>();
     for (const line of lines) {
-      const match = line.match(/^(?:\[\d{1,2}:\d{2}\])?\s*([A-Za-z0-9\s.]+?)(?:\s*\([^)]+\))?:\s*(.+)$/);
+      const match = line.match(/^([A-Z][a-zA-Z\s.-]+?)(?:\s*\([^)]*\))?\s*:\s*(.+)$/);
       if (match && match[1]) {
-        const n = match[1].trim();
-        if (n.length > 1 && n.length < 30) {
-          names.add(n);
+        const candidate = match[1].trim();
+        if (candidate.length > 1 && candidate.length < 35 && !candidate.toLowerCase().includes("http")) {
+          names.add(candidate);
         }
       }
     }
     setDetectedSpeakers(Array.from(names));
   };
 
-  const handleTranscriptChange = (val: string) => {
-    setTranscript(val);
-    parseSpeakersFromText(val);
+  const handleTranscriptChange = (text: string) => {
+    setTranscript(text);
+    parseSpeakersFromText(text);
   };
 
   const handleRunAgent = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !transcript.trim()) {
-      setError("Please provide a meeting title and transcript text.");
+    if (!transcript.trim()) {
+      setError("Please paste or upload a meeting transcript.");
+      return;
+    }
+    if (!title.trim()) {
+      setError("Please provide a meeting title.");
       return;
     }
 
@@ -85,28 +72,27 @@ function NewMeetingContent() {
     setError(null);
 
     try {
-      // 1. Create meeting record
+      // 1. Create meeting record in database
       const createRes = await fetch("/api/meetings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title: title.trim(),
-          date: new Date(date).toISOString(),
-          raw_transcript: transcript.trim(),
-          source_type: selectedSample ? "sample" : "paste",
+          title,
+          date,
+          source_type: "PASTED_TEXT",
+          raw_transcript: transcript,
         }),
       });
 
       if (!createRes.ok) {
-        throw new Error("Failed to create meeting");
+        throw new Error("Failed to create meeting record");
       }
 
       const { meeting } = await createRes.json();
 
-      // 2. Immediately trigger Agent Pipeline
+      // 2. Launch background agent pipeline
       const runRes = await fetch(`/api/meetings/${meeting.id}/run`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
       });
 
       if (!runRes.ok) {
@@ -123,60 +109,19 @@ function NewMeetingContent() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8 space-y-8 animate-fade-in">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 space-y-8 animate-fade-in text-white">
       {/* Header */}
       <div>
-        <div className="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 text-xs font-semibold text-indigo-400 mb-2">
+        <div className="inline-flex items-center gap-2 rounded-full bg-[#00638E]/20 border border-[#00638E]/40 px-3 py-1 text-xs font-semibold text-[#BFD8E3] mb-2">
           <Sparkles className="h-3.5 w-3.5" />
-          <span>Ingestion & Conflict Radar Studio</span>
+          <span>Real Transcript Ingestion</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
           Ingest Meeting Transcript
         </h1>
         <p className="text-sm text-slate-400 mt-1">
-          Paste a raw meeting transcript, drag-and-drop a file, or select an official hackathon demo scenario to run the autonomous agent pipeline.
+          Paste your actual meeting transcript or upload a .txt/.md file. FollowThrough attributes speakers, extracts decisions, inspects historical memory for conflicts, and stages tasks for your review.
         </p>
-      </div>
-
-      {/* 3 Pre-engineered Sample Selector */}
-      <div className="space-y-3">
-        <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-          Load Pre-Configured Demo Scenarios (One-Click Test)
-        </label>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {SAMPLE_MEETINGS.map((sample) => {
-            const isSelected = selectedSample === sample.id;
-            return (
-              <button
-                key={sample.id}
-                type="button"
-                onClick={() => applySample(sample)}
-                className={`text-left rounded-xl border p-4 transition-all ${
-                  isSelected
-                    ? "border-indigo-500 bg-indigo-950/30 ring-1 ring-indigo-500/50 shadow-lg shadow-indigo-500/10"
-                    : "border-slate-800 bg-slate-900/60 hover:border-slate-700 hover:bg-slate-900"
-                }`}
-              >
-                <div className="flex items-center justify-between gap-2 mb-1.5">
-                  <span className="text-[11px] font-medium text-slate-400">{sample.category}</span>
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider ${
-                      sample.badgeColor === "rose"
-                        ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
-                        : sample.badgeColor === "amber"
-                        ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                        : "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
-                    }`}
-                  >
-                    {sample.badge}
-                  </span>
-                </div>
-                <div className="text-xs font-bold text-slate-200 line-clamp-1">{sample.title}</div>
-                <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">{sample.description}</p>
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       {/* Form */}
@@ -195,9 +140,9 @@ function NewMeetingContent() {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Q3 Mobile App Launch Sync"
+              placeholder="e.g. Core Architecture Review or Sprint 42 Planning"
               required
-              className="w-full rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-[#2B2B2B] bg-[#141414] px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:border-[#00638E] focus:outline-none focus:ring-1 focus:ring-[#00638E]"
             />
           </div>
 
@@ -208,7 +153,7 @@ function NewMeetingContent() {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="w-full rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-2.5 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-[#2B2B2B] bg-[#141414] px-4 py-2.5 text-sm text-slate-100 focus:border-[#00638E] focus:outline-none focus:ring-1 focus:ring-[#00638E]"
             />
           </div>
         </div>
@@ -217,11 +162,11 @@ function NewMeetingContent() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <label className="text-xs font-semibold text-slate-300 flex items-center gap-2">
-              <FileText className="h-3.5 w-3.5 text-indigo-400" />
-              <span>Meeting Transcript Text</span>
+              <FileText className="h-3.5 w-3.5 text-[#BFD8E3]" />
+              <span>Meeting Transcript</span>
             </label>
             <div className="flex items-center gap-2">
-              <label className="cursor-pointer text-xs font-medium text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+              <label className="cursor-pointer text-xs font-medium text-[#BFD8E3] hover:text-white flex items-center gap-1">
                 <Upload className="h-3.5 w-3.5" />
                 <span>Upload .txt or .md</span>
                 <input
@@ -236,31 +181,31 @@ function NewMeetingContent() {
 
           <div className="relative">
             <textarea
-              rows={12}
+              rows={14}
               value={transcript}
               onChange={(e) => handleTranscriptChange(e.target.value)}
-              placeholder="Paste formatted transcript or raw notes with speaker prefixes (e.g. 'Elena Vance: We are launching...')"
+              placeholder={"Paste meeting transcript with speaker names, for example:\n\nAlex: We agreed to finalize the API architecture by next Wednesday.\nPriya: Wait, our database migration is scheduled for Thursday, so that deadline creates a conflict.\nMarcus: Let's confirm: Priya will lead the database schema by Tuesday, and Alex will review the endpoints by Thursday."}
               required
-              className="w-full font-mono text-xs leading-relaxed rounded-xl border border-slate-800 bg-slate-950/90 p-4 text-slate-200 placeholder-slate-600 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full font-mono text-xs leading-relaxed rounded-xl border border-[#2B2B2B] bg-[#000000] p-4 text-slate-200 placeholder-slate-600 focus:border-[#00638E] focus:outline-none focus:ring-1 focus:ring-[#00638E]"
             />
           </div>
         </div>
 
         {/* Live Detected Speakers */}
         {detectedSpeakers.length > 0 && (
-          <div className="rounded-xl border border-slate-800/80 bg-slate-900/40 p-4 space-y-2">
+          <div className="rounded-xl border border-[#2B2B2B] bg-[#141414] p-4 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <Users className="h-3.5 w-3.5 text-indigo-400" />
+                <Users className="h-3.5 w-3.5 text-[#00638E]" />
                 <span>Detected Participants ({detectedSpeakers.length})</span>
               </span>
-              <span className="text-[11px] text-slate-400">Speaker attribution active</span>
+              <span className="text-[11px] text-[#BFD8E3]">Speaker attribution active</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {detectedSpeakers.map((spk, idx) => (
                 <span
                   key={idx}
-                  className="rounded-lg border border-slate-700 bg-slate-800/70 px-2.5 py-1 text-xs text-slate-300 font-medium"
+                  className="rounded-lg border border-[#2B2B2B] bg-[#000000] px-2.5 py-1 text-xs text-slate-300 font-medium"
                 >
                   {spk}
                 </span>
@@ -274,7 +219,7 @@ function NewMeetingContent() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/30 hover:opacity-95 transition-all disabled:opacity-50 active:scale-95"
+            className="flex items-center gap-2 rounded-xl bg-[#00638E] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#00638E]/30 hover:bg-[#0077ab] transition-all disabled:opacity-50 active:scale-95"
           >
             {isSubmitting ? (
               <>

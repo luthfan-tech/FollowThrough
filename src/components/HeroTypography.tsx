@@ -37,14 +37,10 @@ export function HeroTypography() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center text-center max-w-5xl mx-auto space-y-6">
-        {/* Wireframe Trust/Credibility Indicator Badge (Replaced old tag) */}
-        <div className="inline-flex items-center gap-2.5 rounded-full border border-[#00638E]/40 bg-[#141414]/90 px-4 py-1.5 backdrop-blur-md shadow-inner shadow-[#00638E]/20">
+        {/* Clean System Badge */}
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#00638E]/40 bg-[#141414] px-4 py-1.5 backdrop-blur-md shadow-inner shadow-[#00638E]/20">
           <span className="flex h-2 w-2 rounded-full bg-[#00638E] animate-ping" />
           <span className="font-mono text-[11px] font-bold tracking-wider text-[#BFD8E3] uppercase">
-            2,500+ Decisions Tracked Across High-Velocity Teams
-          </span>
-          <span className="hidden sm:inline-block text-[#8CB9CC] text-xs">◆</span>
-          <span className="hidden sm:inline-block font-mono text-[10px] text-slate-400 tracking-wider">
             Autonomous Meeting-to-Execution Agent
           </span>
         </div>

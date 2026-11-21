@@ -78,8 +78,8 @@ const EXECUTION_CARDS: ExecutionCard[] = [
     icon: ShieldAlert,
     themeColor: "rose",
     rotation: "-rotate-1 hover:rotate-0",
-    link: "/meetings/new?sample=product-launch",
-    actionText: "Simulate Conflict",
+    link: "/meetings/new",
+    actionText: "Detect Conflicts",
   },
   {
     step: "PHASE 04",

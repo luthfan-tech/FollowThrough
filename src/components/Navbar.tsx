@@ -135,22 +135,11 @@ export function Navbar() {
           <button
             onClick={handleClearData}
             disabled={isResetting}
-            title="Clear all workspace data for real tasks"
+            title="Clear all workspace data for a fresh start"
             className="flex items-center gap-1.5 rounded-lg border border-[#2B2B2B] bg-[#141414] px-2.5 py-1.5 text-xs text-slate-300 hover:bg-rose-950/40 hover:text-rose-300 hover:border-rose-500/30 transition-colors"
           >
             <Trash2 className="h-3.5 w-3.5 text-slate-400" />
             <span className="hidden sm:inline">{statusMsg || "Clear Workspace"}</span>
-          </button>
-
-          {/* Load Demo Data Button */}
-          <button
-            onClick={handleLoadDemo}
-            disabled={isResetting}
-            title="Load demo scenario for testing"
-            className="hidden sm:flex items-center gap-1.5 rounded-lg border border-[#2B2B2B] bg-[#141414] px-2.5 py-1.5 text-xs text-slate-400 hover:bg-[#2B2B2B] hover:text-white transition-colors"
-          >
-            <RotateCcw className="h-3 w-3" />
-            <span>Load Demo</span>
           </button>
 
           {/* New Meeting CTA Button */}

@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   ShieldAlert,
   CheckCircle2,
   Clock,
   ArrowRight,
   TrendingUp,
-  AlertTriangle,
   Play,
   Calendar,
   Layers,
@@ -17,21 +15,11 @@ import {
   Users,
   Compass,
   Plus,
-  Star,
   ChevronDown,
-  Check,
-  Zap,
-  Lock,
-  Workflow,
-  Cpu,
   Database,
   UserCheck,
-  Send,
-  MessageSquare,
-  FileText,
 } from "lucide-react";
 import { Meeting, Conflict, ActionItem, WeeklyDigest } from "@/lib/types";
-import { SAMPLE_MEETINGS } from "@/lib/samples";
 import { HeroTypography } from "@/components/HeroTypography";
 import { HeroClotheslineCards } from "@/components/HeroClotheslineCards";
 import { FooterManifesto } from "@/components/FooterManifesto";
@@ -93,18 +81,7 @@ export default function DashboardPage() {
   const openTasks = tasks.filter((t) => t.status !== "COMPLETED" && t.status !== "REJECTED");
   const overdueTasks = tasks.filter((t) => t.status === "OVERDUE");
 
-  // Partners list
-  const partners = [
-    { name: "Linear", type: "Issue Tracking" },
-    { name: "Notion", type: "Workspace Wiki" },
-    { name: "Asana", type: "Project Management" },
-    { name: "Google Calendar", type: "Schedules" },
-    { name: "Slack", type: "Team Comms" },
-    { name: "GitHub", type: "Code & Projects" },
-    { name: "Jira", type: "Enterprise Agile" },
-  ];
-
-  // FAQ items
+  // Technical FAQ items
   const faqs = [
     {
       q: "How does the Conflict Radar detect contradictions with past meetings?",
@@ -124,34 +101,6 @@ export default function DashboardPage() {
     },
   ];
 
-  // Reviews
-  const reviews = [
-    {
-      name: "Sarah Lin",
-      role: "VP of Product",
-      company: "HyperScale Tech",
-      stars: 5,
-      content:
-        "Traditional AI meeting tools just dump pages of summaries nobody reads. FollowThrough is fundamentally different — its Conflict Radar flagged an unfeasible launch date before our sprint even started.",
-    },
-    {
-      name: "Marcus Vance",
-      role: "Staff Engineering Lead",
-      company: "CloudNative Labs",
-      stars: 5,
-      content:
-        "The Human Confirmation Gate gives us complete confidence. It accurately diarized a 45-minute technical review, caught an ADR contradiction, and populated our tracker with one click.",
-    },
-    {
-      name: "Elena Rostova",
-      role: "Head of Operations",
-      company: "Venture Velocity",
-      stars: 5,
-      content:
-        "The personalized weekly digests completely replaced our manual status meetings. Everyone knows exactly what decisions affect them without digging through recording archives.",
-    },
-  ];
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-16 animate-fade-in text-white">
       {/* 1. HERO SECTION (FollowThrough Typography Banner + 5-Stage Clothesline Cards) */}
@@ -160,37 +109,18 @@ export default function DashboardPage() {
         <HeroClotheslineCards />
       </div>
 
-      {/* 2. PARTNERS / INTEGRATIONS SECTION */}
-      <section className="relative overflow-hidden rounded-2xl border border-[#2B2B2B] bg-[#141414] py-8 px-6 text-center">
-        <p className="text-xs font-mono uppercase tracking-widest text-[#8CB9CC] font-semibold mb-6">
-          NATIVELY COMPATIBLE WITH MODERN ENGINEERING WORKSPACES
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
-          {partners.map((p) => (
-            <div
-              key={p.name}
-              className="flex items-center gap-2 rounded-xl border border-[#2B2B2B] bg-[#000000]/60 px-4 py-2 text-xs font-medium text-slate-300 hover:border-[#00638E] hover:text-[#BFD8E3] transition-colors"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00638E]" />
-              <span className="font-semibold text-white">{p.name}</span>
-              <span className="text-[10px] text-slate-400">({p.type})</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 3. FEATURES SECTION (Bento Grid) */}
+      {/* 2. FEATURES SECTION (Bento Grid) */}
       <section id="features" className="space-y-6 scroll-mt-20">
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#00638E]/40 bg-[#00638E]/10 px-3 py-1 text-xs font-semibold text-[#BFD8E3]">
             <Sparkles className="h-3.5 w-3.5" />
-            <span>Autonomous Capabilities</span>
+            <span>Core Capabilities</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Highlighting What Sets FollowThrough Apart
+            How FollowThrough Operates
           </h2>
           <p className="text-sm text-slate-400">
-            Engineered from the ground up for high-velocity teams who need verified accountability, not passive summaries.
+            Engineered from the ground up to turn raw conversation into verified, trackable work.
           </p>
         </div>
 
@@ -202,14 +132,14 @@ export default function DashboardPage() {
                 <Users className="h-5 w-5" />
               </div>
               <h3 className="text-base font-bold text-white group-hover:text-[#BFD8E3] transition-colors">
-                Multimodal Speaker Diarization
+                Speaker Diarization
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Attributes every statement to distinct speakers with confidence scoring. Strips filler words, interruptions, and casual banter so only ratified commitments survive.
+                Attributes every statement to distinct speakers with confidence scoring. Strips filler words and casual banter so only ratified commitments survive.
               </p>
             </div>
             <div className="pt-3 border-t border-[#2B2B2B] text-[11px] font-mono text-[#8CB9CC]">
-              Confidence Threshold: 99.4%
+              Automated Attribution
             </div>
           </div>
 
@@ -223,11 +153,11 @@ export default function DashboardPage() {
                 Persistent Decision Memory
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Maintains an immutable organizational memory across all past meetings. Retains context, owner, effective date, and architectural policies across multiple quarters.
+                Maintains an organizational memory across past meetings. Retains context, owner, effective date, and architectural policies across sprints.
               </p>
             </div>
             <div className="pt-3 border-t border-[#2B2B2B] text-[11px] font-mono text-[#BFD8E3]">
-              Semantic Cross-Meeting Recall
+              Cross-Meeting Retrieval
             </div>
           </div>
 
@@ -238,14 +168,14 @@ export default function DashboardPage() {
                 <ShieldAlert className="h-5 w-5" />
               </div>
               <h3 className="text-base font-bold text-white group-hover:text-rose-300 transition-colors">
-                Patent-Pending Conflict Radar
+                Conflict Radar
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Flags contradictions against previous decisions, unfeasible deadlines, duplicate work, and missing owners. Assigns severity from Low to Critical with remediation steps.
+                Flags contradictions against previous decisions, unfeasible deadlines, duplicate work, and missing owners. Assigns severity from Low to Critical.
               </p>
             </div>
             <div className="pt-3 border-t border-[#2B2B2B] text-[11px] font-mono text-rose-400">
-              4-Tier Risk Classification
+              Severity Classification
             </div>
           </div>
 
@@ -259,145 +189,36 @@ export default function DashboardPage() {
                 Human Confirmation Gate
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Zero autonomous writes without explicit human sign-off. Review, edit, approve, or reject proposed tasks and reminders before anything touches your production board.
+                Zero autonomous writes without human sign-off. Review, edit, approve, or reject proposed tasks and reminders before anything is created.
               </p>
             </div>
             <div className="pt-3 border-t border-[#2B2B2B] text-[11px] font-mono text-emerald-400">
-              100% User In-Control
+              Human-in-the-Loop
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. WHY US SECTION */}
+      {/* 3. WORKSPACE STATUS & LIVE CONFLICT RADAR */}
       <section className="space-y-6">
-        <div className="text-center max-w-3xl mx-auto space-y-2">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#2B2B2B] bg-[#141414] px-3 py-1 text-xs font-semibold text-slate-300">
-            <Workflow className="h-3.5 w-3.5 text-[#00638E]" />
-            <span>Competitive Advantage</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Why High-Velocity Teams Choose FollowThrough
-          </h2>
-          <p className="text-sm text-slate-400">
-            How FollowThrough replaces the broken cycle of forgotten meeting notes with continuous accountability.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="rounded-2xl border border-[#2B2B2B] bg-[#141414] p-5 space-y-3">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#00638E]">
-              <span>01 // EXECUTION FOCUSED</span>
-            </div>
-            <h3 className="text-sm font-bold text-white">From Notes to Done</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Standard summarizers stop at a passive text document. FollowThrough converts conversations directly into trackable work with owners and deadlines.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-[#2B2B2B] bg-[#141414] p-5 space-y-3">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#8CB9CC]">
-              <span>02 // ZERO FORGOTTEN ADRs</span>
-            </div>
-            <h3 className="text-sm font-bold text-white">Cross-Meeting Memory</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Human memory fades after 3 sprints. FollowThrough remembers every architectural decision and alerts you if new discussions contradict past agreements.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-[#2B2B2B] bg-[#141414] p-5 space-y-3">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#BFD8E3]">
-              <span>03 // PREEMPTIVE RADAR</span>
-            </div>
-            <h3 className="text-sm font-bold text-white">Proactive Collision Defense</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Catches double-booked owners, missing task leads, and overlapping milestones while the meeting is still happening, rather than weeks down the line.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-[#2B2B2B] bg-[#141414] p-5 space-y-3">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400">
-              <span>04 // ENTERPRISE SAFETY</span>
-            </div>
-            <h3 className="text-sm font-bold text-white">Zero Blind Writes</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Unlike black-box agents that write directly to Jira or Slack, FollowThrough requires human sign-off on every action item, keeping you in full command.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. INTERACTIVE DEMO SCENARIOS BENCHMARK */}
-      <section className="rounded-3xl border border-[#00638E]/40 bg-[#141414] p-6 sm:p-8 backdrop-blur-md shadow-xl space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="flex h-2.5 w-2.5 rounded-full bg-[#00638E] animate-ping" />
-              <h2 className="text-lg font-bold text-white">Pre-Calibrated Benchmark Scenarios</h2>
-            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              Live Workspace Status
+            </h2>
             <p className="text-xs text-slate-400 mt-1">
-              Test FollowThrough with these edge-case scenarios, or paste your own real meeting transcript.
+              Active metrics across all ingested meetings and tracked tasks.
             </p>
           </div>
           <Link
             href="/meetings/new"
-            className="text-xs font-bold text-[#BFD8E3] hover:text-white flex items-center gap-1.5"
+            className="flex items-center gap-1.5 rounded-xl bg-[#00638E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#0077ab] transition-all shadow-md shadow-[#00638E]/20"
           >
-            <span>Open Ingestion Studio</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            <Plus className="h-3.5 w-3.5" />
+            <span>Ingest Meeting</span>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {SAMPLE_MEETINGS.map((sample) => (
-            <div
-              key={sample.id}
-              className="group relative flex flex-col justify-between rounded-2xl border border-[#2B2B2B] bg-[#000000]/70 p-5 transition-all hover:border-[#00638E] hover:bg-[#141414] shadow-md hover:shadow-xl"
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-2.5">
-                  <span className="text-[11px] font-mono font-medium text-slate-400">{sample.category}</span>
-                  <span
-                    className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider border ${
-                      sample.badgeColor === "rose"
-                        ? "bg-rose-500/10 text-rose-400 border-rose-500/20"
-                        : sample.badgeColor === "amber"
-                        ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
-                        : "bg-[#00638E]/20 text-[#BFD8E3] border-[#00638E]/40"
-                    }`}
-                  >
-                    {sample.badge}
-                  </span>
-                </div>
-                <h3 className="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">
-                  {sample.title}
-                </h3>
-                <p className="mt-1.5 text-xs text-slate-400 line-clamp-2">{sample.description}</p>
-                <div className="mt-3.5 space-y-1.5">
-                  {sample.expectedHighlights.slice(0, 2).map((h, i) => (
-                    <div key={i} className="flex items-start gap-1.5 text-[11px] text-slate-300">
-                      <span className="text-[#00638E] mt-0.5 font-bold">•</span>
-                      <span className="line-clamp-1">{h}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-5 pt-3.5 border-t border-[#2B2B2B]">
-                <Link
-                  href={`/meetings/new?sample=${sample.id}`}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#141414] border border-[#2B2B2B] px-3 py-2 text-xs font-semibold text-slate-200 hover:bg-[#00638E] hover:text-white hover:border-[#00638E] transition-all"
-                >
-                  <Play className="h-3 w-3 fill-current" />
-                  <span>Load Scenario</span>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 6. WORKSPACE STATUS & LIVE CONFLICT RADAR */}
-      <section className="space-y-6">
         {/* KPI Grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-[#2B2B2B] bg-[#141414] p-5 shadow-lg">
@@ -409,7 +230,7 @@ export default function DashboardPage() {
               <span className="text-3xl font-extrabold text-white">{avgExecutionScore}</span>
               <span className="text-xs text-slate-400">/ 100</span>
               <span className="ml-auto rounded-md bg-[#00638E]/20 px-2 py-0.5 text-xs font-medium text-[#BFD8E3] border border-[#00638E]/40">
-                {executedMeetings.length > 0 ? "Active Sprint" : "Pristine State"}
+                {executedMeetings.length > 0 ? "Active Sprint" : "Clean State"}
               </span>
             </div>
             <div className="mt-3 w-full bg-[#000000] h-1.5 rounded-full overflow-hidden">
@@ -497,7 +318,7 @@ export default function DashboardPage() {
                   <CheckCircle2 className="mx-auto h-9 w-9 text-[#00638E] mb-2.5" />
                   <p className="font-bold text-white text-sm">No Meetings Ingested Yet</p>
                   <p className="mt-1.5 max-w-sm mx-auto text-slate-400 leading-relaxed">
-                    Your workspace is clean. Ingest your first real meeting transcript or click any scenario above to watch the agent analyze decisions.
+                    Your workspace is clean. Ingest your first real meeting transcript to extract decisions, check historical conflicts, and track tasks.
                   </p>
                   <Link
                     href="/meetings/new"
@@ -632,62 +453,18 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* 7. REVIEW SECTION */}
-      <section className="space-y-6">
-        <div className="text-center max-w-3xl mx-auto space-y-2">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#00638E]/40 bg-[#00638E]/10 px-3 py-1 text-xs font-semibold text-[#BFD8E3]">
-            <Star className="h-3.5 w-3.5 fill-[#BFD8E3]" />
-            <span>Social Proof & Testimonials</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Loved by Engineering & Product Teams
-          </h2>
-          <p className="text-sm text-slate-400">
-            See how teams use FollowThrough to eliminate lost consensus and enforce seamless follow-through.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {reviews.map((r, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-[#2B2B2B] bg-[#141414] p-6 flex flex-col justify-between space-y-4 shadow-lg hover:border-[#00638E] transition-colors"
-            >
-              <div className="space-y-3">
-                <div className="flex items-center gap-1 text-[#8CB9CC]">
-                  {Array.from({ length: r.stars }).map((_, s) => (
-                    <Star key={s} className="h-4 w-4 fill-current" />
-                  ))}
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed italic">“{r.content}”</p>
-              </div>
-
-              <div className="pt-4 border-t border-[#2B2B2B] flex items-center gap-3">
-                <div className="h-9 w-9 rounded-full bg-[#00638E]/30 text-[#BFD8E3] font-bold text-xs flex items-center justify-center border border-[#00638E]/50">
-                  {r.name.split(" ").map((n) => n[0]).join("")}
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-white">{r.name}</h4>
-                  <p className="text-[11px] text-slate-400">{r.role} • {r.company}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 8. FAQ SECTION */}
+      {/* 4. TECHNICAL FAQ SECTION */}
       <section id="faq" className="space-y-6 scroll-mt-20 max-w-4xl mx-auto">
         <div className="text-center space-y-2">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#2B2B2B] bg-[#141414] px-3 py-1 text-xs font-semibold text-slate-300">
             <Sparkles className="h-3.5 w-3.5 text-[#00638E]" />
-            <span>Frequently Asked Questions</span>
+            <span>Technical Reference</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Confidently Move Forward with Smart Answers
+            Frequently Asked Questions
           </h2>
           <p className="text-sm text-slate-400">
-            Everything you need to know about FollowThrough’s agentic pipeline and decision memory.
+            How FollowThrough’s agentic pipeline, conflict radar, and decision memory operate.
           </p>
         </div>
 
@@ -721,17 +498,17 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* 9. CTA SECTION (Branding Gradient) */}
+      {/* 5. DIRECT CTA SECTION (Dark Azure Gradient) */}
       <section className="relative overflow-hidden rounded-3xl border border-[#00638E]/50 bg-gradient-to-r from-[#000000] via-[#004A6B] to-[#00638E] p-8 sm:p-12 text-center text-white shadow-2xl">
         <div className="relative z-10 max-w-2xl mx-auto space-y-4">
           <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-mono font-bold tracking-wider text-[#BFD8E3] uppercase border border-white/20">
-            START EXECUTING TODAY
+            EXECUTION PIPELINE
           </span>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-            Turn Your Next Meeting Into Verified Results
+            Turn Your Next Meeting Into Verified Tasks
           </h2>
           <p className="text-sm text-slate-200 leading-relaxed">
-            Stop losing consensus to meeting amnesia. Paste your transcript, let the Conflict Radar inspect past organizational memory, and confirm actionable tasks in under 60 seconds.
+            Paste your transcript, inspect detected conflicts against organizational memory, and confirm actionable deliverables.
           </p>
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -752,7 +529,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* 10. FOOTER WITH MEETING SKETCH MANIFESTO */}
+      {/* 6. FOOTER WITH MEETING SKETCH MANIFESTO */}
       <FooterManifesto />
     </div>
   );
