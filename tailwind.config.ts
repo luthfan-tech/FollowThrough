@@ -10,26 +10,39 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#090d16",
-        foreground: "#f1f5f9",
+        background: "#000000",
+        foreground: "#FFFFFF",
+        azure: {
+          DEFAULT: "#00638E",
+          deep: "#004A6B",
+          light: "#BFD8E3",
+          soft: "#8CB9CC",
+          hover: "#0077ab",
+        },
+        onyx: {
+          DEFAULT: "#000000",
+          surface: "#141414",
+          card: "#141414",
+        },
+        charcoal: {
+          DEFAULT: "#2B2B2B",
+          border: "#2B2B2B",
+          muted: "#383838",
+        },
+        paper: {
+          DEFAULT: "#FFFFFF",
+        },
         card: {
-          DEFAULT: "#0f172a",
-          foreground: "#f8fafc",
-          muted: "#1e293b",
+          DEFAULT: "#141414",
+          foreground: "#FFFFFF",
+          muted: "#2B2B2B",
         },
         primary: {
-          DEFAULT: "#6366f1",
-          hover: "#4f46e5",
+          DEFAULT: "#00638E",
+          hover: "#0077ab",
           foreground: "#ffffff",
         },
-        accent: {
-          emerald: "#10b981",
-          amber: "#f59e0b",
-          rose: "#f43f5e",
-          cyan: "#06b6d4",
-          violet: "#8b5cf6",
-        },
-        border: "#1e293b",
+        border: "#2B2B2B",
       },
       fontFamily: {
         sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],

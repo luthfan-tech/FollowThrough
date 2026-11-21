@@ -23,7 +23,7 @@ interface ExecutionCard {
   points: string[];
   metric: string;
   icon: React.ElementType;
-  themeColor: "coral" | "teal" | "indigo" | "emerald" | "rose";
+  themeColor: "azure" | "deep-azure" | "rose" | "emerald" | "soft-azure";
   rotation: string;
   link: string;
   actionText: string;
@@ -42,7 +42,7 @@ const EXECUTION_CARDS: ExecutionCard[] = [
     ],
     metric: "99.4% Attribution",
     icon: Mic,
-    themeColor: "coral",
+    themeColor: "azure",
     rotation: "-rotate-2 hover:rotate-0",
     link: "/meetings/new",
     actionText: "Ingest Transcript",
@@ -59,7 +59,7 @@ const EXECUTION_CARDS: ExecutionCard[] = [
     ],
     metric: "Zero Lost Agreements",
     icon: Database,
-    themeColor: "indigo",
+    themeColor: "deep-azure",
     rotation: "rotate-1.5 hover:rotate-0",
     link: "/memory",
     actionText: "Explore Memory",
@@ -110,7 +110,7 @@ const EXECUTION_CARDS: ExecutionCard[] = [
     ],
     metric: "Automated Follow-Through",
     icon: Send,
-    themeColor: "teal",
+    themeColor: "soft-azure",
     rotation: "-rotate-1.5 hover:rotate-0",
     link: "/digest",
     actionText: "View Digests",
@@ -120,23 +120,23 @@ const EXECUTION_CARDS: ExecutionCard[] = [
 export function HeroClotheslineCards() {
   const getThemeStyles = (color: ExecutionCard["themeColor"]) => {
     switch (color) {
-      case "coral":
+      case "azure":
         return {
-          border: "border-[#E06D53]/40 group-hover:border-[#E06D53]",
-          badgeBg: "bg-[#E06D53]/15 text-[#E06D53] border-[#E06D53]/30",
-          iconBg: "bg-[#E06D53]/20 text-[#E06D53]",
-          pinColor: "#E06D53",
-          glow: "group-hover:shadow-[#E06D53]/20",
-          accentText: "text-[#E06D53]",
+          border: "border-[#00638E]/50 group-hover:border-[#00638E]",
+          badgeBg: "bg-[#00638E]/20 text-[#BFD8E3] border-[#00638E]/50",
+          iconBg: "bg-[#00638E]/25 text-[#BFD8E3]",
+          pinColor: "#00638E",
+          glow: "group-hover:shadow-[#00638E]/25",
+          accentText: "text-[#BFD8E3]",
         };
-      case "indigo":
+      case "deep-azure":
         return {
-          border: "border-indigo-500/40 group-hover:border-indigo-400",
-          badgeBg: "bg-indigo-500/15 text-indigo-300 border-indigo-500/30",
-          iconBg: "bg-indigo-500/20 text-indigo-400",
-          pinColor: "#6366F1",
-          glow: "group-hover:shadow-indigo-500/20",
-          accentText: "text-indigo-400",
+          border: "border-[#004A6B]/50 group-hover:border-[#004A6B]",
+          badgeBg: "bg-[#004A6B]/25 text-[#8CB9CC] border-[#004A6B]/50",
+          iconBg: "bg-[#004A6B]/30 text-[#8CB9CC]",
+          pinColor: "#004A6B",
+          glow: "group-hover:shadow-[#004A6B]/25",
+          accentText: "text-[#8CB9CC]",
         };
       case "rose":
         return {
@@ -156,15 +156,15 @@ export function HeroClotheslineCards() {
           glow: "group-hover:shadow-emerald-500/20",
           accentText: "text-emerald-400",
         };
-      case "teal":
+      case "soft-azure":
       default:
         return {
-          border: "border-[#2A8082]/40 group-hover:border-[#2A8082]",
-          badgeBg: "bg-[#2A8082]/15 text-[#48b6b9] border-[#2A8082]/30",
-          iconBg: "bg-[#2A8082]/20 text-[#48b6b9]",
-          pinColor: "#2A8082",
-          glow: "group-hover:shadow-[#2A8082]/20",
-          accentText: "text-[#48b6b9]",
+          border: "border-[#8CB9CC]/40 group-hover:border-[#8CB9CC]",
+          badgeBg: "bg-[#8CB9CC]/15 text-[#BFD8E3] border-[#8CB9CC]/40",
+          iconBg: "bg-[#8CB9CC]/20 text-[#BFD8E3]",
+          pinColor: "#8CB9CC",
+          glow: "group-hover:shadow-[#8CB9CC]/20",
+          accentText: "text-[#BFD8E3]",
         };
     }
   };
@@ -175,8 +175,8 @@ export function HeroClotheslineCards() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 px-2">
         <div>
           <div className="flex items-center gap-2">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-[#E06D53]" />
-            <span className="font-mono text-xs uppercase tracking-widest text-[#E06D53] font-bold">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-[#00638E]" />
+            <span className="font-mono text-xs uppercase tracking-widest text-[#00638E] font-bold">
               AGENT ARCHITECTURE & WORKFLOW
             </span>
           </div>
@@ -195,38 +195,38 @@ export function HeroClotheslineCards() {
         {/* Wire SVG */}
         <div className="hidden lg:block absolute top-[28px] left-0 w-full pointer-events-none z-10">
           <svg viewBox="0 0 1200 40" className="w-full h-10 overflow-visible" fill="none">
-            {/* Main catenary glowing wire */}
+            {/* Main catenary glowing wire in Dark Azure and Charcoal */}
             <path
               d="M0 8 Q300 28, 600 24 T1200 8"
-              stroke="#E06D53"
+              stroke="#00638E"
               strokeWidth="1.5"
-              strokeOpacity="0.4"
+              strokeOpacity="0.6"
             />
             <path
               d="M0 9 Q300 29, 600 25 T1200 9"
-              stroke="#2A8082"
+              stroke="#BFD8E3"
               strokeWidth="1"
-              strokeOpacity="0.6"
+              strokeOpacity="0.4"
             />
             {/* Hanging Cable Nodes */}
-            <circle cx="120" cy="14" r="3" fill="#FAF6EC" />
-            <circle cx="360" cy="24" r="3" fill="#FAF6EC" />
-            <circle cx="600" cy="24" r="3" fill="#FAF6EC" />
-            <circle cx="840" cy="21" r="3" fill="#FAF6EC" />
-            <circle cx="1080" cy="11" r="3" fill="#FAF6EC" />
+            <circle cx="120" cy="14" r="3" fill="#FFFFFF" />
+            <circle cx="360" cy="24" r="3" fill="#FFFFFF" />
+            <circle cx="600" cy="24" r="3" fill="#FFFFFF" />
+            <circle cx="840" cy="21" r="3" fill="#FFFFFF" />
+            <circle cx="1080" cy="11" r="3" fill="#FFFFFF" />
           </svg>
         </div>
 
-        {/* The 5 Clothesline Suspended Cards */}
+        {/* The 5 Clothesline Suspended Cards in Onyx (#141414) and Charcoal (#2B2B2B) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-4 relative z-20">
-          {EXECUTION_CARDS.map((card, idx) => {
+          {EXECUTION_CARDS.map((card) => {
             const styles = getThemeStyles(card.themeColor);
             const Icon = card.icon;
 
             return (
               <div
                 key={card.step}
-                className={`group relative flex flex-col justify-between rounded-2xl border bg-gradient-to-b from-slate-900/90 via-slate-950/95 to-[#090D16] p-5 shadow-xl transition-all duration-300 transform ${card.rotation} hover:scale-105 hover:z-30 hover:shadow-2xl ${styles.border} ${styles.glow}`}
+                className={`group relative flex flex-col justify-between rounded-2xl border bg-gradient-to-b from-[#141414] via-[#101010] to-[#000000] p-5 shadow-xl transition-all duration-300 transform ${card.rotation} hover:scale-105 hover:z-30 hover:shadow-2xl ${styles.border} ${styles.glow}`}
               >
                 {/* Vintage Clothesline Metallic Pin Clip */}
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-20">
@@ -258,7 +258,7 @@ export function HeroClotheslineCards() {
                       <Icon className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="text-base font-bold text-white group-hover:text-[#FAF6EC] transition-colors leading-tight">
+                      <h3 className="text-base font-bold text-white group-hover:text-[#FFFFFF] transition-colors leading-tight">
                         {card.title}
                       </h3>
                       <p className="text-[11px] text-slate-400 font-medium">{card.tagline}</p>
@@ -266,7 +266,7 @@ export function HeroClotheslineCards() {
                   </div>
 
                   {/* Feature Checklist Points */}
-                  <ul className="mt-2 space-y-1.5 border-t border-slate-800/80 pt-3 text-[11px] text-slate-300">
+                  <ul className="mt-2 space-y-1.5 border-t border-[#2B2B2B] pt-3 text-[11px] text-slate-300">
                     {card.points.map((pt, i) => (
                       <li key={i} className="flex items-start gap-1.5">
                         <span className={`${styles.accentText} mt-0.5 text-xs`}>✓</span>
@@ -277,7 +277,7 @@ export function HeroClotheslineCards() {
                 </div>
 
                 {/* Card Footer with Metric & Link */}
-                <div className="mt-5 pt-3 border-t border-slate-800/80 flex flex-col gap-2.5">
+                <div className="mt-5 pt-3 border-t border-[#2B2B2B] flex flex-col gap-2.5">
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="text-slate-400">Guarantee</span>
                     <span className={`font-mono font-bold ${styles.accentText}`}>
@@ -287,7 +287,7 @@ export function HeroClotheslineCards() {
 
                   <Link
                     href={card.link}
-                    className={`flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/5 py-2 px-3 text-xs font-semibold text-slate-200 hover:bg-white/15 transition-all group-hover:border-white/20`}
+                    className="flex items-center justify-center gap-1.5 rounded-xl border border-[#2B2B2B] bg-[#141414] py-2 px-3 text-xs font-semibold text-slate-200 hover:bg-[#00638E] hover:text-white hover:border-[#00638E] transition-all"
                   >
                     <span>{card.actionText}</span>
                     <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

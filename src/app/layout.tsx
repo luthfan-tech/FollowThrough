@@ -20,20 +20,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="min-h-screen bg-[#090d16] text-slate-100 antialiased selection:bg-[#E06D53] selection:text-white">
+      <body className="min-h-screen bg-[#000000] text-white antialiased selection:bg-[#00638E] selection:text-white">
         <div className="relative min-h-screen flex flex-col">
-          {/* Subtle background glow */}
+          {/* Subtle background Azure glow */}
           <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-            <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[500px] w-[900px] rounded-full bg-gradient-to-b from-[#E06D53]/10 via-[#2A8082]/10 to-transparent blur-3xl" />
+            <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[500px] w-[900px] rounded-full bg-gradient-to-b from-[#00638E]/15 via-[#004A6B]/10 to-transparent blur-3xl" />
           </div>
 
           <Navbar />
           <main className="relative z-10 flex-1">{children}</main>
 
-          <footer className="relative z-10 border-t border-slate-800/80 bg-[#060911] py-8 text-xs text-slate-500">
+          <footer className="relative z-10 border-t border-[#2B2B2B] bg-[#000000] py-8 text-xs text-slate-400">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="relative h-7 w-7 overflow-hidden rounded-lg border border-[#E06D53]/40 bg-white">
+                <div className="relative h-7 w-7 overflow-hidden rounded-lg border border-[#00638E]/50 bg-[#141414]">
                   <Image
                     src="/brand-logo.jpg"
                     alt="FollowThrough Logo"
@@ -42,13 +42,13 @@ export default function RootLayout({
                   />
                 </div>
                 <div>
-                  <span className="font-bold text-slate-300">FollowThrough</span>
-                  <span className="mx-2 text-slate-600">•</span>
+                  <span className="font-bold text-white">FollowThrough</span>
+                  <span className="mx-2 text-[#2B2B2B]">•</span>
                   <span className="text-slate-400">Agentic AI Hackathon 2026</span>
                 </div>
               </div>
 
-              <p className="text-slate-400 text-center sm:text-right font-medium">
+              <p className="text-slate-300 text-center sm:text-right font-medium">
                 “Meetings create decisions. FollowThrough makes sure they get executed.”
               </p>
 
@@ -57,7 +57,7 @@ export default function RootLayout({
                   href="https://github.com/luthfan-tech/FollowThrough.git"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="hover:text-[#BFD8E3] transition-colors"
                 >
                   GitHub Repository
                 </a>
