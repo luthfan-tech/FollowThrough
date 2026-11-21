@@ -213,7 +213,7 @@ export default function DashboardPage() {
           </div>
           <Link
             href="/meetings/new"
-            className="flex items-center gap-2 rounded-xl bg-[#00638E] hover:bg-[#004A6B] px-5 py-2.5 text-sm font-bold text-white transition-all shadow-md shadow-[#00638E]/20 self-start sm:self-auto"
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#00638E] hover:bg-[#004A6B] px-5 py-2.5 text-sm font-bold text-white transition-all shadow-md shadow-[#00638E]/20 w-full sm:w-auto"
           >
             <Plus className="h-4 w-4" />
             <span>Ingest Meeting</span>
@@ -337,7 +337,7 @@ export default function DashboardPage() {
                     className="block group rounded-2xl border border-slate-200 bg-white p-5 transition-all hover:border-[#00638E] hover:shadow-md shadow-sm"
                   >
                     <div className="flex items-start justify-between gap-4">
-                      <div className="space-y-1.5 flex-1">
+                      <div className="space-y-1.5 flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                           <h4 className="text-base font-bold text-slate-900 group-hover:text-[#00638E] transition-colors">
                             {meeting.title}

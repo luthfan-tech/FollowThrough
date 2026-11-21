@@ -247,11 +247,11 @@ export default function MeetingRunPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
           <button
             onClick={handleRerunAgent}
             disabled={isRerunning}
-            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors shadow-sm"
+            className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors shadow-sm w-full sm:w-auto"
           >
             <RotateCcw className={`h-4 w-4 ${isRerunning ? "animate-spin" : ""}`} />
             <span>Re-run Agent</span>
@@ -273,17 +273,17 @@ export default function MeetingRunPage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex flex-wrap items-center gap-3 shrink-0 w-full sm:w-auto">
             <Link
               href="/tasks"
-              className="flex items-center gap-2 rounded-xl bg-[#00638E] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#004A6B] transition-all shadow-sm"
+              className="flex items-center justify-center gap-2 rounded-xl bg-[#00638E] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#004A6B] transition-all shadow-sm flex-1 sm:flex-initial"
             >
               <Layers className="h-4 w-4" />
               <span>Open Task Board</span>
             </Link>
             <Link
               href="/memory"
-              className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50 transition-all shadow-sm"
+              className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50 transition-all shadow-sm flex-1 sm:flex-initial"
             >
               <Database className="h-4 w-4" />
               <span>View Memory</span>
@@ -674,8 +674,8 @@ export default function MeetingRunPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 w-full sm:w-auto justify-end">
-              <label className="flex items-center gap-2 text-xs sm:text-sm text-slate-800 font-semibold cursor-pointer select-none">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto justify-end">
+              <label className="flex items-center justify-center sm:justify-start gap-2 text-xs sm:text-sm text-slate-800 font-semibold cursor-pointer select-none py-1">
                 <input
                   type="checkbox"
                   checked={scheduleReminders}
@@ -690,7 +690,7 @@ export default function MeetingRunPage() {
                 type="button"
                 onClick={handleConfirmAndExecute}
                 disabled={isConfirming || (approvedDecisionsCount === 0 && approvedActionsCount === 0)}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 via-[#00638E] to-[#004A6B] px-7 py-3 text-sm font-bold text-white shadow-md shadow-[#00638E]/20 hover:opacity-95 transition-all disabled:opacity-50 active:scale-95"
+                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 via-[#00638E] to-[#004A6B] px-7 py-3 text-sm font-bold text-white shadow-md shadow-[#00638E]/20 hover:opacity-95 transition-all disabled:opacity-50 active:scale-95 w-full sm:w-auto"
               >
                 {isConfirming ? (
                   <>

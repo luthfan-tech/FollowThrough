@@ -81,10 +81,10 @@ export function FooterManifesto() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2 w-full sm:w-auto">
             <Link
               href="/meetings/new"
-              className="flex items-center gap-2 rounded-xl bg-[#00638E] hover:bg-[#004A6B] px-6 py-3.5 text-sm font-bold text-white shadow-md shadow-[#00638E]/20 transition-all"
+              className="flex items-center justify-center gap-2 rounded-xl bg-[#00638E] hover:bg-[#004A6B] px-6 py-3.5 text-sm font-bold text-white shadow-md shadow-[#00638E]/20 transition-all w-full sm:w-auto"
             >
               <Play className="h-4 w-4 fill-white" />
               <span>Ingest Real Meeting Now</span>
@@ -92,7 +92,7 @@ export function FooterManifesto() {
 
             <Link
               href="/tasks"
-              className="flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-800 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm"
+              className="flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-800 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm w-full sm:w-auto"
             >
               <span>View Task Tracker</span>
               <ArrowRight className="h-4 w-4" />

@@ -225,11 +225,11 @@ function NewMeetingContent() {
         )}
 
         {/* Action Button */}
-        <div className="pt-2 flex items-center justify-end gap-3">
+        <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex items-center gap-2 rounded-xl bg-[#00638E] hover:bg-[#004A6B] px-6 py-3 text-sm font-semibold text-white shadow-md shadow-[#00638E]/25 transition-all disabled:opacity-50 active:scale-95"
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#00638E] hover:bg-[#004A6B] px-6 py-3 text-sm font-semibold text-white shadow-md shadow-[#00638E]/25 transition-all disabled:opacity-50 active:scale-95 w-full sm:w-auto"
           >
             {isSubmitting ? (
               <>

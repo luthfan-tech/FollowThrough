@@ -127,11 +127,11 @@ export default function WeeklyDigestPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
           <button
             onClick={handleRegenerate}
             disabled={isRegenerating}
-            className="flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs sm:text-sm font-bold text-slate-800 hover:bg-slate-50 transition-colors shadow-sm"
+            className="flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs sm:text-sm font-bold text-slate-800 hover:bg-slate-50 transition-colors shadow-sm flex-1 sm:flex-initial"
           >
             <RotateCcw className={`h-4 w-4 ${isRegenerating ? "animate-spin" : ""}`} />
             <span>Regenerate Digests</span>
@@ -139,10 +139,10 @@ export default function WeeklyDigestPage() {
 
           <button
             onClick={handleCopyMarkdown}
-            className="flex items-center gap-2 rounded-xl bg-[#00638E] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#004A6B] transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#00638E] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#004A6B] transition-all shadow-sm flex-1 sm:flex-initial"
           >
             {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            <span>{copied ? "Copied Markdown!" : "Copy for Slack / Email"}</span>
+            <span>{copied ? "Copied!" : "Copy for Slack"}</span>
           </button>
         </div>
       </div>

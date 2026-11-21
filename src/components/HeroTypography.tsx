@@ -17,16 +17,16 @@ export function HeroTypography() {
       <div className="pointer-events-none absolute top-1/2 right-10 h-64 w-64 rounded-full bg-[#8CB9CC]/10 blur-3xl" />
 
       {/* Geometric Modern Corner Marks */}
-      <div className="pointer-events-none absolute top-4 left-4 text-xs font-mono text-[#00638E] select-none font-bold">
+      <div className="hidden sm:block pointer-events-none absolute top-4 left-4 text-xs font-mono text-[#00638E] select-none font-bold">
         + 01-A // FT-2026
       </div>
-      <div className="pointer-events-none absolute top-4 right-4 text-xs font-mono text-[#00638E] select-none font-bold">
+      <div className="hidden sm:block pointer-events-none absolute top-4 right-4 text-xs font-mono text-[#00638E] select-none font-bold">
         DECISION INTELLIGENCE // +
       </div>
-      <div className="pointer-events-none absolute bottom-4 left-4 text-xs font-mono text-[#00638E] select-none font-bold">
+      <div className="hidden sm:block pointer-events-none absolute bottom-4 left-4 text-xs font-mono text-[#00638E] select-none font-bold">
         + CONFLICT RADAR
       </div>
-      <div className="pointer-events-none absolute bottom-4 right-4 text-xs font-mono text-[#004A6B] select-none font-bold">
+      <div className="hidden sm:block pointer-events-none absolute bottom-4 right-4 text-xs font-mono text-[#004A6B] select-none font-bold">
         ORGANIZATIONAL MEMORY // +
       </div>
 
@@ -58,7 +58,7 @@ export function HeroTypography() {
         {/* CENTERPIECE: The "FollowThrough" chunky rounded retro-futuristic typography */}
         <div className="relative py-3 px-2 w-full select-none">
           {/* Decorative Calligraphic Diacritics (Nuqta diamonds) floating above text */}
-          <div className="flex justify-center items-center gap-12 sm:gap-24 mb-1 text-[#00638E]">
+          <div className="flex justify-center items-center gap-4 sm:gap-16 md:gap-24 mb-1 text-[#00638E]">
             <span className="inline-block transform rotate-45 h-3 w-3 bg-[#00638E] shadow-sm" />
             <span className="inline-block transform rotate-45 h-2.5 w-2.5 bg-[#8CB9CC] shadow-sm" />
             <span className="inline-block transform rotate-45 h-3 w-3 bg-[#004A6B] shadow-sm" />
@@ -68,7 +68,7 @@ export function HeroTypography() {
 
           <div className="relative">
             {/* Chunky, rounded retro-futuristic funk display typography in Dark Azure with layered extrusion */}
-            <h1 className="font-funk text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none uppercase funk-text-extrusion font-extrabold transition-transform duration-300 hover:scale-[1.01]">
+            <h1 className="font-funk text-3xl min-[380px]:text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none uppercase funk-text-extrusion font-extrabold transition-transform duration-300 hover:scale-[1.01] break-normal">
               FollowThrough
             </h1>
 
@@ -113,10 +113,10 @@ export function HeroTypography() {
         </div>
 
         {/* Action Buttons in Clean Light / Dark Azure Theme */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 pt-4 w-full sm:w-auto">
           <Link
             href="/meetings/new"
-            className="group relative flex items-center justify-center gap-2.5 rounded-2xl bg-[#00638E] hover:bg-[#004A6B] px-8 py-4 text-base font-bold text-white shadow-lg shadow-[#00638E]/25 transition-all hover:-translate-y-0.5 active:translate-y-0"
+            className="group relative flex items-center justify-center gap-2.5 rounded-2xl bg-[#00638E] hover:bg-[#004A6B] px-8 py-4 text-base font-bold text-white shadow-lg shadow-[#00638E]/25 transition-all hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto"
           >
             <Play className="h-5 w-5 fill-white" />
             <span className="tracking-wide">Ingest Meeting Transcript</span>
@@ -125,7 +125,7 @@ export function HeroTypography() {
 
           <Link
             href="/tasks"
-            className="flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-7 py-4 text-base font-bold text-slate-800 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-7 py-4 text-base font-bold text-slate-800 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm w-full sm:w-auto"
           >
             <Cpu className="h-5 w-5 text-[#00638E]" />
             <span>Open Task Board</span>
@@ -133,7 +133,7 @@ export function HeroTypography() {
 
           <Link
             href="/memory"
-            className="flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-6 py-4 text-base font-bold text-slate-800 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-6 py-4 text-base font-bold text-slate-800 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm w-full sm:w-auto"
           >
             <ShieldAlert className="h-5 w-5 text-[#00638E]" />
             <span>Decision Memory</span>

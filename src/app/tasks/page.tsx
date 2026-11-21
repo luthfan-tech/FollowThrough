@@ -148,10 +148,10 @@ export default function TasksPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-2 rounded-xl bg-[#00638E] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#004A6B] transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#00638E] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#004A6B] transition-all shadow-sm flex-1 sm:flex-initial"
           >
             <Plus className="h-4 w-4" />
             <span>New Task</span>
@@ -159,7 +159,7 @@ export default function TasksPage() {
 
           <button
             onClick={() => setShowExportModal(true)}
-            className="flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50 transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50 transition-all shadow-sm flex-1 sm:flex-initial"
           >
             <Share2 className="h-4 w-4 text-[#00638E]" />
             <span>Export to Linear / Notion</span>
@@ -209,7 +209,7 @@ export default function TasksPage() {
             ))}
           </select>
 
-          <div className="flex items-center gap-2 text-sm font-bold text-slate-700 pl-3 border-l border-slate-200">
+          <div className="flex items-center gap-2 text-sm font-bold text-slate-700 pl-0 sm:pl-3 border-l-0 sm:border-l border-slate-200">
             <span>Priority:</span>
           </div>
           <select
@@ -403,7 +403,7 @@ export default function TasksPage() {
       {/* Manual Task Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 space-y-4 shadow-2xl animate-fade-in">
+          <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto">
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <CheckSquare className="h-5 w-5 text-[#00638E]" />
               <span>Create New Task</span>
@@ -433,7 +433,7 @@ export default function TasksPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1.5">
                   <label className="text-sm font-bold text-slate-800">Due Date</label>
                   <input
@@ -482,7 +482,7 @@ export default function TasksPage() {
       {/* Sync / Export Modal */}
       {showExportModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 space-y-4 shadow-2xl animate-fade-in">
+          <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto">
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Share2 className="h-5 w-5 text-[#00638E]" />
               <span>Export Tasks to Issue Tracker</span>

@@ -122,7 +122,7 @@ export default function DecisionMemoryPage() {
 
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 rounded-xl bg-[#00638E] px-5 py-3 text-sm font-bold text-white hover:bg-[#004A6B] transition-all shadow-sm self-start sm:self-auto shrink-0"
+          className="flex items-center justify-center gap-2 rounded-xl bg-[#00638E] px-5 py-3 text-sm font-bold text-white hover:bg-[#004A6B] transition-all shadow-sm w-full sm:w-auto shrink-0"
         >
           <Plus className="h-4 w-4" />
           <span>Add Architectural Policy (ADR)</span>
@@ -229,7 +229,7 @@ export default function DecisionMemoryPage() {
       {/* Manual ADR Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-6 space-y-4 shadow-2xl animate-fade-in">
+          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto">
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Database className="h-5 w-5 text-[#00638E]" />
               <span>Record Architectural Policy / Decision</span>

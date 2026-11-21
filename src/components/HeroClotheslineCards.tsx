@@ -39,7 +39,7 @@ const EXECUTION_CARDS: ExecutionCard[] = [
     metric: "Pattern & Model",
     icon: Mic,
     themeColor: "azure",
-    rotation: "-rotate-2 hover:rotate-0",
+    rotation: "sm:-rotate-2 sm:hover:rotate-0",
     link: "/meetings/new",
     actionText: "Ingest Transcript",
   },
@@ -56,7 +56,7 @@ const EXECUTION_CARDS: ExecutionCard[] = [
     metric: "Persistent Store",
     icon: Database,
     themeColor: "deep-azure",
-    rotation: "rotate-1.5 hover:rotate-0",
+    rotation: "sm:rotate-1.5 sm:hover:rotate-0",
     link: "/memory",
     actionText: "Explore Memory",
   },
@@ -73,7 +73,7 @@ const EXECUTION_CARDS: ExecutionCard[] = [
     metric: "Memory Conflict Scan",
     icon: ShieldAlert,
     themeColor: "rose",
-    rotation: "-rotate-1 hover:rotate-0",
+    rotation: "sm:-rotate-1 sm:hover:rotate-0",
     link: "/meetings/new",
     actionText: "Detect Conflicts",
   },
@@ -90,7 +90,7 @@ const EXECUTION_CARDS: ExecutionCard[] = [
     metric: "Human Gatekeeper",
     icon: UserCheck,
     themeColor: "emerald",
-    rotation: "rotate-2 hover:rotate-0",
+    rotation: "sm:rotate-2 sm:hover:rotate-0",
     link: "/tasks",
     actionText: "Review Approvals",
   },
@@ -107,7 +107,7 @@ const EXECUTION_CARDS: ExecutionCard[] = [
     metric: "Execution Tracker",
     icon: Send,
     themeColor: "soft-azure",
-    rotation: "-rotate-1 hover:rotate-0",
+    rotation: "sm:-rotate-1 sm:hover:rotate-0",
     link: "/digest",
     actionText: "View Digests",
   },
@@ -222,7 +222,7 @@ export function HeroClotheslineCards() {
             return (
               <div
                 key={card.step}
-                className={`group relative flex flex-col justify-between rounded-2xl border bg-white p-5 shadow-sm transition-all duration-300 transform ${card.rotation} hover:scale-105 hover:z-30 hover:shadow-xl ${styles.border} ${styles.glow}`}
+                className={`group relative flex flex-col justify-between rounded-2xl border bg-white p-5 shadow-sm transition-all duration-300 transform rotate-0 ${card.rotation} hover:scale-102 sm:hover:scale-105 hover:z-30 hover:shadow-xl ${styles.border} ${styles.glow}`}
               >
                 {/* Metallic Pin Clip */}
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-20">
