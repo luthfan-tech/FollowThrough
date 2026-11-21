@@ -5,20 +5,19 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   Compass,
-  FileText,
   Database,
   CheckSquare,
   Sparkles,
   RotateCcw,
   Plus,
-  ShieldCheck,
+  Trash2,
   Calendar,
 } from "lucide-react";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isResetting, setIsResetting] = useState(false);
-  const [resetSuccess, setResetSuccess] = useState(false);
+  const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
   const navLinks = [
     { href: "/", label: "Dashboard", icon: Compass },
@@ -28,19 +27,45 @@ export function Navbar() {
     { href: "/digest", label: "Weekly Digest", icon: Calendar },
   ];
 
-  const handleResetDemoData = async () => {
-    if (!confirm("Reset database to initial demo state? This restores the 3 baseline meetings and historical ADR decisions.")) {
+  const handleClearData = async () => {
+    if (!confirm("Clear all meeting transcripts, decisions, and tasks for a fresh workspace?")) {
       return;
     }
     setIsResetting(true);
     try {
-      const res = await fetch("/api/seed", { method: "POST" });
+      const res = await fetch("/api/seed", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "clear" }),
+      });
       if (res.ok) {
-        setResetSuccess(true);
+        setStatusMsg("Workspace Cleared!");
         setTimeout(() => {
-          setResetSuccess(false);
+          setStatusMsg(null);
           window.location.reload();
-        }, 1200);
+        }, 800);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsResetting(false);
+    }
+  };
+
+  const handleLoadDemo = async () => {
+    setIsResetting(true);
+    try {
+      const res = await fetch("/api/seed", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "seed" }),
+      });
+      if (res.ok) {
+        setStatusMsg("Demo Loaded!");
+        setTimeout(() => {
+          setStatusMsg(null);
+          window.location.reload();
+        }, 800);
       }
     } catch (err) {
       console.error(err);
@@ -64,7 +89,7 @@ export function Navbar() {
                   FollowThrough
                 </span>
                 <span className="rounded-full bg-indigo-500/10 px-2 py-0.5 text-[10px] font-semibold text-indigo-400 border border-indigo-500/20">
-                  AGENTIC
+                  LIVE AGENT
                 </span>
               </div>
               <p className="text-[11px] text-slate-400">Meeting-to-Execution Agent</p>
@@ -95,28 +120,39 @@ export function Navbar() {
         </div>
 
         {/* Right side controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           {/* Agent Status Pill */}
-          <div className="hidden sm:flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-950/30 px-3 py-1 text-xs text-emerald-400">
+          <div className="hidden lg:flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-950/30 px-3 py-1 text-xs text-emerald-400">
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-medium text-[11px]">Conflict Radar Active</span>
+            <span className="font-medium text-[11px]">Conflict Radar Online</span>
           </div>
 
-          {/* Reset Demo Data Button */}
+          {/* Clear Workspace Button */}
           <button
-            onClick={handleResetDemoData}
+            onClick={handleClearData}
             disabled={isResetting}
-            title="Reset database to initial demo state"
-            className="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/60 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
+            title="Clear all workspace data for real tasks"
+            className="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/60 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-rose-950/40 hover:text-rose-300 hover:border-rose-500/30 transition-colors"
           >
-            <RotateCcw className={`h-3.5 w-3.5 ${isResetting ? "animate-spin" : ""}`} />
-            <span className="hidden lg:inline">{resetSuccess ? "Reset Done!" : "Reset Demo Data"}</span>
+            <Trash2 className="h-3.5 w-3.5 text-slate-400" />
+            <span className="hidden sm:inline">{statusMsg || "Clear Workspace"}</span>
+          </button>
+
+          {/* Load Demo Data Button */}
+          <button
+            onClick={handleLoadDemo}
+            disabled={isResetting}
+            title="Load demo scenario for testing"
+            className="hidden sm:flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/60 px-2.5 py-1.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+          >
+            <RotateCcw className="h-3 w-3" />
+            <span>Load Demo</span>
           </button>
 
           {/* New Meeting CTA */}
           <Link
             href="/meetings/new"
-            className="flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3.5 py-1.5 text-xs font-medium text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-500 transition-all active:scale-95"
+            className="flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-500 transition-all active:scale-95"
           >
             <Plus className="h-4 w-4" />
             <span>Ingest Meeting</span>

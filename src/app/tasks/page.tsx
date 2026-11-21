@@ -26,6 +26,13 @@ export default function TasksPage() {
   const [selectedPriority, setSelectedPriority] = useState<string>("ALL");
   const [loading, setLoading] = useState(true);
 
+  // Add Task Modal
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
+  const [newOwner, setNewOwner] = useState("");
+  const [newDue, setNewDue] = useState("");
+  const [newPriority, setNewPriority] = useState<Priority>("MEDIUM");
+
   // Sync / Export Modal
   const [showExportModal, setShowExportModal] = useState(false);
   const [exportPlatform, setExportPlatform] = useState<"linear" | "notion" | "webhook">("linear");
@@ -44,6 +51,36 @@ export default function TasksPage() {
       console.error(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCreateTask = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newTitle.trim()) return;
+
+    try {
+      const res = await fetch("/api/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: newTitle.trim(),
+          owner: newOwner.trim() || "Unassigned",
+          due_date: newDue ? new Date(newDue).toISOString() : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+          priority: newPriority,
+          status: "APPROVED",
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setTasks((prev) => [data.task, ...prev]);
+        setShowAddModal(false);
+        setNewTitle("");
+        setNewOwner("");
+        setNewDue("");
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -109,6 +146,14 @@ export default function TasksPage() {
         </div>
 
         <div className="flex items-center gap-3">
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-2 text-xs font-semibold text-white hover:bg-indigo-500 transition-all shadow-md shadow-indigo-600/20"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            <span>New Task</span>
+          </button>
+
           <button
             onClick={() => setShowExportModal(true)}
             className="flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/80 px-3.5 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-700 hover:text-white transition-all shadow-sm"
@@ -213,65 +258,71 @@ export default function TasksPage() {
                 </div>
 
                 <div className="space-y-3 flex-1 overflow-y-auto max-h-[650px] pr-1">
-                  {columnTasks.map((task) => (
-                    <div
-                      key={task.id}
-                      className="group rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-2.5 transition-all hover:border-slate-700 hover:bg-slate-900 shadow-sm"
-                    >
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="font-mono text-[10px] text-indigo-400 font-bold">
-                          {task.external_task_id || "FLW-100"}
-                        </span>
-                        <span
-                          className={`rounded px-1.5 py-0.5 text-[9px] font-bold uppercase ${
-                            task.priority === "CRITICAL"
-                              ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
-                              : task.priority === "HIGH"
-                              ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                              : "bg-slate-800 text-slate-400"
-                          }`}
-                        >
-                          {task.priority}
-                        </span>
-                      </div>
-
-                      <h4 className="text-xs font-bold text-white leading-snug">{task.title}</h4>
-                      {task.description && (
-                        <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
-                          {task.description}
-                        </p>
-                      )}
-
-                      <div className="pt-2 border-t border-slate-800/80 space-y-1.5 text-[10px] text-slate-400">
-                        <div className="flex items-center justify-between">
-                          <span className="flex items-center gap-1 text-slate-300 font-medium">
-                            <User className="h-3 w-3 text-indigo-400" />
-                            {task.owner || "Unassigned"}
-                          </span>
-                          <span className="flex items-center gap-1 font-mono">
-                            <Calendar className="h-3 w-3 text-purple-400" />
-                            {task.due_date ? new Date(task.due_date).toLocaleDateString() : "No date"}
-                          </span>
-                        </div>
-
-                        {/* Quick Status Mover */}
-                        <div className="pt-1 flex items-center justify-between">
-                          <span className="text-slate-400">Move:</span>
-                          <select
-                            value={task.status}
-                            onChange={(e) => handleUpdateStatus(task.id, e.target.value as TaskStatus)}
-                            className="rounded bg-slate-900 border border-slate-800 px-1.5 py-0.5 text-[10px] text-slate-300 focus:outline-none"
-                          >
-                            <option value="PROPOSED">Proposed</option>
-                            <option value="APPROVED">Approved</option>
-                            <option value="IN_PROGRESS">In Progress</option>
-                            <option value="COMPLETED">Completed</option>
-                            <option value="OVERDUE">Overdue</option>
-                          </select>
-                        </div>
-                      </div>
+                  {columnTasks.length === 0 ? (
+                    <div className="py-8 text-center text-[11px] text-slate-400">
+                      Empty column
                     </div>
-                  ))}
+                  ) : (
+                    columnTasks.map((task) => (
+                      <div
+                        key={task.id}
+                        className="group rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-2.5 transition-all hover:border-slate-700 hover:bg-slate-900 shadow-sm"
+                      >
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="font-mono text-[10px] text-indigo-400 font-bold">
+                            {task.external_task_id || "FLW-100"}
+                          </span>
+                          <span
+                            className={`rounded px-1.5 py-0.5 text-[9px] font-bold uppercase ${
+                              task.priority === "CRITICAL"
+                                ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
+                                : task.priority === "HIGH"
+                                ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                                : "bg-slate-800 text-slate-400"
+                            }`}
+                          >
+                            {task.priority}
+                          </span>
+                        </div>
+
+                        <h4 className="text-xs font-bold text-white leading-snug">{task.title}</h4>
+                        {task.description && (
+                          <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
+                            {task.description}
+                          </p>
+                        )}
+
+                        <div className="pt-2 border-t border-slate-800/80 space-y-1.5 text-[10px] text-slate-400">
+                          <div className="flex items-center justify-between">
+                            <span className="flex items-center gap-1 text-slate-300 font-medium">
+                              <User className="h-3 w-3 text-indigo-400" />
+                              {task.owner || "Unassigned"}
+                            </span>
+                            <span className="flex items-center gap-1 font-mono">
+                              <Calendar className="h-3 w-3 text-purple-400" />
+                              {task.due_date ? new Date(task.due_date).toLocaleDateString() : "No date"}
+                            </span>
+                          </div>
+
+                          {/* Quick Status Mover */}
+                          <div className="pt-1 flex items-center justify-between">
+                            <span className="text-slate-400">Move:</span>
+                            <select
+                              value={task.status}
+                              onChange={(e) => handleUpdateStatus(task.id, e.target.value as TaskStatus)}
+                              className="rounded bg-slate-900 border border-slate-800 px-1.5 py-0.5 text-[10px] text-slate-300 focus:outline-none"
+                            >
+                              <option value="PROPOSED">Proposed</option>
+                              <option value="APPROVED">Approved</option>
+                              <option value="IN_PROGRESS">In Progress</option>
+                              <option value="COMPLETED">Completed</option>
+                              <option value="OVERDUE">Overdue</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             );
@@ -280,61 +331,146 @@ export default function TasksPage() {
       ) : (
         /* List View */
         <div className="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
-          <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-slate-950/80 text-[10px] uppercase tracking-wider text-slate-400 border-b border-slate-800">
-              <tr>
-                <th className="py-3 px-4">Task ID</th>
-                <th className="py-3 px-4">Title</th>
-                <th className="py-3 px-4">Assignee</th>
-                <th className="py-3 px-4">Due Date</th>
-                <th className="py-3 px-4">Priority</th>
-                <th className="py-3 px-4">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800">
-              {filteredTasks.map((task) => (
-                <tr key={task.id} className="hover:bg-slate-900/60 transition-colors">
-                  <td className="py-3 px-4 font-mono text-indigo-400 font-bold">
-                    {task.external_task_id || "FLW-100"}
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="font-semibold text-white">{task.title}</div>
-                    <div className="text-[11px] text-slate-400 line-clamp-1">{task.description}</div>
-                  </td>
-                  <td className="py-3 px-4 font-medium text-slate-200">{task.owner || "Unassigned"}</td>
-                  <td className="py-3 px-4 font-mono text-[11px] text-slate-400">
-                    {task.due_date ? new Date(task.due_date).toLocaleDateString() : "No deadline"}
-                  </td>
-                  <td className="py-3 px-4">
-                    <span
-                      className={`rounded px-2 py-0.5 text-[9px] font-bold uppercase ${
-                        task.priority === "CRITICAL"
-                          ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
-                          : task.priority === "HIGH"
-                          ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                          : "bg-slate-800 text-slate-400"
-                      }`}
-                    >
-                      {task.priority}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4">
-                    <select
-                      value={task.status}
-                      onChange={(e) => handleUpdateStatus(task.id, e.target.value as TaskStatus)}
-                      className="rounded bg-slate-950 border border-slate-800 px-2 py-1 text-xs text-slate-200 focus:outline-none"
-                    >
-                      <option value="PROPOSED">Proposed</option>
-                      <option value="APPROVED">Approved</option>
-                      <option value="IN_PROGRESS">In Progress</option>
-                      <option value="COMPLETED">Completed</option>
-                      <option value="OVERDUE">Overdue</option>
-                    </select>
-                  </td>
+          {filteredTasks.length === 0 ? (
+            <div className="py-12 text-center text-xs text-slate-400">
+              No tasks found. Create a task or ingest a meeting to see deliverables here.
+            </div>
+          ) : (
+            <table className="w-full text-left text-xs text-slate-300">
+              <thead className="bg-slate-950/80 text-[10px] uppercase tracking-wider text-slate-400 border-b border-slate-800">
+                <tr>
+                  <th className="py-3 px-4">Task ID</th>
+                  <th className="py-3 px-4">Title</th>
+                  <th className="py-3 px-4">Assignee</th>
+                  <th className="py-3 px-4">Due Date</th>
+                  <th className="py-3 px-4">Priority</th>
+                  <th className="py-3 px-4">Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-800">
+                {filteredTasks.map((task) => (
+                  <tr key={task.id} className="hover:bg-slate-900/60 transition-colors">
+                    <td className="py-3 px-4 font-mono text-indigo-400 font-bold">
+                      {task.external_task_id || "FLW-100"}
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="font-semibold text-white">{task.title}</div>
+                      <div className="text-[11px] text-slate-400 line-clamp-1">{task.description}</div>
+                    </td>
+                    <td className="py-3 px-4 font-medium text-slate-200">{task.owner || "Unassigned"}</td>
+                    <td className="py-3 px-4 font-mono text-[11px] text-slate-400">
+                      {task.due_date ? new Date(task.due_date).toLocaleDateString() : "No deadline"}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span
+                        className={`rounded px-2 py-0.5 text-[9px] font-bold uppercase ${
+                          task.priority === "CRITICAL"
+                            ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
+                            : task.priority === "HIGH"
+                            ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                            : "bg-slate-800 text-slate-400"
+                        }`}
+                      >
+                        {task.priority}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <select
+                        value={task.status}
+                        onChange={(e) => handleUpdateStatus(task.id, e.target.value as TaskStatus)}
+                        className="rounded bg-slate-950 border border-slate-800 px-2 py-1 text-xs text-slate-200 focus:outline-none"
+                      >
+                        <option value="PROPOSED">Proposed</option>
+                        <option value="APPROVED">Approved</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="COMPLETED">Completed</option>
+                        <option value="OVERDUE">Overdue</option>
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      )}
+
+      {/* Manual Task Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 space-y-4 shadow-2xl animate-fade-in">
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              <CheckSquare className="h-4 w-4 text-indigo-400" />
+              <span>Create New Task</span>
+            </h2>
+
+            <form onSubmit={handleCreateTask} className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-300">Task Title</label>
+                <input
+                  type="text"
+                  required
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  placeholder="e.g. Audit API authentication scopes"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-300">Assignee (Owner)</label>
+                <input
+                  type="text"
+                  value={newOwner}
+                  onChange={(e) => setNewOwner(e.target.value)}
+                  placeholder="e.g. Elena Vance"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-300">Due Date</label>
+                  <input
+                    type="date"
+                    value={newDue}
+                    onChange={(e) => setNewDue(e.target.value)}
+                    className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-300">Priority</label>
+                  <select
+                    value={newPriority}
+                    onChange={(e) => setNewPriority(e.target.value as Priority)}
+                    className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+                  >
+                    <option value="CRITICAL">Critical</option>
+                    <option value="HIGH">High</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="LOW">Low</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowAddModal(false)}
+                  className="rounded-lg px-3 py-2 text-xs text-slate-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-500 transition-all"
+                >
+                  Save Task
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
 
@@ -348,7 +484,7 @@ export default function TasksPage() {
             </h2>
             <p className="text-xs text-slate-400">
               FollowThrough automatically transforms confirmed decisions into external trackers.
-              Select your team's destination below:
+              Select your destination below:
             </p>
 
             <div className="grid grid-cols-3 gap-2 pt-1">
