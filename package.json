@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start",
-    "seed": "node scripts/seed.mjs"
+    "start": "next start"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
