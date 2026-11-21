@@ -28,33 +28,29 @@ export function detectSpeakers(meetingId: string, rawTranscript: string): Speake
     }
   }
 
-  // If no speakers detected through prefix patterns, extract prominent capitalized proper nouns
+  // If no speakers detected through prefix patterns, do NOT fabricate fake people.
+  // Leave empty so that unattributed transcripts remain unresolved.
   if (speakerCounts.size === 0) {
-    const defaultSpeakers = ["Elena Vance", "Marcus Chen", "Dev Priya"];
-    defaultSpeakers.forEach((name, idx) => {
-      speakerCounts.set(name, 3 - idx);
-    });
+    return [];
   }
 
+  // Functional role keywords based on stated professional designations
   const roleKeywords: Record<string, string> = {
-    marcus: "Product Lead",
-    chen: "Product Lead",
-    elena: "VP of Engineering",
-    vance: "VP of Engineering",
-    priya: "Lead Mobile Engineer",
-    dev: "Lead Mobile Engineer",
-    sam: "Backend Infrastructure",
-    torres: "Backend Infrastructure",
-    rachel: "Frontend Engineer",
-    green: "Frontend Engineer",
-    carlos: "Growth Marketing Lead",
-    mendes: "Growth Marketing Lead",
-    jordan: "Operations Lead",
-    lee: "Operations Lead",
-    david: "Security Lead",
-    miller: "Security Lead",
-    sofia: "Release Engineer",
-    martinez: "Release Engineer",
+    lead: "Lead",
+    vp: "Vice President",
+    director: "Director",
+    architect: "Architect",
+    engineer: "Engineer",
+    frontend: "Frontend Engineer",
+    backend: "Backend Infrastructure",
+    mobile: "Mobile Engineer",
+    devops: "DevOps Engineer",
+    security: "Security Engineer",
+    product: "Product Lead",
+    marketing: "Growth Marketing",
+    operations: "Operations Lead",
+    design: "Product Designer",
+    qa: "QA Engineer",
   };
 
   const speakers: Speaker[] = [];

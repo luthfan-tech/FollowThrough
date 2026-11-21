@@ -72,22 +72,20 @@ let writeLock: Promise<void> = Promise.resolve();
 
 export function writeDatabase(data: DatabaseSchema): void {
   ensureDirectoryExists();
-  // Unique temp file per atomic transaction prevents collision across concurrent threads
-  const uniqueId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-  const tempFile = `${DB_FILE}.${uniqueId}.tmp`;
+  const serialized = JSON.stringify(data, null, 2);
 
+  // Safe direct sync write compatible with Windows / OneDrive file locks and Linux volumes
   try {
-    fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), "utf-8");
-    fs.renameSync(tempFile, DB_FILE);
+    fs.writeFileSync(DB_FILE, serialized, "utf-8");
   } catch (err) {
-    if (fs.existsSync(tempFile)) {
-      try {
-        fs.unlinkSync(tempFile);
-      } catch {
-        // Ignore cleanup error
-      }
+    try {
+      const fd = fs.openSync(DB_FILE, "w");
+      fs.writeFileSync(fd, serialized, "utf-8");
+      fs.closeSync(fd);
+    } catch (retryErr) {
+      console.error("writeDatabase error:", retryErr);
+      throw retryErr;
     }
-    throw err;
   }
 }
 
@@ -179,7 +177,16 @@ export function updateDecision(id: string, updates: Partial<Decision>): Decision
   const db = readDatabase();
   const idx = db.decisions.findIndex((d) => d.id === id);
   if (idx === -1) return null;
-  db.decisions[idx] = { ...db.decisions[idx], ...updates };
+
+  const current = db.decisions[idx];
+  // If decision content is edited without explicit re-approval, require fresh approval
+  const contentChanged = updates.decision_text && updates.decision_text !== current.decision_text;
+  let resetApproval = {};
+  if (contentChanged && updates.approved === undefined) {
+    resetApproval = { approved: false, status: "proposed" };
+  }
+
+  db.decisions[idx] = { ...current, ...updates, ...resetApproval };
   writeDatabase(db);
   return db.decisions[idx];
 }
@@ -201,7 +208,21 @@ export function updateActionItem(id: string, updates: Partial<ActionItem>): Acti
   const db = readDatabase();
   const idx = db.action_items.findIndex((a) => a.id === id);
   if (idx === -1) return null;
-  db.action_items[idx] = { ...db.action_items[idx], ...updates };
+
+  const current = db.action_items[idx];
+  // If core deliverable attributes are edited without explicit re-approval, invalidate prior approval
+  const contentChanged =
+    (updates.title && updates.title !== current.title) ||
+    (updates.owner && updates.owner !== current.owner) ||
+    (updates.due_date !== undefined && updates.due_date !== current.due_date) ||
+    (updates.description && updates.description !== current.description);
+
+  let resetApproval = {};
+  if (contentChanged && updates.approved === undefined) {
+    resetApproval = { approved: false, status: "PROPOSED" };
+  }
+
+  db.action_items[idx] = { ...current, ...updates, ...resetApproval };
   writeDatabase(db);
   return db.action_items[idx];
 }
@@ -236,7 +257,12 @@ export function getReminders(): Reminder[] {
 
 export function saveReminders(reminders: Reminder[]): void {
   const db = readDatabase();
-  db.reminders.push(...reminders);
+  if (!db.reminders) db.reminders = [];
+  const existingMap = new Map(db.reminders.map((r) => [r.id, r]));
+  for (const rem of reminders) {
+    existingMap.set(rem.id, rem);
+  }
+  db.reminders = Array.from(existingMap.values());
   writeDatabase(db);
 }
 

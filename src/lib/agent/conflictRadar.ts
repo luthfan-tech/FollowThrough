@@ -114,6 +114,33 @@ export function runConflictRadar(
           previous_owner: prev.owner,
         });
       }
+
+      // Rule: Generalized Semantic Contradiction / Policy Reversal Check
+      const reversalVerbs = ["replace", "abandon", "drop", "switch from", "migrate away", "discontinue", "cancel", "reverse", "override", "stop using", "deprecate", "sunset"];
+      const hasReversalVerb = reversalVerbs.some((v) => curText.includes(v));
+      const sharedKeywords = (mem.matchedKeywords || []).filter((k) => k.length > 3);
+
+      if (hasReversalVerb && sharedKeywords.length >= 1) {
+        const alreadyFlagged = conflicts.some(
+          (c) => c.current_decision_id === proposed.id && c.previous_decision_id === prev.id
+        );
+        if (!alreadyFlagged) {
+          conflicts.push({
+            current_decision_id: proposed.id,
+            previous_decision_id: prev.id,
+            conflict_type: "CONTRADICTION",
+            severity: "HIGH",
+            explanation: `Potential Policy Contradiction: This proposed decision appears to reverse or alter a ratified policy from "${prev.meeting_title || 'Prior Architectural Record'}" regarding topic [${sharedKeywords.join(", ")}].`,
+            recommendation: `Conduct an architectural review before reversing this decision to verify team consensus and prevent regressions.`,
+            resolved: false,
+            current_decision_text: proposed.decision_text,
+            previous_decision_text: prev.decision_text,
+            previous_meeting_title: prev.meeting_title,
+            previous_meeting_date: prev.decision_date,
+            previous_owner: prev.owner,
+          });
+        }
+      }
     }
   }
 

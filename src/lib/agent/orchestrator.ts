@@ -108,13 +108,24 @@ export async function runAgentPipeline(meetingId: string, geminiApiKey?: string)
   saveDecisions(meetingId, decisions);
   saveActionItems(meetingId, actionItems);
 
-  addAgentEvent({
-    meeting_id: meetingId,
-    step: "extract",
-    status: "SUCCESS",
-    message: `Extracted ${decisions.length} decision candidates and ${actionItems.length} proposed action items.`,
-    metadata: { decisionsCount: decisions.length, actionsCount: actionItems.length },
-  });
+  if (extracted.providerError) {
+    addAgentEvent({
+      meeting_id: meetingId,
+      step: "extract",
+      status: "WARNING",
+      message: `AI Provider Notice: ${extracted.providerError}. Switched to deterministic parser (${decisions.length} decisions, ${actionItems.length} action items).`,
+      metadata: { provider: extracted.provider, error: extracted.providerError },
+    });
+  } else {
+    const providerLabel = extracted.provider === "gemini" ? "Google Gemini" : extracted.provider === "openai" ? "OpenAI GPT-4o" : "Deterministic Parser";
+    addAgentEvent({
+      meeting_id: meetingId,
+      step: "extract",
+      status: "SUCCESS",
+      message: `Extraction complete via ${providerLabel}: Identified ${decisions.length} decisions and ${actionItems.length} proposed action items.`,
+      metadata: { provider: extracted.provider, decisionsCount: decisions.length, actionsCount: actionItems.length },
+    });
+  }
 
   // Step 4: Retrieve Relevant Organizational Decision Memory
   addAgentEvent({
@@ -225,6 +236,7 @@ export async function executeHumanConfirmedActions(payload: HumanConfirmationPay
 
   const meeting = getMeetingById(meetingId);
   if (!meeting) throw new Error(`Meeting not found: ${meetingId}`);
+  const wasAlreadyExecuted = meeting.status === "executed";
 
   // 1. Update Decisions in memory
   const allDecisions = getDecisions();
@@ -286,18 +298,20 @@ export async function executeHumanConfirmedActions(payload: HumanConfirmationPay
   };
   saveMeeting(executedMeeting);
 
-  // 4. Record Agent Event
-  addAgentEvent({
-    meeting_id: meetingId,
-    step: "executed",
-    status: "SUCCESS",
-    message: `Human Confirmation Received: Committed ${approvedDecisionIds.length} decisions into organizational memory, dispatched ${approvedActionItemIds.length} tasks to tracker, and scheduled ${createdReminders.length} proactive reminders.`,
-    metadata: {
-      approvedDecisions: approvedDecisionIds.length,
-      approvedTasks: approvedActionItemIds.length,
-      remindersScheduled: createdReminders.length,
-    },
-  });
+  // 4. Record Agent Event (Idempotent - records confirmation on first execution)
+  if (!wasAlreadyExecuted) {
+    addAgentEvent({
+      meeting_id: meetingId,
+      step: "executed",
+      status: "SUCCESS",
+      message: `Human Confirmation Received: Committed ${approvedDecisionIds.length} decisions into organizational memory, dispatched ${approvedActionItemIds.length} tasks to tracker, and scheduled ${createdReminders.length} proactive reminders.`,
+      metadata: {
+        approvedDecisions: approvedDecisionIds.length,
+        approvedTasks: approvedActionItemIds.length,
+        remindersScheduled: createdReminders.length,
+      },
+    });
+  }
 
   // 5. Update Weekly Digests
   generateAllDigests();

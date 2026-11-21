@@ -19,8 +19,10 @@ export function generateAllDigests(): WeeklyDigest[] {
     }
   });
 
-  // Guarantee key members exist for demo
-  ["Marcus Chen", "Dev Priya", "Elena Vance", "Sam Torres", "Carlos Mendes"].forEach((p) => personSet.add(p));
+  // Only generate digests for actual owners present in tasks or decisions
+  if (personSet.size === 0) {
+    return [];
+  }
 
   const digests: WeeklyDigest[] = [];
   for (const person of Array.from(personSet)) {

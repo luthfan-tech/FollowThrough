@@ -114,6 +114,9 @@ export default function TasksPage() {
 
   const owners = Array.from(new Set(tasks.map((t) => t.owner || "Unassigned")));
 
+  // Strictly enforce that rejected or unapproved tasks never enter execution export
+  const exportableTasks = tasks.filter((t) => t.approved && t.status !== "REJECTED");
+
   const filteredTasks = tasks.filter((t) => {
     const matchesOwner = selectedOwner === "ALL" || (t.owner || "Unassigned") === selectedOwner;
     const matchesPriority = selectedPriority === "ALL" || t.priority === selectedPriority;
@@ -510,12 +513,15 @@ export default function TasksPage() {
 
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs sm:text-sm text-slate-700 space-y-1.5">
               <div className="flex items-center justify-between text-slate-900">
-                <span className="font-bold">Payload Ready:</span>
-                <span className="font-mono text-xs text-[#00638E] font-extrabold">{filteredTasks.length} tasks</span>
+                <span className="font-bold">Verified Approved Payloads:</span>
+                <span className="font-mono text-xs text-[#00638E] font-extrabold">{exportableTasks.length} tasks</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                Each task includes meeting origin metadata, assigned DRI, and calculated deadline.
+                Guaranteed: Only human-approved tasks ({exportableTasks.length}) are included. Any unapproved or rejected action items are strictly excluded from execution payloads.
               </p>
+              <div className="pt-1 text-[11px] text-slate-500 font-mono">
+                Format: Webhook / REST JSON Schema [Active Sandbox Mode]
+              </div>
             </div>
 
             <div className="flex items-center justify-end gap-3 pt-2">
@@ -529,21 +535,21 @@ export default function TasksPage() {
               <button
                 type="button"
                 onClick={handleSimulateSync}
-                disabled={syncStatus !== null}
+                disabled={syncStatus !== null || exportableTasks.length === 0}
                 className="flex items-center gap-2 rounded-lg bg-[#00638E] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#004A6B] transition-all shadow-sm disabled:opacity-50"
               >
                 {syncStatus === "connecting" ? (
                   <>
                     <span className="h-3.5 w-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                    <span>Syncing...</span>
+                    <span>Dispatching...</span>
                   </>
                 ) : syncStatus === "success" ? (
                   <>
                     <CheckCircle2 className="h-4 w-4 text-emerald-300" />
-                    <span>Dispatched!</span>
+                    <span>Payload Dispatched!</span>
                   </>
                 ) : (
-                  <span>Dispatch Sync</span>
+                  <span>Export Approved Payloads</span>
                 )}
               </button>
             </div>

@@ -2,22 +2,40 @@
 
 > **“Meetings create decisions. FollowThrough makes sure they get executed.”**
 
-**FollowThrough** is an autonomous, human-in-the-loop Agentic AI platform built for the **Agentic AI Hackathon** (Problem Statement: *Meeting-to-execution agent*).
+**FollowThrough** is an autonomous, human-in-the-loop Agentic AI execution platform built for the **Agentic AI Hackathon** (Problem Statement: *Meeting-to-execution agent*).
 
-Unlike conventional meeting tools that merely generate passive summaries or chat transcripts, FollowThrough is an **execution agent**. It attributes speakers, extracts ratified decisions and actionable deliverables, cross-checks persistent organizational memory with its **Conflict Radar** to prevent contradictions and teammate overload, enforces a mandatory human confirmation gate, dispatches verified tasks into tracking systems, schedules proactive reminders, and generates personalized weekly digests.
+Unlike conventional meeting tools that merely generate passive summaries, bulleted lists, or raw chat transcripts, FollowThrough is an **execution agent**. It attributes speakers, extracts ratified decisions and actionable deliverables, cross-checks persistent organizational memory with its **Conflict Radar** to prevent contradictions and teammate overload, enforces a mandatory human confirmation gate, dispatches verified tasks into tracking systems, schedules proactive reminders, and generates personalized weekly digests.
 
 ---
 
-## 🌟 Key Differentiators
+## 🎯 What Problem It Solves & Who It Helps
 
-| Standard Meeting Summarizers | FollowThrough Execution Agent |
-| :--- | :--- |
-| Generates walls of unverified text | Extracts strict, validated decision & task schemas |
-| Zero memory of prior organizational agreements | **Persistent Decision Memory**: Indexes every approved policy across meetings |
-| Unaware of contradictory commitments | **Conflict Radar**: Identifies contradictions, milestone breaches, missing DRIs, and capacity collisions |
-| Blindly fires notifications or creates noise | **Human-in-the-Loop Confirmation Gate**: Mandatory review before any state change |
-| Passive notes that get lost in Slack | **Task Board & Integrations**: Kanban tracking + Linear/Notion sync simulation |
-| Generic meeting recap sent to everyone | **Personalized Weekly Digest**: Tailored deliverables, overdue alerts, and decision impact per person |
+### The Problem: The Consensus-to-Execution Chasm
+Modern high-velocity engineering, product, and leadership teams spend hours in syncs, architecture reviews, and sprint planning. However:
+1. **Consensus Evaporates**: Decisions ratified in meetings are buried in 10-page text documents or lost in Slack channels.
+2. **Prior Architectural Commitments Are Forgotten**: A team standardizes on an identity provider or backward compatibility policy in March, only to accidentally reverse it in a June sprint because nobody remembered the prior Architecture Decision Record (ADR).
+3. **Tasks Lack Clear Accountability**: Action items are recorded without specific directly-responsible individuals (DRIs) or realistic deadlines.
+4. **Autonomous AI Agents Cause Chaos**: Black-box agents that write directly to Jira, Linear, or GitHub without human sign-off create duplicate work, notify wrong stakeholders, and trigger operational regressions.
+
+### Who It Helps
+- **Engineering Leads & Technical Program Managers**: Guarantees architectural decisions (ADRs) are systematically remembered and enforced across meetings.
+- **Product Managers & Sprint Planners**: Catches deadline collisions, unassigned deliverables, and developer capacity overload before sprint commit.
+- **Cross-Functional Team Members**: Delivers tailored weekly execution digests so individuals see only the tasks, deadlines, and policy changes that directly affect them.
+
+---
+
+## ⚖️ What the AI Does vs. What Ordinary Application Logic Does
+
+To ensure transparency, reliability, and security, FollowThrough strictly demarcates between non-deterministic probabilistic intelligence and deterministic governance logic:
+
+| Functional Layer | What the AI Does (LLM Inference) | What Ordinary Application Logic Does (Deterministic Code) |
+| :--- | :--- | :--- |
+| **Ingestion & Normalization** | Semantic understanding of informal conversational idioms. | Regex tokenization of timestamps (`[01:23]`), speaker prefix matching, and whitespace sanitization. |
+| **Speaker Attribution** | Identifies speaking turns and infers technical roles from conversational context. | Speaker pattern parsing (`Name: statement`), confidence scoring, and strict unresolved fallback handling. |
+| **Artifact Extraction** | Contextual extraction of ratified decisions, action items, risks, and open questions into strict JSON schemas. | Deduplication, ID generation, entity relationship binding, and dynamic regex fallback parsing if AI APIs are unavailable. |
+| **Memory & Conflict Radar** | Contextual semantic contradiction analysis between new proposals and past decisions. | BM25/keyword indexing, tokenization, stop-word filtering, numerical deadline comparison (<24h velocity traps), duplicate task lookup, and DRI overload aggregation. |
+| **Execution Scoring** | Generates contextual qualitative risk commentary and actionable recommendations. | Strict 0–100 mathematical scoring formula based on Decision Clarity (25), Ownership DRI (25), Deadline Precision (25), and Risk Deductions. |
+| **Governance & Dispatch** | Formulates suggested task descriptions and weekly executive pulse summaries. | **Mandatory Human-in-the-Loop Confirmation Gate**, approval state persistence, automatic invalidation of approval when content is edited, idempotent reminder scheduling, and REST API dispatch. |
 
 ---
 
@@ -25,7 +43,7 @@ Unlike conventional meeting tools that merely generate passive summaries or chat
 
 ```mermaid
 flowchart TD
-    subgraph Ingestion["1. Ingestion & Normalization"]
+    subgraph Ingestion["1. Ingestion & Diarization"]
         A[Raw Transcript / File Ingestion] --> B[Speaker Attribution & Role Inference]
     end
 
@@ -49,7 +67,7 @@ flowchart TD
 
     subgraph Scoring["4. Execution Scoring"]
         G --> I[Execution Score Engine 0-100]
-        I --> J[Clarity + Ownership + Deadlines - Penalties]
+        I --> J[Clarity + Ownership + Deadlines - Risk Penalty]
     end
 
     subgraph ConfirmationGate["5. Human-in-the-Loop Gate"]
@@ -59,124 +77,129 @@ flowchart TD
 
     subgraph Dispatch["6. Autonomous Execution"]
         L --> M[(Commit to Decision Memory)]
-        L --> N[Dispatch to Task Board / Linear / Notion]
-        L --> O[Schedule Proactive Deadline Reminders]
+        L --> N[Dispatch to Task Board / Webhook]
+        L --> O[Schedule Proactive Reminders]
         L --> P[Generate Personalized Weekly Digests]
     end
 ```
 
 ---
 
-## 🤖 The Multi-Step Agentic Workflow
+## 🛡️ Enterprise Security & Execution Guarantees
 
-FollowThrough executes an 8-stage agentic pipeline:
-
-1. **Ingest & Normalize Transcript**: Cleans colloquialisms, tokenizes timestamps (`[00:45]`), and handles pasted text or `.txt`/`.md` uploads.
-2. **Speaker Attribution & Persona Mapping**: Resolves conversational prefixes to organizational personas (e.g. Elena Vance → VP of Engineering, Marcus Chen → Product Lead).
-3. **Structured JSON Extraction**: Employs structured schemas to extract ratified decisions, action items, assignees, deadlines, and project risks.
-4. **Organizational Memory Query**: Queries historical decisions stored across past meetings to retrieve relevant baseline commitments.
-5. **Conflict Radar Analysis**: Cross-references new proposals with historical memory to detect:
-   - **`CONTRADICTION`**: Reversing ratified policies (e.g. dropping iOS 15 support when ADR-24 mandated backward compatibility).
-   - **`CHANGED_COMMITMENT`**: Shifting public release milestones without stakeholder consensus.
-   - **`MISSING_OWNER`**: Critical tasks left unassigned or assigned vaguely to "the team".
-   - **`UNREALISTIC_DEADLINE`**: Massive architectural overhauls scheduled in `<24h`.
-   - **`DUPLICATE_TASK`**: Spawning redundant deliverables already tracked in open sprints.
-   - **`DEADLINE_CONFLICT`**: Assigning multiple concurrent high-stakes deliverables to one teammate.
-6. **Execution Score Calculation**: Assigns a transparent 0–100 score based on Decision Clarity (25), Ownership Coverage (25), Deadline Precision (25), and Risk Deductions.
-7. **Human Confirmation Gate**: Staged actions are reviewed on an approval screen. **No external tasks or memories are created without explicit confirmation**.
-8. **Autonomous Dispatch**: Commits approved decisions to long-term memory, creates tasks on the Kanban board, schedules deadline reminders, and updates personal weekly digests.
+FollowThrough enforces zero-trust execution principles:
+1. **Rejected Actions Never Execute**: Action items rejected during review are marked `REJECTED` and strictly excluded from task boards and export payloads.
+2. **Approval Bound to Exact Content**: If a user edits an approved action item's title, owner, or deadline, approval is immediately invalidated (`approved: false`, `status: PROPOSED`), requiring re-review before execution.
+3. **Idempotent Operations**: Retries and repeated confirmation clicks deduplicate by unique IDs, preventing duplicate external tasks or reminder spam.
+4. **Prompt Injection Defense**: All user transcripts are wrapped in `<untrusted_meeting_transcript>` boundaries with strict system prompt overrides instructing the model to treat meeting text as raw data, never as execution instructions.
+5. **No Fabricated Owners or Deadlines**: If an action item lacks a clear owner or deadline in the transcript, it remains `Unassigned` and deadline `null`—the agent never hallucinates fake assignees or arbitrary dates.
+6. **Honest Error Handling**: If an LLM API key fails, expires, or hits quota, the system logs an honest `WARNING` event explaining the error and switches to the deterministic parser fallback rather than faking live LLM success.
+7. **OWASP Secret Safety**: All API keys reside exclusively in server-side environment variables (`process.env.GEMINI_API_KEY` / `OPENAI_API_KEY`) and are never exposed in browser bundles or client responses.
 
 ---
 
-## 💻 Tech Stack
+## 📋 Implemented Features vs. Known Limitations
 
-- **Framework**: Next.js 14+ (App Router, Server Components & Route Handlers)
-- **Language**: TypeScript (strict type safety)
-- **Styling**: Tailwind CSS with dark-mode SaaS styling and custom glowing accents
-- **Icons**: Lucide React
-- **Persistence**: File-backed ACID JSON database (`data/database.json`) with automatic directory creation and atomic file operations
-- **AI Engine**: Hybrid Dual-Engine:
-  - **Live LLM Mode**: Google Gemini 1.5 Flash (`@google/generative-ai`) with structured JSON schema output
-  - **Deterministic Heuristic Engine**: Zero-API-key instant demo fallback so judges never hit rate limits or setup friction
+### Implemented Features
+- **Transcript Ingestion**: Multi-speaker text paste or `.txt`/`.md` document upload with automatic turnaround parsing.
+- **Speaker Attribution**: Regex and turn-prefix extraction mapping speakers to organizational roles.
+- **Dual Extraction Engine**: Live Google Gemini / OpenAI GPT-4o JSON structured output, with dynamic deterministic fallback.
+- **Persistent Decision Memory**: ACID JSON-backed store (`data/database.json`) retaining ratified ADRs across sessions and server restarts.
+- **Conflict Radar**: 6-vector analysis identifying policy contradictions, milestone slippage, missing DRIs, unrealistic turnaround times (<24h), duplicate tasks, and assignee overload.
+- **Execution Score (0–100)**: Quantitative scoring of decision clarity, DRI coverage, deadline precision, and conflict risks.
+- **Human-in-the-Loop Confirmation Gate**: Sticky approval board requiring manual toggling and confirmation before committing actions.
+- **Confirmed Task Board**: Filterable Kanban and list views with status lifecycle transitions (`PROPOSED` → `APPROVED` → `IN_PROGRESS` → `COMPLETED` → `OVERDUE`).
+- **Proactive Deadline Reminders**: Automatic 24-hour pre-deadline alert calculations with REST API endpoints (`/api/reminders`).
+- **Per-Person Weekly Digests**: Tailored briefings aggregating due tasks, overdue blockers, relevant policy decisions, and conflict warnings with one-click Markdown copy for Slack/Email.
+- **Responsive Theme**: Clean Paper White (`#FFFFFF`) with Dark Azure (`#00638E`) and Deep Azure (`#004A6B`) typography.
+
+### Known Limitations
+- **External Webhook Dispatch**: FollowThrough generates verified REST/Webhook JSON schemas for Linear and Notion. Direct cloud writes require connecting your team's webhook or OAuth token.
+- **Audio File Transcription**: FollowThrough processes text transcripts from Zoom, Meet, Teams, Whisper, or Otter. Direct raw audio ingestion requires pre-processing via Whisper or transcription services.
+- **Multi-Tenant Authorization**: Designed for single-team/workspace deployment. Multi-tenant enterprise SSO (SAML/Okta) is slated for enterprise release.
 
 ---
 
-## 🚀 Quickstart & Setup Instructions
+## 🚀 Setup & Credentials
 
 ### Prerequisites
-- Node.js 18+ (tested on Node v20 & v26)
+- Node.js 18+ (tested on Node v20 & v22 LTS)
 - npm or yarn
 
 ### 1. Clone & Install
 ```bash
-git clone <repository-url>
-cd followthrough
+git clone https://github.com/luthfan-tech/FollowThrough.git
+cd FollowThrough
 npm install
 ```
 
-### 2. Seed Database
-Initialize the persistent database with baseline organizational ADRs and historical meetings:
-```bash
-node scripts/seed.mjs
-```
-
-### 3. Optional: Configure Gemini API Key
-To use the live Gemini 1.5 Flash LLM for extraction, create a `.env.local` file:
+### 2. Configure Environment (Optional)
+To use live Google Gemini or OpenAI models, create a `.env.local` file in the project root:
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
+# Optional OpenAI fallback:
+OPENAI_API_KEY=your_openai_api_key_here
 ```
-*(Note: If no API key is provided, FollowThrough automatically uses its deterministic heuristic engine to deliver 100% feature functionality during demos).*
+*(Note: If no API keys are provided, FollowThrough automatically runs on its built-in deterministic heuristic agent, allowing 100% offline hackathon judging without rate limits or external dependencies).*
 
-### 4. Run Development Server
+### 3. Build & Run
 ```bash
-npm run dev
+# Build production bundle
+npm run build
+
+# Start production server
+npm run start
 ```
 Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ---
 
-## 🧪 Interactive Demo Guide (3 Scenarios)
+## ⏱️ Reproducible 3-Minute Demo Walkthrough
 
-FollowThrough comes with 3 pre-configured demo transcripts accessible right from the UI:
+### Step 1: Ingest First Meeting (1:00)
+1. Navigate to **[http://localhost:3000/meetings/new](http://localhost:3000/meetings/new)**.
+2. Enter Title: `Mobile Infrastructure Sync`.
+3. Paste the following transcript:
+   ```text
+   Elena: We agreed to standardize on Tailwind CSS as our official frontend standard.
+   Marcus: I will document the design tokens and component migration by Friday.
+   Dev Priya: Alex, can you review the authentication flow?
+   Alex: I will review the authentication flow by next Wednesday.
+   ```
+4. Click **Run FollowThrough Agent Pipeline**.
+5. Observe the autonomous activity timeline trace, the attributed speakers (Elena, Marcus, Dev Priya, Alex), the extracted decisions, and the staged action items.
+6. Click **Confirm & Execute Approved Actions** to commit the decision to persistent memory.
 
-### Scenario 1: Q3 Mobile App Launch Sync (Direct Contradiction)
-- **Click**: Dashboard → **"Load & Run Scenario"** on Sample 1
-- **What Happens**:
-  - The agent identifies a **CRITICAL CONTRADICTION**: The meeting decides to *"Drop iOS 15 support"*, directly violating ratified **ADR-24** in organizational memory (*"Mobile v2.0 must maintain iOS 15+ compatibility for 28% of enterprise customers"*).
-  - The agent flags another **CRITICAL VIOLATION**: Attempting to switch the auth provider to Auth0 without an architectural review.
-  - The **Conflict Radar** shows a side-by-side comparison with the prior decision, date, and owner.
-  - The user can reject the contradictory decision, approve the safe tasks, and click **"Confirm & Execute"**.
+### Step 2: Test Conflict Radar Contradiction (1:00)
+1. Navigate to **[http://localhost:3000/meetings/new](http://localhost:3000/meetings/new)**.
+2. Enter Title: `Frontend Architecture Refactor`.
+3. Paste a transcript that contradicts the prior agreement:
+   ```text
+   Carlos: We agreed to drop Tailwind CSS and replace with Bootstrap across all services.
+   Jordan: Someone needs to handle the rewrite overnight.
+   ```
+4. Click **Run FollowThrough Agent Pipeline**.
+5. Watch the **Conflict Radar** fire:
+   - **`[HIGH] CONTRADICTION`**: Explains that dropping Tailwind CSS reverses the ratified decision from `Mobile Infrastructure Sync`.
+   - **`[MEDIUM] MISSING_OWNER`**: Flags that the rewrite task was assigned vaguely to "someone" with no DRI.
+6. Toggle the contradictory decision to **Rejected** and confirm the safe items.
 
-### Scenario 2: Core Platform Sprint 42 Planning (Missing Owners & Unrealistic Deadlines)
-- **Click**: Ingestion Studio → Sample 2
-- **What Happens**:
-  - The agent detects a **MISSING OWNER** on a critical Redis payment service overhaul.
-  - The agent detects an **UNREALISTIC DEADLINE**: Tasking Sam Torres to refactor 40 GraphQL endpoints in `<18h`.
-  - The Execution Score drops to highlight organizational execution risk.
-
-### Scenario 3: Weekly Ops & Growth Review (Duplicate Tasks & Overload)
-- **Click**: Ingestion Studio → Sample 3
-- **What Happens**:
-  - Flags a **DUPLICATE TASK** (Attribution tracking pixel already assigned to Carlos in `MKT-89`).
-  - Detects **ASSIGNEE OVERLOAD**: Carlos Mendes assigned 3 concurrent high-stakes deliverables on the same Friday.
-  - Detects a violation of the active Google Ads spend freeze policy.
+### Step 3: Verify Task Board & Weekly Digest (1:00)
+1. Navigate to **[Task Board](http://localhost:3000/tasks)**: Notice verified tasks in their respective Kanban columns. Test editing a task title and observe that the approval status automatically resets to `PROPOSED` for safety.
+2. Navigate to **[Weekly Digest](http://localhost:3000/digest)**: Select `Marcus` or `Alex` to inspect personalized briefings. Click **Copy for Slack / Email** to copy the formatted Markdown briefing.
 
 ---
 
-## 🗺️ Future Roadmap
+## 🤝 Human Contribution & Antigravity Assistance
 
-- [ ] **Native Slack & Zoom Bots**: Real-time webhook ingestion directly from Zoom cloud recording webhooks and Google Meet bots.
-- [ ] **Two-Way Linear & Jira Sync**: Bidirectional sync syncing status updates back to meeting records when PRs merge.
-- [ ] **Voice Attribution Diarization**: Multi-modal audio diarization directly from raw MP3/WAV recordings.
-- [ ] **Predictive Capacity Modeling**: LLM-driven velocity forecasting based on historical sprint burndown data.
+- **Human Architect**:
+  - Conceived the core problem statement: eliminating consensus evaporation and enforcing post-meeting execution.
+  - Defined the 6-class conflict taxonomy and the Human-in-the-Loop Confirmation Gate specification.
+  - Curated the visual design language: Paper White palette, Dark Azure branding, and clothesline card architecture.
+  - Provided ongoing domain guidance on enterprise engineering review workflows.
 
----
-
-## 🤝 Human Contribution vs. AI Generation
-
-| Component | Architecture & Human Engineering | AI Agent Autonomous Generation |
-| :--- | :--- | :--- |
-| **System Design** | Architecture planning, entity relationships, conflict taxonomy | Dynamic pipeline orchestration |
-| **Conflict Radar** | 6-class conflict heuristics, severity rules, memory retrieval | Semantic contradiction detection & contextual explanations |
-| **Safety & Governance**| Mandatory confirmation gatekeeper, rejection overrides | Proposed task generation & draft scheduling |
-| **User Experience** | Responsive dark-mode UI, Kanban board, Per-person digest view | Dynamic summary generation, speaker persona inference |
+- **Antigravity AI Assistant**:
+  - Implemented the full-stack Next.js 14 App Router codebase, typed API route handlers, and SQLite/JSON persistence layer.
+  - Developed the speaker attribution regex engine and the dual-mode extraction pipeline (Gemini + Deterministic fallback).
+  - Built the multi-factor execution scoring engine and the Conflict Radar semantic matcher.
+  - Hardened enterprise security: implemented untrusted transcript framing, content-bound approval invalidation, and Windows file-lock synchronization.
