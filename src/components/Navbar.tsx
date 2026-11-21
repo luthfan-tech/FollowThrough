@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
@@ -75,21 +76,27 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#090d16]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#090d16]/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand */}
+        {/* Brand with User Logo */}
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25 transition-transform group-hover:scale-105">
-              <Sparkles className="h-5 w-5" />
+            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-[#E06D53]/40 bg-white shadow-md shadow-[#E06D53]/20 transition-transform group-hover:scale-105">
+              <Image
+                src="/brand-logo.jpg"
+                alt="FollowThrough Logo"
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-lg font-bold tracking-tight text-white group-hover:text-indigo-300 transition-colors">
+                <span className="text-base sm:text-lg font-extrabold tracking-tight text-white group-hover:text-[#E06D53] transition-colors">
                   FollowThrough
                 </span>
-                <span className="rounded-full bg-indigo-500/10 px-2 py-0.5 text-[10px] font-semibold text-indigo-400 border border-indigo-500/20">
-                  LIVE AGENT
+                <span className="rounded-full bg-[#E06D53]/15 px-2 py-0.5 text-[9px] font-bold text-[#E06D53] border border-[#E06D53]/30 uppercase tracking-wider">
+                  AI AGENT
                 </span>
               </div>
               <p className="text-[11px] text-slate-400">Meeting-to-Execution Agent</p>
@@ -107,7 +114,7 @@ export function Navbar() {
                   href={link.href}
                   className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
                     isActive
-                      ? "bg-indigo-600/15 text-indigo-300 border border-indigo-500/30"
+                      ? "bg-[#E06D53]/15 text-[#FAF6EC] border border-[#E06D53]/40"
                       : "text-slate-400 hover:bg-slate-800/60 hover:text-slate-200"
                   }`}
                 >
@@ -152,7 +159,7 @@ export function Navbar() {
           {/* New Meeting CTA */}
           <Link
             href="/meetings/new"
-            className="flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-500 transition-all active:scale-95"
+            className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-[#E06D53] to-[#2A8082] px-3.5 py-1.5 text-xs font-semibold text-white shadow-md shadow-[#E06D53]/20 hover:opacity-95 transition-all active:scale-95"
           >
             <Plus className="h-4 w-4" />
             <span>Ingest Meeting</span>

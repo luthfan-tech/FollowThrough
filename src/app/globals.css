@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Rubik+Mono+One&family=Bungee&family=Syne:wght@800;900&family=Aref+Ruqaa:wght@700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -60,4 +62,41 @@ body {
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Retro Funk Typography & Poster Styling */
+.font-funk {
+  font-family: 'Righteous', 'Rubik Mono One', 'Syne', cursive, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-funk-arabic {
+  font-family: 'Aref Ruqaa', 'Righteous', cursive, sans-serif;
+}
+
+/* Layered 70s / Sai Abhyankar "FA FA FA" Retro-Funk Drop Extrusion */
+.funk-text-extrusion {
+  color: #FAF6EC;
+  text-shadow:
+    2px 2px 0px #E06D53,
+    4px 4px 0px #2A8082,
+    6px 6px 0px #1B4D57,
+    8px 8px 0px #3B0A16,
+    11px 11px 0px #1E050B,
+    14px 14px 22px rgba(0, 0, 0, 0.95);
+}
+
+.funk-text-extrusion-sm {
+  color: #FAF6EC;
+  text-shadow:
+    1.5px 1.5px 0px #E06D53,
+    3px 3px 0px #2A8082,
+    4.5px 4.5px 0px #3B0A16,
+    6px 6px 12px rgba(0, 0, 0, 0.85);
+}
+
+/* Subtle Film Grain Noise overlay */
+.bg-film-grain {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
 }

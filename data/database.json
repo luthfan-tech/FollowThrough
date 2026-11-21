@@ -5,6 +5,92 @@
   "action_items": [],
   "conflicts": [],
   "reminders": [],
-  "digests": [],
+  "digests": [
+    {
+      "id": "dig-marcuschen",
+      "person": "Marcus Chen",
+      "week_start": "2026-11-21T09:59:55.761Z",
+      "summary": "0 deliverable(s) due this upcoming week.",
+      "tasks_due": [],
+      "overdue_tasks": [],
+      "decisions_affecting_them": [],
+      "conflicts_requiring_attention": [],
+      "completed_work": [
+        {
+          "id": "c-0",
+          "title": "Prior sprint milestones verified"
+        }
+      ],
+      "generated_at": "2026-11-21T09:59:55.761Z"
+    },
+    {
+      "id": "dig-devpriya",
+      "person": "Dev Priya",
+      "week_start": "2026-11-21T09:59:55.767Z",
+      "summary": "0 deliverable(s) due this upcoming week.",
+      "tasks_due": [],
+      "overdue_tasks": [],
+      "decisions_affecting_them": [],
+      "conflicts_requiring_attention": [],
+      "completed_work": [
+        {
+          "id": "c-0",
+          "title": "Prior sprint milestones verified"
+        }
+      ],
+      "generated_at": "2026-11-21T09:59:55.767Z"
+    },
+    {
+      "id": "dig-elenavance",
+      "person": "Elena Vance",
+      "week_start": "2026-11-21T09:59:55.773Z",
+      "summary": "0 deliverable(s) due this upcoming week.",
+      "tasks_due": [],
+      "overdue_tasks": [],
+      "decisions_affecting_them": [],
+      "conflicts_requiring_attention": [],
+      "completed_work": [
+        {
+          "id": "c-0",
+          "title": "Prior sprint milestones verified"
+        }
+      ],
+      "generated_at": "2026-11-21T09:59:55.773Z"
+    },
+    {
+      "id": "dig-samtorres",
+      "person": "Sam Torres",
+      "week_start": "2026-11-21T09:59:55.781Z",
+      "summary": "0 deliverable(s) due this upcoming week.",
+      "tasks_due": [],
+      "overdue_tasks": [],
+      "decisions_affecting_them": [],
+      "conflicts_requiring_attention": [],
+      "completed_work": [
+        {
+          "id": "c-0",
+          "title": "Prior sprint milestones verified"
+        }
+      ],
+      "generated_at": "2026-11-21T09:59:55.781Z"
+    },
+    {
+      "id": "dig-carlosmendes",
+      "person": "Carlos Mendes",
+      "week_start": "2026-11-21T09:59:55.796Z",
+      "summary": "0 deliverable(s) due this upcoming week.",
+      "tasks_due": [],
+      "overdue_tasks": [],
+      "decisions_affecting_them": [],
+      "conflicts_requiring_attention": [],
+      "completed_work": [
+        {
+          "id": "c-0",
+          "title": "Prior sprint milestones verified"
+        }
+      ],
+      "generated_at": "2026-11-21T09:59:55.796Z"
+    }
+  ],
   "agent_events": []
 }
