@@ -1,0 +1,14 @@
+# Sample 3: Weekly Growth & Operations Review
+# Category: Operations & Growth
+# Highlight: Duplicate Tasks & Conflicting Commitments Demo
+
+[00:05] Marcus Chen: Let's do a quick operations sync. Carlos, how is the acquisition pipeline looking?
+[00:30] Carlos Mendes: Cost per acquisition on Google Search is creeping up. I want to immediately adjust our Google Ads bidding budget and inject an extra $15,000 into high-intent keywords.
+[01:05] Jordan Lee: Wait, Carlos. Didn't we have a clear agreement last week to freeze all Google Ads spend adjustments until month-end so data science can calibrate baseline attribution?
+[01:35] Carlos Mendes: I know, but we need lead volume now. Let's make an executive exception and adjust the ad budget starting tomorrow.
+[02:05] Marcus Chen: Okay, approved: Carlos is authorized to adjust Google Ads campaign budgets this week.
+[02:30] Jordan Lee: Also, Carlos, we need someone to set up the attribution tracking pixels for the new checkout funnel.
+[03:00] Carlos Mendes: I will handle the checkout attribution tracking pixel setup by this Friday.
+[03:20] Marcus Chen: And Carlos, remember you also have the quarterly investor deck slides and the enterprise partner onboarding flow due this exact same Friday afternoon.
+[03:45] Carlos Mendes: Yes, I will deliver the attribution pixel, the partner onboarding, and the investor deck all by Friday 5 PM.
+[04:10] Marcus Chen: Great. Jordan, please prepare the vendor audit spreadsheet by next Tuesday. Let's adjourn.

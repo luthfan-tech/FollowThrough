@@ -1,0 +1,125 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Meeting {
+  id              String       @id @default(cuid())
+  title           String
+  date            DateTime     @default(now())
+  source_type     String       @default("paste")
+  raw_transcript  String
+  summary         String?
+  execution_score Int          @default(0)
+  status          String       @default("pending_review")
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updated_at
+
+  speakers        Speaker[]
+  decisions       Decision[]
+  action_items    ActionItem[]
+  conflicts       Conflict[]
+  agent_events    AgentEvent[]
+}
+
+model Speaker {
+  id          String   @id @default(cuid())
+  meeting_id  String
+  name        String
+  role        String?
+  confidence  Float    @default(1.0)
+  created_at  DateTime @default(now())
+
+  meeting     Meeting  @relation(fields: [meeting_id], references: [id], onDelete: Cascade)
+}
+
+model Decision {
+  id              String       @id @default(cuid())
+  meeting_id      String
+  decision_text   String
+  owner           String?
+  status          String       @default("proposed")
+  decision_date   DateTime     @default(now())
+  effective_date  DateTime?
+  context         String?
+  confidence      Float        @default(1.0)
+  approved        Boolean      @default(false)
+  created_at      DateTime     @default(now())
+
+  meeting         Meeting      @relation(fields: [meeting_id], references: [id], onDelete: Cascade)
+  action_items    ActionItem[]
+
+  current_conflicts  Conflict[] @relation("CurrentDecision")
+  previous_conflicts Conflict[] @relation("PreviousDecision")
+}
+
+model ActionItem {
+  id               String     @id @default(cuid())
+  meeting_id       String
+  decision_id      String?
+  title            String
+  description      String?
+  owner            String?
+  due_date         DateTime?
+  priority         String     @default("MEDIUM")
+  status           String     @default("PROPOSED")
+  external_task_id String?
+  approved         Boolean    @default(false)
+  created_at       DateTime   @default(now())
+
+  meeting          Meeting    @relation(fields: [meeting_id], references: [id], onDelete: Cascade)
+  decision         Decision?  @relation(fields: [decision_id], references: [id], onDelete: SetNull)
+  reminders        Reminder[]
+}
+
+model Conflict {
+  id                   String    @id @default(cuid())
+  meeting_id           String
+  current_decision_id  String?
+  previous_decision_id String?
+  conflict_type        String
+  severity             String
+  explanation          String
+  recommendation       String
+  resolved             Boolean   @default(false)
+  created_at           DateTime  @default(now())
+
+  meeting              Meeting   @relation(fields: [meeting_id], references: [id], onDelete: Cascade)
+  current_decision     Decision? @relation("CurrentDecision", fields: [current_decision_id], references: [id], onDelete: SetNull)
+  previous_decision    Decision? @relation("PreviousDecision", fields: [previous_decision_id], references: [id], onDelete: SetNull)
+}
+
+model Reminder {
+  id             String     @id @default(cuid())
+  action_item_id String
+  remind_at      DateTime
+  channel        String     @default("in-app")
+  status         String     @default("SCHEDULED")
+  created_at     DateTime   @default(now())
+
+  action_item    ActionItem @relation(fields: [action_item_id], references: [id], onDelete: Cascade)
+}
+
+model WeeklyDigest {
+  id           String   @id @default(cuid())
+  person       String
+  week_start   DateTime
+  content      String
+  generated_at DateTime @default(now())
+}
+
+model AgentEvent {
+  id         String   @id @default(cuid())
+  meeting_id String
+  step       String
+  status     String
+  message    String
+  metadata   String?
+  created_at DateTime @default(now())
+
+  meeting    Meeting  @relation(fields: [meeting_id], references: [id], onDelete: Cascade)
+}

@@ -1,0 +1,16 @@
+# Sample 1: Q3 Mobile App Launch Sync & Readiness
+# Category: Product & Architecture
+# Highlight: Direct Contradiction Demo (triggers Critical Contradiction with ADR-24 and release milestone)
+
+[00:01] Marcus Chen: Thanks everyone for jumping on the Q3 Mobile App Launch Sync. We are less than four weeks out from our planned October 15 launch, and I want an honest readiness assessment.
+[00:45] Dev Priya: Marcus, I need to raise a major blocker. Our Swift concurrency migration is throwing unexpected crashes on older devices running iOS 15. Supporting iOS 15 is requiring crazy workarounds.
+[01:15] Elena Vance: How many active enterprise users are still on iOS 15?
+[01:28] Dev Priya: About 28%. But it's slowing the mobile team to a crawl. I strongly propose we drop iOS 15 support entirely and make iOS 17 the minimum requirement.
+[02:02] Marcus Chen: Okay, let's make that call right now: We will drop iOS 15 backward compatibility and set iOS 17+ as our minimum requirement for the Mobile v2.0 release.
+[02:30] Elena Vance: Wait, what about the October 15th public release milestone?
+[02:44] Dev Priya: We won't make October 15th with the remaining QA cycles. I propose we push the global public release date back to November 25th.
+[03:10] Marcus Chen: Approved. Let's officially reschedule the Mobile v2.0 release date to November 25th.
+[03:35] Dev Priya: One more thing regarding backend auth. We've been having some token refresh snags with Supabase. I was thinking of swapping our auth layer to Auth0 over the weekend.
+[04:05] Marcus Chen: Good initiative. Let's do it: Dev Priya will migrate the mobile client authentication to Auth0 by this Monday.
+[04:30] Elena Vance: Make sure you update the API contracts.
+[04:45] Marcus Chen: Action items: Dev Priya to rewrite the auth client for Auth0 by Monday. Elena to review the new API contracts by Wednesday. And I will notify enterprise account managers about the new November 25 release date.

@@ -1,0 +1,13 @@
+# Sample 2: Core Platform Sprint 42 Planning
+# Category: Engineering Sprint
+# Highlight: Unrealistic Deadlines & Missing Owners Demo
+
+[00:00] Elena Vance: Welcome to Sprint 42 planning. Looking at our Datadog APM, our payment microservice P99 latency spiked to 3.8 seconds yesterday during peak traffic.
+[00:35] Elena Vance: We cannot enter next month with this latency. Someone on the team needs to completely rewrite the SQL caching layer and migrate the cache store to Redis.
+[01:10] Sam Torres: That's a massive overhaul. Who is taking that?
+[01:25] Elena Vance: Someone just grab it from the backlog today. Also, Sam, our frontend clients need the updated GraphQL schema for checkout. Can you refactor the entire GraphQL schema by tomorrow 8:00 AM?
+[02:00] Sam Torres: Tomorrow 8:00 AM? That's less than 18 hours from now for 40 endpoints, but I guess I'll pull an all-nighter if you insist.
+[02:40] Rachel Green: What about the billing dashboard UI overhaul? We have customer complaints about the invoice breakdown.
+[03:05] Elena Vance: Rachel, let's overhaul the entire billing dashboard UI and deploy it to staging by tomorrow morning as well.
+[03:30] Rachel Green: That's practically impossible without mockups from design, but I'll try to hack something together.
+[04:00] Elena Vance: Great. To recap: Somebody will migrate payments caching to Redis. Sam will finish the full GraphQL refactor by tomorrow 8 AM. Rachel will deploy the redesigned billing dashboard by tomorrow 9 AM. Let's get to work.
