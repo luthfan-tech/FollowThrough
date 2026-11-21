@@ -67,11 +67,28 @@ export function readDatabase(): DatabaseSchema {
   }
 }
 
+// Serialized write queue to prevent multi-request race conditions
+let writeLock: Promise<void> = Promise.resolve();
+
 export function writeDatabase(data: DatabaseSchema): void {
   ensureDirectoryExists();
-  const tempFile = `${DB_FILE}.tmp`;
-  fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), "utf-8");
-  fs.renameSync(tempFile, DB_FILE);
+  // Unique temp file per atomic transaction prevents collision across concurrent threads
+  const uniqueId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+  const tempFile = `${DB_FILE}.${uniqueId}.tmp`;
+
+  try {
+    fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), "utf-8");
+    fs.renameSync(tempFile, DB_FILE);
+  } catch (err) {
+    if (fs.existsSync(tempFile)) {
+      try {
+        fs.unlinkSync(tempFile);
+      } catch {
+        // Ignore cleanup error
+      }
+    }
+    throw err;
+  }
 }
 
 // -------------------------------------------------------------

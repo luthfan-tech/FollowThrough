@@ -9,18 +9,22 @@ import {
   Database,
   CheckSquare,
   Sparkles,
-  RotateCcw,
   Plus,
   Trash2,
   Calendar,
   Layers,
   HelpCircle,
+  Shield,
+  User,
 } from "lucide-react";
+import { DEFAULT_USER, PRESET_USERS, UserRole } from "@/lib/auth";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isResetting, setIsResetting] = useState(false);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
+  const [currentRole, setCurrentRole] = useState<UserRole>("ADMIN");
+  const [showRoleMenu, setShowRoleMenu] = useState(false);
 
   const navLinks = [
     { href: "/", label: "Dashboard", icon: Compass },
@@ -39,7 +43,10 @@ export function Navbar() {
     try {
       const res = await fetch("/api/seed", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-user-role": currentRole,
+        },
         body: JSON.stringify({ action: "clear" }),
       });
       if (res.ok) {
@@ -48,6 +55,9 @@ export function Navbar() {
           setStatusMsg(null);
           window.location.reload();
         }, 800);
+      } else {
+        const data = await res.json();
+        alert(data.error || "Permission denied");
       }
     } catch (err) {
       console.error(err);
@@ -56,27 +66,8 @@ export function Navbar() {
     }
   };
 
-  const handleLoadDemo = async () => {
-    setIsResetting(true);
-    try {
-      const res = await fetch("/api/seed", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "seed" }),
-      });
-      if (res.ok) {
-        setStatusMsg("Demo Loaded!");
-        setTimeout(() => {
-          setStatusMsg(null);
-          window.location.reload();
-        }, 800);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsResetting(false);
-    }
-  };
+  const activeUser =
+    Object.values(PRESET_USERS).find((u) => u.role === currentRole) || DEFAULT_USER;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#2B2B2B] bg-[#000000]/95 backdrop-blur-md">
@@ -131,6 +122,54 @@ export function Navbar() {
 
         {/* Right side controls */}
         <div className="flex items-center gap-2.5">
+          {/* Active User & RBAC Role Switcher */}
+          <div className="relative">
+            <button
+              onClick={() => setShowRoleMenu(!showRoleMenu)}
+              className="flex items-center gap-2 rounded-xl border border-[#2B2B2B] bg-[#141414] px-2.5 py-1.5 text-xs hover:border-[#00638E] transition-all"
+              title="Current User Identity & Authorization Role"
+            >
+              <div className="h-5 w-5 rounded-md bg-[#00638E]/30 text-[#BFD8E3] font-bold text-[10px] flex items-center justify-center border border-[#00638E]/50">
+                {activeUser.avatarInitials}
+              </div>
+              <div className="hidden sm:flex flex-col text-left leading-none">
+                <span className="text-[11px] font-bold text-white">{activeUser.name}</span>
+                <span className="text-[9px] text-[#8CB9CC] font-mono">{activeUser.role}</span>
+              </div>
+            </button>
+
+            {/* Dropdown Menu */}
+            {showRoleMenu && (
+              <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-[#2B2B2B] bg-[#141414] p-2 shadow-2xl z-50 space-y-1">
+                <div className="px-3 py-1.5 border-b border-[#2B2B2B] text-[10px] font-mono uppercase text-slate-400 font-bold">
+                  Switch Auth Role (RBAC)
+                </div>
+                {Object.values(PRESET_USERS).map((user) => (
+                  <button
+                    key={user.id}
+                    onClick={() => {
+                      setCurrentRole(user.role);
+                      setShowRoleMenu(false);
+                    }}
+                    className={`w-full flex items-center justify-between rounded-xl px-3 py-2 text-xs text-left transition-colors ${
+                      currentRole === user.role
+                        ? "bg-[#00638E]/20 text-[#BFD8E3] font-bold border border-[#00638E]/40"
+                        : "text-slate-300 hover:bg-[#2B2B2B] hover:text-white"
+                    }`}
+                  >
+                    <div>
+                      <div className="text-white font-medium">{user.name}</div>
+                      <div className="text-[10px] text-slate-400">{user.title}</div>
+                    </div>
+                    <span className="text-[9px] font-mono uppercase font-bold text-[#8CB9CC]">
+                      {user.role}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Clear Workspace Button */}
           <button
             onClick={handleClearData}
