@@ -17,24 +17,24 @@ export function HeroTypography() {
       <div className="pointer-events-none absolute top-1/2 right-10 h-64 w-64 rounded-full bg-[#8CB9CC]/10 blur-3xl" />
 
       {/* Geometric Modern Corner Marks */}
-      <div className="pointer-events-none absolute top-4 left-4 text-xs font-mono text-[#8CB9CC] select-none">
+      <div className="pointer-events-none absolute top-4 left-4 text-xs font-mono text-[#00638E] select-none font-bold">
         + 01-A // FT-2026
       </div>
-      <div className="pointer-events-none absolute top-4 right-4 text-xs font-mono text-[#00638E] select-none font-semibold">
+      <div className="pointer-events-none absolute top-4 right-4 text-xs font-mono text-[#00638E] select-none font-bold">
         DECISION INTELLIGENCE // +
       </div>
-      <div className="pointer-events-none absolute bottom-4 left-4 text-xs font-mono text-[#00638E] select-none font-semibold">
+      <div className="pointer-events-none absolute bottom-4 left-4 text-xs font-mono text-[#00638E] select-none font-bold">
         + CONFLICT RADAR
       </div>
-      <div className="pointer-events-none absolute bottom-4 right-4 text-xs font-mono text-[#8CB9CC] select-none">
+      <div className="pointer-events-none absolute bottom-4 right-4 text-xs font-mono text-[#004A6B] select-none font-bold">
         ORGANIZATIONAL MEMORY // +
       </div>
 
       <div className="relative z-10 flex flex-col items-center text-center max-w-5xl mx-auto space-y-6">
         {/* System Badge */}
         <div className="inline-flex items-center gap-2 rounded-full border border-[#BFD8E3] bg-white px-4 py-1.5 shadow-sm">
-          <span className="flex h-2 w-2 rounded-full bg-[#00638E] animate-ping" />
-          <span className="font-mono text-[11px] font-bold tracking-wider text-[#00638E] uppercase">
+          <span className="flex h-2.5 w-2.5 rounded-full bg-[#00638E] animate-ping" />
+          <span className="font-mono text-xs sm:text-sm font-bold tracking-wider text-[#00638E] uppercase">
             Autonomous Meeting-to-Execution Agent
           </span>
         </div>
@@ -50,7 +50,7 @@ export function HeroTypography() {
               priority
             />
           </div>
-          <span className="text-xs font-mono tracking-widest text-[#004A6B] uppercase font-bold">
+          <span className="text-xs sm:text-sm font-mono tracking-widest text-[#004A6B] uppercase font-extrabold">
             RATIFIED DECISION INTELLIGENCE
           </span>
         </div>
@@ -100,14 +100,14 @@ export function HeroTypography() {
         </div>
 
         {/* Subheading & Core Positioning Manifesto */}
-        <div className="space-y-3 max-w-3xl">
-          <p className="font-funk text-lg sm:text-2xl text-slate-900 tracking-wide font-bold">
+        <div className="space-y-4 max-w-3xl">
+          <p className="font-funk text-xl sm:text-2xl text-slate-900 tracking-wide font-extrabold leading-snug">
             “Meetings create decisions. FollowThrough makes sure they get executed.”
           </p>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
+          <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-sans font-medium">
             Don’t let verbal consensus evaporate into Slack silence or produce conflicting work.
             FollowThrough attributes speakers, extracts actionable commitments, cross-checks persistent
-            organizational memory with its <strong className="text-[#00638E]">Conflict Radar</strong>,
+            organizational memory with its <strong className="text-[#00638E] font-bold">Conflict Radar</strong>,
             enforces human-in-the-loop confirmation, dispatches tasks, and generates personalized digests.
           </p>
         </div>
@@ -116,47 +116,47 @@ export function HeroTypography() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <Link
             href="/meetings/new"
-            className="group relative flex items-center justify-center gap-2.5 rounded-2xl bg-[#00638E] hover:bg-[#004A6B] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#00638E]/25 transition-all hover:-translate-y-0.5 active:translate-y-0"
+            className="group relative flex items-center justify-center gap-2.5 rounded-2xl bg-[#00638E] hover:bg-[#004A6B] px-8 py-4 text-base font-bold text-white shadow-lg shadow-[#00638E]/25 transition-all hover:-translate-y-0.5 active:translate-y-0"
           >
-            <Play className="h-4 w-4 fill-white" />
+            <Play className="h-5 w-5 fill-white" />
             <span className="tracking-wide">Ingest Meeting Transcript</span>
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Link>
 
           <Link
             href="/tasks"
-            className="flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-6 py-4 text-sm font-semibold text-slate-800 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-7 py-4 text-base font-bold text-slate-800 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm"
           >
-            <Cpu className="h-4 w-4 text-[#00638E]" />
+            <Cpu className="h-5 w-5 text-[#00638E]" />
             <span>Open Task Board</span>
           </Link>
 
           <Link
             href="/memory"
-            className="flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-5 py-4 text-sm font-medium text-slate-700 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-6 py-4 text-base font-bold text-slate-800 hover:border-[#00638E] hover:text-[#00638E] transition-all shadow-sm"
           >
-            <ShieldAlert className="h-4 w-4 text-[#00638E]" />
+            <ShieldAlert className="h-5 w-5 text-[#00638E]" />
             <span>Decision Memory</span>
           </Link>
         </div>
 
         {/* Specifications Bar */}
         <div className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-3xl border-t border-slate-200 text-left">
-          <div className="space-y-0.5">
-            <span className="text-[10px] font-mono uppercase text-[#00638E] font-bold">Diarization</span>
-            <p className="text-xs font-bold text-slate-900">Multi-Speaker Voice & Text</p>
+          <div className="space-y-1">
+            <span className="text-xs font-mono uppercase text-[#00638E] font-extrabold">Diarization</span>
+            <p className="text-sm font-bold text-slate-900">Multi-Speaker Attribution</p>
           </div>
-          <div className="space-y-0.5">
-            <span className="text-[10px] font-mono uppercase text-[#004A6B] font-bold">Memory Bank</span>
-            <p className="text-xs font-bold text-slate-900">Persistent Cross-Meeting</p>
+          <div className="space-y-1">
+            <span className="text-xs font-mono uppercase text-[#004A6B] font-extrabold">Memory Bank</span>
+            <p className="text-sm font-bold text-slate-900">Persistent Cross-Meeting</p>
           </div>
-          <div className="space-y-0.5">
-            <span className="text-[10px] font-mono uppercase text-[#00638E] font-bold">Safety Gate</span>
-            <p className="text-xs font-bold text-slate-900">Human Approval Required</p>
+          <div className="space-y-1">
+            <span className="text-xs font-mono uppercase text-[#00638E] font-extrabold">Safety Gate</span>
+            <p className="text-sm font-bold text-slate-900">Human Approval Required</p>
           </div>
-          <div className="space-y-0.5">
-            <span className="text-[10px] font-mono uppercase text-[#004A6B] font-bold">Execution</span>
-            <p className="text-xs font-bold text-slate-900">Kanban + Weekly Digests</p>
+          <div className="space-y-1">
+            <span className="text-xs font-mono uppercase text-[#004A6B] font-extrabold">Execution</span>
+            <p className="text-sm font-bold text-slate-900">Kanban + Weekly Digests</p>
           </div>
         </div>
       </div>
