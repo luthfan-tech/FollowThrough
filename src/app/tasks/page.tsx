@@ -133,14 +133,14 @@ export default function TasksPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 text-xs font-semibold text-indigo-400 mb-2">
+          <div className="inline-flex items-center gap-2 rounded-full bg-sky-50 border border-sky-200 px-3 py-1 text-xs font-semibold text-[#00638E] mb-2">
             <CheckSquare className="h-3.5 w-3.5" />
             <span>Execution Tracker & Integrations</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
             Confirmed Task Board
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-slate-600 mt-1">
             Every task originates from a ratified meeting decision with explicit human-in-the-loop approval.
           </p>
         </div>
@@ -148,7 +148,7 @@ export default function TasksPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-2 text-xs font-semibold text-white hover:bg-indigo-500 transition-all shadow-md shadow-indigo-600/20"
+            className="flex items-center gap-1.5 rounded-xl bg-[#00638E] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#004A6B] transition-all shadow-sm"
           >
             <Plus className="h-3.5 w-3.5" />
             <span>New Task</span>
@@ -156,18 +156,18 @@ export default function TasksPage() {
 
           <button
             onClick={() => setShowExportModal(true)}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/80 px-3.5 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-700 hover:text-white transition-all shadow-sm"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all shadow-sm"
           >
-            <Share2 className="h-3.5 w-3.5" />
+            <Share2 className="h-3.5 w-3.5 text-[#00638E]" />
             <span>Export to Linear / Notion</span>
           </button>
 
           {/* View toggle */}
-          <div className="flex rounded-lg border border-slate-800 bg-slate-900 p-0.5 text-xs text-slate-400">
+          <div className="flex rounded-lg border border-slate-200 bg-slate-100 p-0.5 text-xs text-slate-600">
             <button
               onClick={() => setViewMode("kanban")}
               className={`rounded-md px-2.5 py-1.5 font-medium transition-colors ${
-                viewMode === "kanban" ? "bg-indigo-600 text-white" : "hover:text-slate-200"
+                viewMode === "kanban" ? "bg-[#00638E] text-white shadow-sm" : "hover:text-slate-900"
               }`}
             >
               <Kanban className="h-3.5 w-3.5" />
@@ -175,7 +175,7 @@ export default function TasksPage() {
             <button
               onClick={() => setViewMode("list")}
               className={`rounded-md px-2.5 py-1.5 font-medium transition-colors ${
-                viewMode === "list" ? "bg-indigo-600 text-white" : "hover:text-slate-200"
+                viewMode === "list" ? "bg-[#00638E] text-white shadow-sm" : "hover:text-slate-900"
               }`}
             >
               <List className="h-3.5 w-3.5" />
@@ -185,16 +185,16 @@ export default function TasksPage() {
       </div>
 
       {/* Filters Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-4 backdrop-blur-sm">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
         <div className="flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-2 text-xs text-slate-400">
+          <div className="flex items-center gap-2 text-xs text-slate-500">
             <Filter className="h-3.5 w-3.5" />
             <span>Filter Assignee:</span>
           </div>
           <select
             value={selectedOwner}
             onChange={(e) => setSelectedOwner(e.target.value)}
-            className="rounded-lg border border-slate-800 bg-slate-950/80 px-3 py-1.5 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+            className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-800 focus:border-[#00638E] focus:bg-white focus:outline-none"
           >
             <option value="ALL">All Assignees</option>
             {owners.map((owner) => (
@@ -204,13 +204,13 @@ export default function TasksPage() {
             ))}
           </select>
 
-          <div className="flex items-center gap-2 text-xs text-slate-400 pl-2 border-l border-slate-800">
+          <div className="flex items-center gap-2 text-xs text-slate-500 pl-2 border-l border-slate-200">
             <span>Priority:</span>
           </div>
           <select
             value={selectedPriority}
             onChange={(e) => setSelectedPriority(e.target.value)}
-            className="rounded-lg border border-slate-800 bg-slate-950/80 px-3 py-1.5 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+            className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-800 focus:border-[#00638E] focus:bg-white focus:outline-none"
           >
             <option value="ALL">All Priorities</option>
             <option value="CRITICAL">Critical</option>
@@ -220,8 +220,8 @@ export default function TasksPage() {
           </select>
         </div>
 
-        <div className="text-xs text-slate-400">
-          Showing <span className="font-semibold text-slate-200">{filteredTasks.length}</span> tasks
+        <div className="text-xs text-slate-500">
+          Showing <span className="font-semibold text-slate-900">{filteredTasks.length}</span> tasks
         </div>
       </div>
 
@@ -233,26 +233,26 @@ export default function TasksPage() {
             return (
               <div
                 key={col.status}
-                className="flex flex-col rounded-xl border border-slate-800/80 bg-slate-900/40 p-3 min-w-[220px] space-y-3"
+                className="flex flex-col rounded-xl border border-slate-200 bg-slate-50/70 p-3 min-w-[220px] space-y-3"
               >
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-200">
                   <div className="flex items-center gap-2">
                     <span
                       className={`h-2 w-2 rounded-full ${
                         col.status === "COMPLETED"
-                          ? "bg-emerald-400"
+                          ? "bg-emerald-500"
                           : col.status === "OVERDUE"
-                          ? "bg-rose-400"
+                          ? "bg-rose-500"
                           : col.status === "IN_PROGRESS"
-                          ? "bg-cyan-400"
+                          ? "bg-sky-500"
                           : col.status === "APPROVED"
-                          ? "bg-indigo-400"
-                          : "bg-slate-500"
+                          ? "bg-[#00638E]"
+                          : "bg-slate-400"
                       }`}
                     />
-                    <span className="text-xs font-bold text-slate-200">{col.label}</span>
+                    <span className="text-xs font-bold text-slate-800">{col.label}</span>
                   </div>
-                  <span className="rounded-full bg-slate-800 px-2 py-0.5 text-[10px] font-semibold text-slate-400">
+                  <span className="rounded-full bg-white border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-600 shadow-xs">
                     {columnTasks.length}
                   </span>
                 </div>
@@ -266,40 +266,40 @@ export default function TasksPage() {
                     columnTasks.map((task) => (
                       <div
                         key={task.id}
-                        className="group rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-2.5 transition-all hover:border-slate-700 hover:bg-slate-900 shadow-sm"
+                        className="group rounded-xl border border-slate-200 bg-white p-3.5 space-y-2.5 transition-all hover:border-slate-300 hover:shadow-md shadow-sm"
                       >
                         <div className="flex items-center justify-between gap-1">
-                          <span className="font-mono text-[10px] text-indigo-400 font-bold">
+                          <span className="font-mono text-[10px] text-[#00638E] font-bold">
                             {task.external_task_id || "FLW-100"}
                           </span>
                           <span
                             className={`rounded px-1.5 py-0.5 text-[9px] font-bold uppercase ${
                               task.priority === "CRITICAL"
-                                ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
+                                ? "bg-rose-100 text-rose-800 border border-rose-200"
                                 : task.priority === "HIGH"
-                                ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                                : "bg-slate-800 text-slate-400"
+                                ? "bg-amber-100 text-amber-800 border border-amber-200"
+                                : "bg-slate-100 text-slate-600"
                             }`}
                           >
                             {task.priority}
                           </span>
                         </div>
 
-                        <h4 className="text-xs font-bold text-white leading-snug">{task.title}</h4>
+                        <h4 className="text-xs font-bold text-slate-900 leading-snug">{task.title}</h4>
                         {task.description && (
-                          <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
+                          <p className="text-[11px] text-slate-600 line-clamp-2 leading-relaxed">
                             {task.description}
                           </p>
                         )}
 
-                        <div className="pt-2 border-t border-slate-800/80 space-y-1.5 text-[10px] text-slate-400">
+                        <div className="pt-2 border-t border-slate-100 space-y-1.5 text-[10px] text-slate-500">
                           <div className="flex items-center justify-between">
-                            <span className="flex items-center gap-1 text-slate-300 font-medium">
-                              <User className="h-3 w-3 text-indigo-400" />
+                            <span className="flex items-center gap-1 text-slate-700 font-medium">
+                              <User className="h-3 w-3 text-[#00638E]" />
                               {task.owner || "Unassigned"}
                             </span>
-                            <span className="flex items-center gap-1 font-mono">
-                              <Calendar className="h-3 w-3 text-purple-400" />
+                            <span className="flex items-center gap-1 font-mono text-slate-600">
+                              <Calendar className="h-3 w-3 text-[#00638E]" />
                               {task.due_date ? new Date(task.due_date).toLocaleDateString() : "No date"}
                             </span>
                           </div>
@@ -310,7 +310,7 @@ export default function TasksPage() {
                             <select
                               value={task.status}
                               onChange={(e) => handleUpdateStatus(task.id, e.target.value as TaskStatus)}
-                              className="rounded bg-slate-900 border border-slate-800 px-1.5 py-0.5 text-[10px] text-slate-300 focus:outline-none"
+                              className="rounded bg-slate-50 border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 focus:outline-none"
                             >
                               <option value="PROPOSED">Proposed</option>
                               <option value="APPROVED">Approved</option>
@@ -330,14 +330,14 @@ export default function TasksPage() {
         </div>
       ) : (
         /* List View */
-        <div className="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+        <div className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
           {filteredTasks.length === 0 ? (
-            <div className="py-12 text-center text-xs text-slate-400">
+            <div className="py-12 text-center text-xs text-slate-500">
               No tasks found. Create a task or ingest a meeting to see deliverables here.
             </div>
           ) : (
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950/80 text-[10px] uppercase tracking-wider text-slate-400 border-b border-slate-800">
+            <table className="w-full text-left text-xs text-slate-700">
+              <thead className="bg-slate-50 text-[10px] uppercase tracking-wider text-slate-500 border-b border-slate-200">
                 <tr>
                   <th className="py-3 px-4">Task ID</th>
                   <th className="py-3 px-4">Title</th>
@@ -347,28 +347,28 @@ export default function TasksPage() {
                   <th className="py-3 px-4">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800">
+              <tbody className="divide-y divide-slate-100">
                 {filteredTasks.map((task) => (
-                  <tr key={task.id} className="hover:bg-slate-900/60 transition-colors">
-                    <td className="py-3 px-4 font-mono text-indigo-400 font-bold">
+                  <tr key={task.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3 px-4 font-mono text-[#00638E] font-bold">
                       {task.external_task_id || "FLW-100"}
                     </td>
                     <td className="py-3 px-4">
-                      <div className="font-semibold text-white">{task.title}</div>
-                      <div className="text-[11px] text-slate-400 line-clamp-1">{task.description}</div>
+                      <div className="font-semibold text-slate-900">{task.title}</div>
+                      <div className="text-[11px] text-slate-500 line-clamp-1">{task.description}</div>
                     </td>
-                    <td className="py-3 px-4 font-medium text-slate-200">{task.owner || "Unassigned"}</td>
-                    <td className="py-3 px-4 font-mono text-[11px] text-slate-400">
+                    <td className="py-3 px-4 font-medium text-slate-800">{task.owner || "Unassigned"}</td>
+                    <td className="py-3 px-4 font-mono text-[11px] text-slate-500">
                       {task.due_date ? new Date(task.due_date).toLocaleDateString() : "No deadline"}
                     </td>
                     <td className="py-3 px-4">
                       <span
                         className={`rounded px-2 py-0.5 text-[9px] font-bold uppercase ${
                           task.priority === "CRITICAL"
-                            ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
+                            ? "bg-rose-100 text-rose-800 border border-rose-200"
                             : task.priority === "HIGH"
-                            ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                            : "bg-slate-800 text-slate-400"
+                            ? "bg-amber-100 text-amber-800 border border-amber-200"
+                            : "bg-slate-100 text-slate-600"
                         }`}
                       >
                         {task.priority}
@@ -378,7 +378,7 @@ export default function TasksPage() {
                       <select
                         value={task.status}
                         onChange={(e) => handleUpdateStatus(task.id, e.target.value as TaskStatus)}
-                        className="rounded bg-slate-950 border border-slate-800 px-2 py-1 text-xs text-slate-200 focus:outline-none"
+                        className="rounded bg-slate-50 border border-slate-200 px-2 py-1 text-xs text-slate-800 focus:outline-none"
                       >
                         <option value="PROPOSED">Proposed</option>
                         <option value="APPROVED">Approved</option>
@@ -397,54 +397,54 @@ export default function TasksPage() {
 
       {/* Manual Task Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 space-y-4 shadow-2xl animate-fade-in">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <CheckSquare className="h-4 w-4 text-indigo-400" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 space-y-4 shadow-2xl animate-fade-in">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <CheckSquare className="h-4 w-4 text-[#00638E]" />
               <span>Create New Task</span>
             </h2>
 
             <form onSubmit={handleCreateTask} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-300">Task Title</label>
+                <label className="text-xs font-semibold text-slate-700">Task Title</label>
                 <input
                   type="text"
                   required
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   placeholder="e.g. Audit API authentication scopes"
-                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:border-[#00638E] focus:bg-white focus:outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-300">Assignee (Owner)</label>
+                <label className="text-xs font-semibold text-slate-700">Assignee (Owner)</label>
                 <input
                   type="text"
                   value={newOwner}
                   onChange={(e) => setNewOwner(e.target.value)}
                   placeholder="e.g. Elena Vance"
-                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:border-[#00638E] focus:bg-white focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-slate-300">Due Date</label>
+                  <label className="text-xs font-semibold text-slate-700">Due Date</label>
                   <input
                     type="date"
                     value={newDue}
                     onChange={(e) => setNewDue(e.target.value)}
-                    className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-[#00638E] focus:bg-white focus:outline-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-slate-300">Priority</label>
+                  <label className="text-xs font-semibold text-slate-700">Priority</label>
                   <select
                     value={newPriority}
                     onChange={(e) => setNewPriority(e.target.value as Priority)}
-                    className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-[#00638E] focus:bg-white focus:outline-none"
                   >
                     <option value="CRITICAL">Critical</option>
                     <option value="HIGH">High</option>
@@ -458,15 +458,15 @@ export default function TasksPage() {
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="rounded-lg px-3 py-2 text-xs text-slate-400 hover:text-white"
+                  className="rounded-lg px-3 py-2 text-xs text-slate-600 hover:text-slate-900"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-500 transition-all"
+                  className="rounded-lg bg-[#00638E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#004A6B] transition-all shadow-sm"
                 >
-                  Save Task
+                  Add Task
                 </button>
               </div>
             </form>
@@ -474,66 +474,75 @@ export default function TasksPage() {
         </div>
       )}
 
-      {/* Export / Integrations Simulation Modal */}
+      {/* Sync / Export Modal */}
       {showExportModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 space-y-4 shadow-2xl animate-fade-in">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <Share2 className="h-4 w-4 text-indigo-400" />
-              <span>External Task Tracker Integration</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 space-y-4 shadow-2xl animate-fade-in">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <Share2 className="h-4 w-4 text-[#00638E]" />
+              <span>Export Tasks to Issue Tracker</span>
             </h2>
-            <p className="text-xs text-slate-400">
-              FollowThrough automatically transforms confirmed decisions into external trackers.
-              Select your destination below:
+            <p className="text-xs text-slate-600">
+              Synchronize confirmed action items directly with your team’s project management systems.
             </p>
 
-            <div className="grid grid-cols-3 gap-2 pt-1">
-              {[
-                { id: "linear", label: "Linear", color: "indigo" },
-                { id: "notion", label: "Notion", color: "purple" },
-                { id: "webhook", label: "Webhook", color: "emerald" },
-              ].map((p) => (
-                <button
-                  key={p.id}
-                  onClick={() => setExportPlatform(p.id as any)}
-                  className={`rounded-xl border p-3 text-center transition-all ${
-                    exportPlatform === p.id
-                      ? "border-indigo-500 bg-indigo-950/40 text-white"
-                      : "border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200"
-                  }`}
-                >
-                  <span className="text-xs font-bold block">{p.label}</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-3 space-y-1 text-xs text-slate-300 font-mono">
-              <div className="text-[10px] text-slate-400 uppercase font-sans font-semibold">Payload Preview</div>
-              <div>Destination: {exportPlatform.toUpperCase()} Sync Hub</div>
-              <div>Records: {filteredTasks.length} Approved Tasks</div>
-              <div>Security: OAuth2 Bearer Enforced</div>
-            </div>
-
-            {syncStatus && (
-              <div className="rounded-xl bg-indigo-950/40 border border-indigo-500/30 p-3 text-center text-xs text-indigo-300 font-medium">
-                {syncStatus === "connecting" ? "Synchronizing tasks..." : "✓ Synced successfully!"}
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-slate-700">Target Integration</label>
+              <div className="grid grid-cols-3 gap-2">
+                {(["linear", "notion", "webhook"] as const).map((platform) => (
+                  <button
+                    key={platform}
+                    type="button"
+                    onClick={() => setExportPlatform(platform)}
+                    className={`rounded-xl border p-3 text-xs font-bold uppercase tracking-wider transition-all ${
+                      exportPlatform === platform
+                        ? "border-[#00638E] bg-sky-50 text-[#00638E] shadow-sm"
+                        : "border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300"
+                    }`}
+                  >
+                    {platform}
+                  </button>
+                ))}
               </div>
-            )}
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 space-y-1">
+              <div className="flex items-center justify-between text-slate-700">
+                <span className="font-semibold">Payload Ready:</span>
+                <span className="font-mono text-[10px] text-[#00638E] font-bold">{filteredTasks.length} tasks</span>
+              </div>
+              <p className="text-[11px] text-slate-500">
+                Each task includes meeting origin metadata, assigned DRI, and calculated deadline.
+              </p>
+            </div>
 
             <div className="flex items-center justify-end gap-3 pt-2">
               <button
                 type="button"
                 onClick={() => setShowExportModal(false)}
-                className="rounded-lg px-3 py-2 text-xs text-slate-400 hover:text-white"
+                className="rounded-lg px-3 py-2 text-xs text-slate-600 hover:text-slate-900"
               >
-                Close
+                Cancel
               </button>
               <button
                 type="button"
                 onClick={handleSimulateSync}
-                className="rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-500 transition-all"
+                disabled={syncStatus !== null}
+                className="flex items-center gap-2 rounded-lg bg-[#00638E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#004A6B] transition-all shadow-sm disabled:opacity-50"
               >
-                Dispatch Tasks Now
+                {syncStatus === "connecting" ? (
+                  <>
+                    <span className="h-3 w-3 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                    <span>Syncing...</span>
+                  </>
+                ) : syncStatus === "success" ? (
+                  <>
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
+                    <span>Dispatched!</span>
+                  </>
+                ) : (
+                  <span>Dispatch Sync</span>
+                )}
               </button>
             </div>
           </div>

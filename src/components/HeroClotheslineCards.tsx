@@ -9,10 +9,6 @@ import {
   UserCheck,
   Send,
   ArrowUpRight,
-  Sparkles,
-  CheckCircle2,
-  Clock,
-  Layers,
 } from "lucide-react";
 
 interface ExecutionCard {
@@ -122,49 +118,49 @@ export function HeroClotheslineCards() {
     switch (color) {
       case "azure":
         return {
-          border: "border-[#00638E]/50 group-hover:border-[#00638E]",
-          badgeBg: "bg-[#00638E]/20 text-[#BFD8E3] border-[#00638E]/50",
-          iconBg: "bg-[#00638E]/25 text-[#BFD8E3]",
+          border: "border-slate-200 group-hover:border-[#00638E]",
+          badgeBg: "bg-[#00638E]/10 text-[#00638E] border-[#00638E]/30",
+          iconBg: "bg-[#00638E]/10 text-[#00638E]",
           pinColor: "#00638E",
-          glow: "group-hover:shadow-[#00638E]/25",
-          accentText: "text-[#BFD8E3]",
+          glow: "group-hover:shadow-[#00638E]/15",
+          accentText: "text-[#00638E]",
         };
       case "deep-azure":
         return {
-          border: "border-[#004A6B]/50 group-hover:border-[#004A6B]",
-          badgeBg: "bg-[#004A6B]/25 text-[#8CB9CC] border-[#004A6B]/50",
-          iconBg: "bg-[#004A6B]/30 text-[#8CB9CC]",
+          border: "border-slate-200 group-hover:border-[#004A6B]",
+          badgeBg: "bg-[#004A6B]/10 text-[#004A6B] border-[#004A6B]/30",
+          iconBg: "bg-[#004A6B]/10 text-[#004A6B]",
           pinColor: "#004A6B",
-          glow: "group-hover:shadow-[#004A6B]/25",
-          accentText: "text-[#8CB9CC]",
+          glow: "group-hover:shadow-[#004A6B]/15",
+          accentText: "text-[#004A6B]",
         };
       case "rose":
         return {
-          border: "border-rose-500/40 group-hover:border-rose-400",
-          badgeBg: "bg-rose-500/15 text-rose-300 border-rose-500/30",
-          iconBg: "bg-rose-500/20 text-rose-400",
-          pinColor: "#F43F5E",
-          glow: "group-hover:shadow-rose-500/20",
-          accentText: "text-rose-400",
+          border: "border-slate-200 group-hover:border-rose-500",
+          badgeBg: "bg-rose-50 text-rose-700 border-rose-200",
+          iconBg: "bg-rose-50 text-rose-600",
+          pinColor: "#E11D48",
+          glow: "group-hover:shadow-rose-500/15",
+          accentText: "text-rose-600",
         };
       case "emerald":
         return {
-          border: "border-emerald-500/40 group-hover:border-emerald-400",
-          badgeBg: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-          iconBg: "bg-emerald-500/20 text-emerald-400",
-          pinColor: "#10B981",
-          glow: "group-hover:shadow-emerald-500/20",
-          accentText: "text-emerald-400",
+          border: "border-slate-200 group-hover:border-emerald-500",
+          badgeBg: "bg-emerald-50 text-emerald-700 border-emerald-200",
+          iconBg: "bg-emerald-50 text-emerald-600",
+          pinColor: "#059669",
+          glow: "group-hover:shadow-emerald-500/15",
+          accentText: "text-emerald-600",
         };
       case "soft-azure":
       default:
         return {
-          border: "border-[#8CB9CC]/40 group-hover:border-[#8CB9CC]",
-          badgeBg: "bg-[#8CB9CC]/15 text-[#BFD8E3] border-[#8CB9CC]/40",
-          iconBg: "bg-[#8CB9CC]/20 text-[#BFD8E3]",
-          pinColor: "#8CB9CC",
-          glow: "group-hover:shadow-[#8CB9CC]/20",
-          accentText: "text-[#BFD8E3]",
+          border: "border-slate-200 group-hover:border-[#00638E]",
+          badgeBg: "bg-sky-50 text-[#00638E] border-sky-200",
+          iconBg: "bg-sky-50 text-[#00638E]",
+          pinColor: "#00638E",
+          glow: "group-hover:shadow-[#00638E]/15",
+          accentText: "text-[#00638E]",
         };
     }
   };
@@ -180,12 +176,12 @@ export function HeroClotheslineCards() {
               AGENT ARCHITECTURE & WORKFLOW
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mt-1">
             The 5-Stage FollowThrough Execution Line
           </h2>
         </div>
-        <div className="flex items-center gap-2 text-xs text-slate-400">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="flex items-center gap-2 text-xs text-slate-500">
+          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>Interactive Execution Stream</span>
         </div>
       </div>
@@ -195,29 +191,29 @@ export function HeroClotheslineCards() {
         {/* Wire SVG */}
         <div className="hidden lg:block absolute top-[28px] left-0 w-full pointer-events-none z-10">
           <svg viewBox="0 0 1200 40" className="w-full h-10 overflow-visible" fill="none">
-            {/* Main catenary glowing wire in Dark Azure and Charcoal */}
+            {/* Main catenary wire in Dark Azure and Soft Azure */}
             <path
               d="M0 8 Q300 28, 600 24 T1200 8"
               stroke="#00638E"
               strokeWidth="1.5"
-              strokeOpacity="0.6"
+              strokeOpacity="0.4"
             />
             <path
               d="M0 9 Q300 29, 600 25 T1200 9"
-              stroke="#BFD8E3"
+              stroke="#8CB9CC"
               strokeWidth="1"
-              strokeOpacity="0.4"
+              strokeOpacity="0.6"
             />
             {/* Hanging Cable Nodes */}
-            <circle cx="120" cy="14" r="3" fill="#FFFFFF" />
-            <circle cx="360" cy="24" r="3" fill="#FFFFFF" />
-            <circle cx="600" cy="24" r="3" fill="#FFFFFF" />
-            <circle cx="840" cy="21" r="3" fill="#FFFFFF" />
-            <circle cx="1080" cy="11" r="3" fill="#FFFFFF" />
+            <circle cx="120" cy="14" r="3" fill="#004A6B" />
+            <circle cx="360" cy="24" r="3" fill="#004A6B" />
+            <circle cx="600" cy="24" r="3" fill="#004A6B" />
+            <circle cx="840" cy="21" r="3" fill="#004A6B" />
+            <circle cx="1080" cy="11" r="3" fill="#004A6B" />
           </svg>
         </div>
 
-        {/* The 5 Clothesline Suspended Cards in Onyx (#141414) and Charcoal (#2B2B2B) */}
+        {/* The 5 Clothesline Suspended Cards in Clean White */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-4 relative z-20">
           {EXECUTION_CARDS.map((card) => {
             const styles = getThemeStyles(card.themeColor);
@@ -226,21 +222,21 @@ export function HeroClotheslineCards() {
             return (
               <div
                 key={card.step}
-                className={`group relative flex flex-col justify-between rounded-2xl border bg-gradient-to-b from-[#141414] via-[#101010] to-[#000000] p-5 shadow-xl transition-all duration-300 transform ${card.rotation} hover:scale-105 hover:z-30 hover:shadow-2xl ${styles.border} ${styles.glow}`}
+                className={`group relative flex flex-col justify-between rounded-2xl border bg-white p-5 shadow-sm transition-all duration-300 transform ${card.rotation} hover:scale-105 hover:z-30 hover:shadow-xl ${styles.border} ${styles.glow}`}
               >
-                {/* Vintage Clothesline Metallic Pin Clip */}
+                {/* Metallic Pin Clip */}
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-20">
                   <div
-                    className="h-4 w-3 rounded-sm shadow-md border border-white/20"
+                    className="h-4 w-3 rounded-sm shadow-sm border border-slate-300"
                     style={{ backgroundColor: styles.pinColor }}
                   />
-                  <div className="h-2 w-1 bg-white/40 -mt-1 rounded-full" />
+                  <div className="h-2 w-1 bg-slate-400 -mt-1 rounded-full" />
                 </div>
 
                 {/* Card Header & Badges */}
                 <div className="space-y-3 pt-1">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-[10px] font-extrabold tracking-wider text-slate-400">
+                    <span className="font-mono text-[10px] font-extrabold tracking-wider text-slate-500">
                       {card.step}
                     </span>
                     <span
@@ -258,18 +254,18 @@ export function HeroClotheslineCards() {
                       <Icon className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="text-base font-bold text-white group-hover:text-[#FFFFFF] transition-colors leading-tight">
+                      <h3 className="text-base font-bold text-slate-900 group-hover:text-[#00638E] transition-colors leading-tight">
                         {card.title}
                       </h3>
-                      <p className="text-[11px] text-slate-400 font-medium">{card.tagline}</p>
+                      <p className="text-[11px] text-slate-500 font-medium">{card.tagline}</p>
                     </div>
                   </div>
 
                   {/* Feature Checklist Points */}
-                  <ul className="mt-2 space-y-1.5 border-t border-[#2B2B2B] pt-3 text-[11px] text-slate-300">
+                  <ul className="mt-2 space-y-1.5 border-t border-slate-100 pt-3 text-[11px] text-slate-600">
                     {card.points.map((pt, i) => (
                       <li key={i} className="flex items-start gap-1.5">
-                        <span className={`${styles.accentText} mt-0.5 text-xs`}>✓</span>
+                        <span className={`${styles.accentText} mt-0.5 text-xs font-bold`}>✓</span>
                         <span className="leading-tight">{pt}</span>
                       </li>
                     ))}
@@ -277,9 +273,9 @@ export function HeroClotheslineCards() {
                 </div>
 
                 {/* Card Footer with Metric & Link */}
-                <div className="mt-5 pt-3 border-t border-[#2B2B2B] flex flex-col gap-2.5">
+                <div className="mt-5 pt-3 border-t border-slate-100 flex flex-col gap-2.5">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-slate-400">Guarantee</span>
+                    <span className="text-slate-500">Guarantee</span>
                     <span className={`font-mono font-bold ${styles.accentText}`}>
                       {card.metric}
                     </span>
@@ -287,7 +283,7 @@ export function HeroClotheslineCards() {
 
                   <Link
                     href={card.link}
-                    className="flex items-center justify-center gap-1.5 rounded-xl border border-[#2B2B2B] bg-[#141414] py-2 px-3 text-xs font-semibold text-slate-200 hover:bg-[#00638E] hover:text-white hover:border-[#00638E] transition-all"
+                    className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 py-2 px-3 text-xs font-semibold text-slate-700 hover:bg-[#00638E] hover:text-white hover:border-[#00638E] transition-all shadow-sm"
                   >
                     <span>{card.actionText}</span>
                     <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

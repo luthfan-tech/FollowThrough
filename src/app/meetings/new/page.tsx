@@ -109,17 +109,17 @@ function NewMeetingContent() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 space-y-8 animate-fade-in text-white">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 space-y-8 animate-fade-in text-slate-900 bg-white">
       {/* Header */}
       <div>
-        <div className="inline-flex items-center gap-2 rounded-full bg-[#00638E]/20 border border-[#00638E]/40 px-3 py-1 text-xs font-semibold text-[#BFD8E3] mb-2">
+        <div className="inline-flex items-center gap-2 rounded-full bg-[#00638E]/10 border border-[#00638E]/20 px-3 py-1 text-xs font-semibold text-[#00638E] mb-2">
           <Sparkles className="h-3.5 w-3.5" />
           <span>Real Transcript Ingestion</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
           Ingest Meeting Transcript
         </h1>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-sm text-slate-600 mt-1">
           Paste your actual meeting transcript or upload a .txt/.md file. FollowThrough attributes speakers, extracts decisions, inspects historical memory for conflicts, and stages tasks for your review.
         </p>
       </div>
@@ -127,33 +127,33 @@ function NewMeetingContent() {
       {/* Form */}
       <form onSubmit={handleRunAgent} className="space-y-6">
         {error && (
-          <div className="flex items-center gap-2 rounded-xl border border-rose-500/30 bg-rose-950/30 p-4 text-xs text-rose-300">
-            <AlertCircle className="h-4 w-4 shrink-0" />
+          <div className="flex items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 p-4 text-xs text-rose-800">
+            <AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="md:col-span-2 space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Meeting Title</label>
+            <label className="text-xs font-semibold text-slate-700">Meeting Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Core Architecture Review or Sprint 42 Planning"
               required
-              className="w-full rounded-xl border border-[#2B2B2B] bg-[#141414] px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:border-[#00638E] focus:outline-none focus:ring-1 focus:ring-[#00638E]"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-[#00638E] focus:outline-none focus:ring-1 focus:ring-[#00638E] shadow-sm"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Meeting Date</label>
+            <label className="text-xs font-semibold text-slate-700">Meeting Date</label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="w-full rounded-xl border border-[#2B2B2B] bg-[#141414] px-4 py-2.5 text-sm text-slate-100 focus:border-[#00638E] focus:outline-none focus:ring-1 focus:ring-[#00638E]"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 focus:border-[#00638E] focus:outline-none focus:ring-1 focus:ring-[#00638E] shadow-sm"
             />
           </div>
         </div>
@@ -161,12 +161,12 @@ function NewMeetingContent() {
         {/* Transcript Area */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-300 flex items-center gap-2">
-              <FileText className="h-3.5 w-3.5 text-[#BFD8E3]" />
+            <label className="text-xs font-semibold text-slate-700 flex items-center gap-2">
+              <FileText className="h-3.5 w-3.5 text-[#00638E]" />
               <span>Meeting Transcript</span>
             </label>
             <div className="flex items-center gap-2">
-              <label className="cursor-pointer text-xs font-medium text-[#BFD8E3] hover:text-white flex items-center gap-1">
+              <label className="cursor-pointer text-xs font-semibold text-[#00638E] hover:underline flex items-center gap-1">
                 <Upload className="h-3.5 w-3.5" />
                 <span>Upload .txt or .md</span>
                 <input
@@ -186,26 +186,26 @@ function NewMeetingContent() {
               onChange={(e) => handleTranscriptChange(e.target.value)}
               placeholder={"Paste meeting transcript with speaker names, for example:\n\nAlex: We agreed to finalize the API architecture by next Wednesday.\nPriya: Wait, our database migration is scheduled for Thursday, so that deadline creates a conflict.\nMarcus: Let's confirm: Priya will lead the database schema by Tuesday, and Alex will review the endpoints by Thursday."}
               required
-              className="w-full font-mono text-xs leading-relaxed rounded-xl border border-[#2B2B2B] bg-[#000000] p-4 text-slate-200 placeholder-slate-600 focus:border-[#00638E] focus:outline-none focus:ring-1 focus:ring-[#00638E]"
+              className="w-full font-mono text-xs leading-relaxed rounded-xl border border-slate-300 bg-slate-50/60 p-4 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#00638E] focus:outline-none focus:ring-1 focus:ring-[#00638E] shadow-sm"
             />
           </div>
         </div>
 
         {/* Live Detected Speakers */}
         {detectedSpeakers.length > 0 && (
-          <div className="rounded-xl border border-[#2B2B2B] bg-[#141414] p-4 space-y-2">
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-2 shadow-sm">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
                 <Users className="h-3.5 w-3.5 text-[#00638E]" />
                 <span>Detected Participants ({detectedSpeakers.length})</span>
               </span>
-              <span className="text-[11px] text-[#BFD8E3]">Speaker attribution active</span>
+              <span className="text-[11px] text-[#00638E] font-medium">Speaker attribution active</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {detectedSpeakers.map((spk, idx) => (
                 <span
                   key={idx}
-                  className="rounded-lg border border-[#2B2B2B] bg-[#000000] px-2.5 py-1 text-xs text-slate-300 font-medium"
+                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 font-medium shadow-sm"
                 >
                   {spk}
                 </span>
@@ -219,7 +219,7 @@ function NewMeetingContent() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex items-center gap-2 rounded-xl bg-[#00638E] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#00638E]/30 hover:bg-[#0077ab] transition-all disabled:opacity-50 active:scale-95"
+            className="flex items-center gap-2 rounded-xl bg-[#00638E] hover:bg-[#004A6B] px-6 py-3 text-sm font-semibold text-white shadow-md shadow-[#00638E]/25 transition-all disabled:opacity-50 active:scale-95"
           >
             {isSubmitting ? (
               <>
@@ -241,7 +241,7 @@ function NewMeetingContent() {
 
 export default function NewMeetingPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading New Meeting Ingestion Studio...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-xs text-slate-500">Loading New Meeting Ingestion Studio...</div>}>
       <NewMeetingContent />
     </Suspense>
   );
